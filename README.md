@@ -21,3 +21,24 @@
 </div>
 
 
+<br/>
+
+<h2 align="center">División de tareas</h2>
+
+#### Icono
+
+| Encargado/s       | Inicio | Final | Rama      |
+| :---------------- | :----- | :---- | :-------- |
+|                   |       |        |           |
+
+#### Splash Screen
+
+| Encargado/s       | Inicio | Final | Rama      |
+| :---------------- | :----- | :---- | :-------- |
+|     |   |  |  |
+
+#### Formulario de Ingreso
+
+| Encargado/s                        | Inicio | Final | Rama      |
+| :--------------------------------- | :----- | :---- | :-------- |
+|  |   |  |  |
