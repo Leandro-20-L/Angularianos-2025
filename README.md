@@ -10,7 +10,14 @@
 
 <div align="center">
 
-[![ValentinGradia](https://img.shields.io/badge/BautistaEscalante-707070?style=for-the-badge&logo=github&logoColor=black)](https://github.com/bautista-escalante)
+[![BautistaEscalante](https://img.shields.io/badge/BautistaEscalante-707070?style=for-the-badge&logo=github&logoColor=black)](https://github.com/bautista-escalante)
+</div>
+
+<h3 align="center">Leandro Escobar </h3>
+
+<div align="center">
+
+[![LeandroEscobar](https://img.shields.io/badge/LeandroEscobar-707070?style=for-the-badge&logo=github&logoColor=black)](https://github.com/LeandroUTNFRA)
 </div>
 
 
