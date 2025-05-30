@@ -1,0 +1,7 @@
+{
+  "name": "la_comanda",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular-standalone"
+}
