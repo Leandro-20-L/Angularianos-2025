@@ -1,8 +1,8 @@
 import type { CapacitorConfig } from '@capacitor/cli';
 
 const config: CapacitorConfig = {
-  appId: 'io.ionic.starter',
-  appName: 'la_comanda',
+  appId: 'com.angularianos.comanda',
+  appName: 'la comanda',
   webDir: 'www'
 };
 
