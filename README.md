@@ -3,6 +3,11 @@
 
 
 <div align="center">
+    <img src="src/assets/imgs/logo.jpeg" alt="Logo" width="250">
+</div>
+<br/>
+
+<div align="center">
     <h2 align="center">Integrantes</h1>
 </div>
 
