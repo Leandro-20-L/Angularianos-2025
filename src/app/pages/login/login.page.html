@@ -1,0 +1,94 @@
+<ion-content class="login-content">
+  <div class="login-wrapper">
+
+    
+
+    <div class="logo">
+      <img src="assets/imgs/logo.jpeg" alt="logo">
+    </div>
+
+    <div class="login-title">
+      <h2>Bienvenido a Angularianos</h2>
+    </div>
+
+
+    <div class="inputbox input-icon-right">
+      <ion-input
+        type="email"
+        placeholder="Ingrese su correo"
+        [(ngModel)]="email"
+        class="login-input">
+      </ion-input>
+      <i class="bi bi-person-fill"></i>
+    </div>
+
+    <div class="inputbox input-icon-right">
+      <ion-input
+        type="password"
+        placeholder="Ingrese su contraseña " 
+        [(ngModel)]="password"
+        class="login-input">
+      </ion-input>
+      <i class="bi bi-lock"></i>
+    </div>
+
+    <ion-button expand="block" class="login-btn" (click)="login()">INICIAR SESIÓN</ion-button>
+
+    <div *ngIf="errorMessage" class="error-message">
+      {{ errorMessage }}
+    </div>
+
+    <div class="text">
+      <h2>inicio Rápido:</h2>
+    </div>
+    
+    
+
+    <div class="quick-users-row">
+  <div class="user-button">
+    <ion-button shape="round" (click)="LlenarUsers('anonimo@anonimo.com', '444444')">
+      <img src="assets/accesos_rapidos/anonimo.png" alt="">
+    </ion-button>
+  </div>
+  <div class="user-button">
+    <ion-button shape="round" (click)="LlenarUsers('bartender@gmail.com', '123456')">
+      <img src="assets/accesos_rapidos/barman.png" alt="">
+    </ion-button>
+  </div>
+  <div class="user-button">
+    <ion-button shape="round" (click)="LlenarUsers('cocinero@gmail.com', '123456')">
+      <img src="assets/accesos_rapidos/cocinero.png" alt="">
+    </ion-button>
+  </div>
+  <div class="user-button">
+    <ion-button shape="round" (click)="LlenarUsers('dueño@gmail.com', '123456')">
+      <img src="assets/accesos_rapidos/dueño.png" alt="">
+    </ion-button>
+  </div>
+</div>
+
+<div class="quick-users-row">
+  <div class="user-button">
+    <ion-button shape="round" (click)="LlenarUsers('jefe@gmail.com', '123456')">
+      <img src="assets/accesos_rapidos/jefe_1.png" alt="">
+    </ion-button>
+  </div>
+  <div class="user-button">
+    <ion-button shape="round" (click)="LlenarUsers('mozo@gmail.com', '123456')">
+      <img src="assets/accesos_rapidos/mesero.png" alt="">
+    </ion-button>
+  </div>
+  <div class="user-button">
+    <ion-button shape="round" (click)="LlenarUsers('supervisor@gmail.com', '123456')">
+      <img src="assets/accesos_rapidos/supervisor.png" alt="">
+    </ion-button>
+  </div>
+  <div class="user-button">
+    <ion-button shape="round" (click)="LlenarUsers('usuario@usuario.com', '333333')">
+      <img src="assets/accesos_rapidos/usuario.png" alt="">
+    </ion-button>
+  </div>
+</div>
+
+  </div>
+</ion-content>
