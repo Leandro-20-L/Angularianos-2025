@@ -3,6 +3,11 @@
 
 
 <div align="center">
+    <img src="src/assets/imgs/logo.jpeg" alt="Logo" width="250">
+</div>
+<br/>
+
+<div align="center">
     <h2 align="center">Integrantes</h1>
 </div>
 
@@ -29,16 +34,16 @@
 
 | Encargado/s       | Inicio | Final | Rama      |
 | :---------------- | :----- | :---- | :-------- |
-|                   |       |        |           |
+| Bautista Escalante| 30/05  | 30/05 |  main     |
 
 #### Splash Screen
 
 | Encargado/s       | Inicio | Final | Rama      |
 | :---------------- | :----- | :---- | :-------- |
-|     |   |  |  |
+| Bautista Escalante| 30/05  | 30/05 | main      |
 
 #### Formulario de Ingreso
 
 | Encargado/s                        | Inicio | Final | Rama      |
 | :--------------------------------- | :----- | :---- | :-------- |
-|  |   |  |  |
+| Leandro Escobar                    |  30/05  | 31/05| main     |
