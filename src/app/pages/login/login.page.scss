@@ -124,11 +124,21 @@
   height: 60px;
 }
 
-.logo{
+.logo {
   width: 100px;
-  
+
 }
 
 .logo img {
   border-radius: 50%;
+}
+
+a {
+  font-size: 1.2rem;
+  color: #007bff;
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
 }

@@ -1,0 +1,115 @@
+.fondo {
+    --background: linear-gradient(to bottom, #6A040F, #9D0208);
+    color: #FFBA08;
+    font-family: 'Amoresa', sans-serif;
+    justify-content: center;
+    color: white;
+    --padding-top: 0;
+    --padding-bottom: 0;
+}
+
+.titulo {
+    text-align: center;
+    color: #ffffff;
+    font-size: 30px;
+}
+
+.login-input {
+    --background: transparent;
+    --color: #FFBA08;
+    --placeholder-color: #FFBA08;
+    color: #FFBA08;
+    font-weight: bold;
+    font-size: 1rem;
+    width: 100%;
+}
+
+.text {
+    color: #FFBA08;
+}
+
+.error-message {
+    color: #FFBA08;
+    background-color: #6A040F;
+    border: 1px solid #D00000;
+    padding: 10px 15px;
+    border-radius: 8px;
+    font-weight: bold;
+    margin-top: 15px;
+    max-width: 320px;
+    text-align: center;
+}
+
+.inputbox.input-icon-right {
+    position: relative;
+    display: flex;
+    align-items: center;
+    background: #D00000;
+    border: 2px solid #FAA307;
+    border-radius: 25px;
+    padding: 8px 16px;
+    max-width: 320px;
+}
+
+.formulario {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    padding: 20px;
+    gap: 20px;
+}
+
+.inputbox {
+    width: 100%;
+    max-width: 400px;
+    background: #D00000;
+    border: 2px solid #FAA307;
+    border-radius: 25px;
+    margin-top: 10px;
+    padding: 8px 16px;
+}
+
+.decision {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    padding: 20px;
+}
+
+.identificado,
+.anonimo {
+    --border-radius: 50%;
+    --background: #FAA307;
+}
+
+.btn-text {
+    color: black;
+    font-size: 20px;
+}
+
+.login-btn {
+    --background: #E85D04;
+    --color: black;
+    --border-radius: 30px;
+    font-weight: bold;
+    font-size: 1rem;
+    max-width: 320px;
+    transition: 0.3s ease-in-out;
+}
+
+.login-btn:hover {
+    --background: #FFBA08;
+    --color: #6A040F;
+    --border-radius: 30px;
+}
+
+.imagen {
+    width: 200px;
+    --background: #D00000;
+    border: 2px solid #FAA307;
+
+}

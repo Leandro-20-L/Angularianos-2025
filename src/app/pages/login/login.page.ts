@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { IonContent,IonButton,IonInput } from '@ionic/angular/standalone';
-import { Router, RouterModule } from '@angular/router';
+import { Router, RouterLink, RouterModule } from '@angular/router';
 import { supabase } from 'src/app/supabase.client';
 
 @Component({
@@ -10,7 +10,7 @@ import { supabase } from 'src/app/supabase.client';
   templateUrl: './login.page.html',
   styleUrls: ['./login.page.scss'],
   standalone: true,
-  imports: [IonContent, CommonModule, FormsModule,IonButton,IonInput]
+  imports: [IonContent, CommonModule, FormsModule,IonButton,IonInput, RouterLink]
 })
 export class LoginPage implements OnInit {
 
