@@ -34,16 +34,32 @@
 
 | Encargado/s       | Inicio | Final | Rama      |
 | :---------------- | :----- | :---- | :-------- |
-| Bautista Escalante| 30/05  | 30/05 |  main     |
+| Bautista Escalante| 30/05  | 30/05 |   `main`     |
 
 #### Splash Screen
 
 | Encargado/s       | Inicio | Final | Rama      |
 | :---------------- | :----- | :---- | :-------- |
-| Bautista Escalante| 30/05  | 30/05 | main      |
+| Bautista Escalante| 30/05  | 30/05 |  `main`      |
 
 #### Formulario de Ingreso
 
 | Encargado/s                        | Inicio | Final | Rama      |
 | :--------------------------------- | :----- | :---- | :-------- |
-| Leandro Escobar                    |  30/05  | 31/05| main     |
+| Leandro Escobar                    |  30/05  | 31/05|  `main`     |
+
+## Puntos
+
+### 1)
+#### Alta cliente
+
+| Encargado/s       | Inicio | Final | Rama      |
+| :---------------- | :----- | :---- | :-------- |
+| Bautista Escalante    | 5/6  | 5/6  | `main` |
+
+### 2 
+#### Listado clientes pendientes de aprobación
+
+| Encargado/s       | Inicio | Final | Rama       |
+| :---------------- | :----- | :---- | :--------- |
+|  |  |   |  |
