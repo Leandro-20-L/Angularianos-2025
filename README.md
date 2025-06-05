@@ -55,7 +55,7 @@
 
 | Encargado/s       | Inicio | Final | Rama      |
 | :---------------- | :----- | :---- | :-------- |
-| Bautista Escalante    | 5/6  | 5/6  | `main` |
+| Bautista Escalante    | 3/6  | 3/6  | `main` |
 
 ### 2 
 #### Listado clientes pendientes de aprobación
