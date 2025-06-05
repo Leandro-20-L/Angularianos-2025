@@ -1,9 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { IonContent,IonButton,IonInput } from '@ionic/angular/standalone';
+import { IonContent,IonButton,IonInput,ToastController } from '@ionic/angular/standalone';
 import { Router, RouterLink, RouterModule } from '@angular/router';
 import { supabase } from 'src/app/supabase.client';
+import { AuthService } from 'src/app/servicios/auth.service';
+import { UsuarioService } from 'src/app/servicios/usuario.service';
 
 @Component({
   selector: 'app-login',
@@ -19,24 +21,34 @@ export class LoginPage implements OnInit {
   errorMessage: string = '';
   phone: string = '';
 
-  constructor(private router: Router) {}
+  constructor(private router: Router,private afAuth: AuthService,public toastController : ToastController,private usuario: UsuarioService) {}
 
   async login() {
-    const { data, error } = await supabase.auth.signInWithPassword({
-      email: this.email,
-      password: this.password,
-    });
+    try {
+    const { user } = await this.afAuth.logIn(this.email, this.password);
 
-    console.log('Login response:', data);
-    console.log('Login error:', error);
+   
+    const datosUsuario = await this.usuario.obtenerUsuarioPorUID(user.id);
 
-    if (error) {
-      this.errorMessage = 'Credenciales inválidas';
-      console.error(error.message);
-    } else {
-      this.errorMessage = '';
-      this.router.navigate(['/home']);
+    if (!datosUsuario.aprobado) {
+      this.imprimirToast("Tu cuenta aún no fue aprobada. Esperá que un supervisor te habilite.");
+      return;
     }
+
+    switch (datosUsuario.role) {
+      case 'supervisor':
+        this.router.navigate(['/clientes-pendientes']); 
+        break;
+      case 'dueño':
+        this.router.navigate(['/clientes-pendientes']); 
+        break;
+      default:
+        this.router.navigate(['/home']);
+    }
+
+  } catch (error) {
+    this.imprimirToast("Correo o clave incorrecto");
+  }
   }
 
   LlenarUsers(mail:string, pass:string){
@@ -49,5 +61,14 @@ export class LoginPage implements OnInit {
     
   }
 
+  async imprimirToast(mensaje:string)
+  {
+    const toast = await this.toastController.create({
+      message: mensaje,
+      duration: 2000,
+      position: 'bottom'
+    })
+    await toast.present();
+  }
 
 }

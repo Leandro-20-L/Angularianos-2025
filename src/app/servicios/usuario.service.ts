@@ -26,5 +26,34 @@ export class UsuarioService {
     return this.supabase.client.storage.from("usuarios").getPublicUrl(ruta).data.publicUrl;
   }
 
+  async obtenerUsuarioPorUID(uid: string): Promise<any> {
+  const { data, error } = await this.supabase.client
+    .from("usuarios")
+    .select("*")
+    .eq("uid", uid)
+    .single();
 
+  if (error) throw error;
+  return data;
+}
+
+async obtenerPendientes(): Promise<any[]> {
+    const { data, error } = await this.supabase.client
+      .from('usuarios')
+      .select('*')
+      .eq('role', 'cliente')
+      .eq('aprobado', false);
+
+    if (error) throw new Error(error.message);
+    return data || [];
+  }
+
+  async aprobarUsuario(uid: string): Promise<void> {
+    const { error } = await this.supabase.client
+      .from('usuarios')
+      .update({ aprobado: true })
+      .eq('uid', uid);
+
+    if (error) throw new Error(error.message);
+  }
 }

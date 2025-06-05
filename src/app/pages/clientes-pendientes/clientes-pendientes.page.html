@@ -1,0 +1,30 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Clientes Pendientes</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content *ngIf="!cargando; else loading">
+  <ion-list *ngIf="clientesPendientes.length > 0; else sinClientes">
+    <ion-item *ngFor="let cliente of clientesPendientes">
+      <ion-avatar slot="start">
+        <img [src]="cliente.foto" />
+      </ion-avatar>
+      <ion-label>
+        <h2>{{ cliente.nombre }} {{ cliente.apellido }}</h2>
+        <p>{{ cliente.correo }}</p>
+      </ion-label>
+      <ion-button color="success" slot="end" (click)="aprobar(cliente.uid)">
+        Aprobar
+      </ion-button>
+    </ion-item>
+  </ion-list>
+</ion-content>
+
+<ng-template #loading>
+  <ion-spinner name="crescent"></ion-spinner>
+</ng-template>
+
+<ng-template #sinClientes>
+  <ion-text color="medium" class="ion-padding">No hay clientes pendientes.</ion-text>
+</ng-template>
