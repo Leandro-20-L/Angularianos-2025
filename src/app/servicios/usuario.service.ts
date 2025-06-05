@@ -9,6 +9,7 @@ export class UsuarioService {
   constructor(private supabase: SupabaseService) { }
 
   async registrarUsuario(usuario: any) {
+    console.log("Insertando usuario:", usuario);
     const { error } = await this.supabase.client
       .from("usuarios")
       .insert(usuario);

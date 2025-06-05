@@ -67,6 +67,7 @@ export class RegistroClientePage implements OnInit {
           role: "cliente",
           aprobado: false
         });
+        this.imprimirToast("Registro exitoso.");
       }
       if(this.tipo === "anonimo"){
         
@@ -75,10 +76,13 @@ export class RegistroClientePage implements OnInit {
           foto: urlFoto,
           role: "cliente"
         });
-
+        this.imprimirToast("Registro exitoso.");
       }
-      this.imprimirToast("Registro exitoso.");
+      
     } catch (error:any) {
+      console.log("Usuario a registrar:", this.usuario);
+      console.error("ERROR REGISTRO:", error);
+      
       this.mensajeError=error.message;
     }
     

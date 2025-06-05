@@ -40,10 +40,15 @@ export class AuthService {
   }
 
   public async signUp(email: string, password: string): Promise<string> {
+    console.log('Email:', `"${email}"`);
+  console.log('Password:', `"${password}"`);
   const { data, error } = await supabase.auth.signUp({
     email,
     password,
   });
+
+  console.log('Supabase signUp response:', data);
+  console.log('Supabase signUp error:', error);
 
   if (error) throw error;
 
