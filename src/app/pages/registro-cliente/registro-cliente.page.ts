@@ -54,11 +54,13 @@ export class RegistroClientePage implements OnInit {
     }
       try {
       const user = await this.authService.signUp(this.correo, this.clave);
+      const uid = user;
       const urlFoto = await this.usuario.subirFoto(this.ruta, this.foto);
          
       if(this.tipo === "identificado"){
              
         await this.usuario.registrarUsuario({
+          uid,
           nombre: this.nombre,
           apellido: this.apellido,
           dni: this.dni,
