@@ -62,4 +62,4 @@
 
 | Encargado/s       | Inicio | Final | Rama       |
 | :---------------- | :----- | :---- | :--------- |
-|  |  |   |  |
+| Leandro Escobar | 4/6 | 5/6  |  `main` |
