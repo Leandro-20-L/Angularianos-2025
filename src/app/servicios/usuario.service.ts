@@ -18,6 +18,11 @@ export class UsuarioService {
   }
 
   async subirFoto(ruta: string, foto: Blob): Promise<string> {
+    const session = await this.supabase.client.auth.getSession();
+      console.log("Sesión activa:", session);
+      console.log("Ruta:", ruta);
+      console.log("Foto (Blob):", foto);
+      
     const { error } = await this.supabase.client.storage
       .from("usuarios")
       .upload(ruta, foto);
