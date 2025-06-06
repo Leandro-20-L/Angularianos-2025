@@ -1,5 +1,4 @@
-<ion-content class="fondo" [fullscreen]="true">
-
+<ion-content *ngIf="!escaneando" class="fondo" [fullscreen]="true">
 
   <div *ngIf="tipo === ''" class="decision">
     <ion-title class="titulo">Registrase</ion-title>
@@ -35,7 +34,11 @@
     <div class="inputbox input-icon-right">
       <ion-input type="text" placeholder="Ingrese su DNI" [(ngModel)]="dni" class="login-input">
       </ion-input>
+      <ion-button class="btn_barras" (click)="scan()">
+        <img src="assets/iconos/codigo_barras.svg" class="codigo_barras">
+      </ion-button>
     </div>
+
 
     <div class="inputbox input-icon-right">
       <ion-input type="text" placeholder="Ingrese su correo" [(ngModel)]="correo" class="login-input">
@@ -68,5 +71,15 @@
 
     <ion-button class="login-btn" (click)="registrar()">Registrase</ion-button>
   </div>
+
+</ion-content>
+
+<ion-content *ngIf="escaneando" class="fondoTransparente">
+
+  <ion-fab vertical="bottom" horizontal="end">
+    <ion-fab-button (click)="cancelarEscaneo()" class="salir">
+      <img src="assets/iconos/atras.svg" class="salir" />
+    </ion-fab-button>
+  </ion-fab>
 
 </ion-content>

@@ -5,14 +5,15 @@ import { SupabaseService } from 'src/app/servicios/supabase.service';
 import { Camera, CameraResultType, CameraSource } from '@capacitor/camera';
 import { UsuarioService } from 'src/app/servicios/usuario.service';
 import { AuthService } from 'src/app/servicios/auth.service';
-import { IonContent, IonTitle,IonButton,IonInput,ToastController } from '@ionic/angular/standalone';
+import { IonContent, IonTitle, IonButton, IonInput, ToastController, IonIcon, IonFabButton, IonFab } from '@ionic/angular/standalone';
+import { BarcodeScanner } from '@capacitor-community/barcode-scanner';
 
 @Component({
   selector: 'app-registro-cliente',
   templateUrl: './registro-cliente.page.html',
   styleUrls: ['./registro-cliente.page.scss'],
   standalone: true,
-  imports: [ CommonModule, FormsModule,IonContent, IonTitle,IonButton,IonInput]
+  imports: [IonFab, IonFabButton, IonIcon, CommonModule, FormsModule, IonContent, IonTitle, IonButton, IonInput]
 })
 export class RegistroClientePage implements OnInit {
   dni: string = "";
@@ -23,10 +24,12 @@ export class RegistroClientePage implements OnInit {
   apellido: string = "";
   foto: Blob = new Blob();
   ruta: string = "";
+  escaneando: boolean = false;
   anonimo: boolean = true;
   mensajeError: string = "";
+  dniData: string | null = null;
 
-  constructor(private supabase: SupabaseService, private usuario: UsuarioService, public toastController : ToastController,private authService: AuthService) { }
+  constructor(private supabase: SupabaseService, private usuario: UsuarioService, public toastController: ToastController, private authService: AuthService) { }
 
   ngOnInit() {
   }
@@ -50,15 +53,15 @@ export class RegistroClientePage implements OnInit {
 
   async registrar() {
     if (!this.validarDatos()) {
-    return; 
+      return;
     }
-      try {
+    try {
       const user = await this.authService.signUp(this.correo, this.clave);
       const uid = user;
       const urlFoto = await this.usuario.subirFoto(this.ruta, this.foto);
-         
-      if(this.tipo === "identificado"){
-             
+
+      if (this.tipo === "identificado") {
+
         await this.usuario.registrarUsuario({
           uid,
           nombre: this.nombre,
@@ -71,8 +74,8 @@ export class RegistroClientePage implements OnInit {
         });
         this.imprimirToast("Registro exitoso.");
       }
-      if(this.tipo === "anonimo"){
-        
+      if (this.tipo === "anonimo") {
+
         await this.usuario.registrarUsuario({
           nombre: this.nombre,
           foto: urlFoto,
@@ -80,18 +83,18 @@ export class RegistroClientePage implements OnInit {
         });
         this.imprimirToast("Registro exitoso.");
       }
-      
-    } catch (error:any) {
+
+    } catch (error: any) {
       console.log("Usuario a registrar:", this.usuario);
       console.error("ERROR REGISTRO:", error);
-      
-      this.mensajeError=error.message;
+
+      this.mensajeError = error.message;
     }
-    
+
   }
 
   validarDatos(): boolean {
-  
+
     if (!this.nombre.trim()) {
       this.imprimirToast("El nombre es obligatorio.");
       console.log("falta nombre");
@@ -142,15 +145,49 @@ export class RegistroClientePage implements OnInit {
     }
 
     return true;
-}
+  }
 
-async imprimirToast(mensaje:string)
-  {
+  async imprimirToast(mensaje: string) {
     const toast = await this.toastController.create({
       message: mensaje,
       duration: 2000,
       position: 'bottom'
     })
     await toast.present();
+  }
+
+  async scan() {
+    this.escaneando = true;
+    BarcodeScanner.hideBackground();
+
+    const permission = await BarcodeScanner.checkPermission({ force: true });
+    if (!permission.granted) {
+      this.imprimirToast("Permiso de cámara denegado");
+      return;
+    }
+
+    document.body.classList.add('scanner-active');
+
+    const result: { hasContent: boolean, content?: string } = await BarcodeScanner.startScan();
+
+    if (result.hasContent && result.content) {
+      const datos = result.content.split('@');
+      const apellido = datos[1];
+      const nombres = datos[2]; 
+      this.dni = datos[4];
+      
+      this.apellido = apellido.trim();
+      this.nombre = nombres.trim();
+    } else {
+      this.imprimirToast("No se detectó ningún código.");
+    }
+    await this.cancelarEscaneo();
+  }
+
+  async cancelarEscaneo() {
+    this.escaneando = false;
+    await BarcodeScanner.stopScan();
+    BarcodeScanner.showBackground();
+    document.body.classList.remove('scanner-active');
   }
 }

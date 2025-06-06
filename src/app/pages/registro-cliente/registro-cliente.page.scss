@@ -111,5 +111,19 @@
     width: 200px;
     --background: #D00000;
     border: 2px solid #FAA307;
+}
 
+.codigo_barras,
+.btn_barras {
+    width: 70px;
+    --background: transparent !important;
+}
+
+.fondoTransparente {
+    --background: transparent !important;
+    background: transparent !important;
+}
+
+.salir {
+    --background: #6A040F !important;
 }
