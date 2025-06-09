@@ -22,7 +22,7 @@ export class UsuarioService {
       console.log("Sesión activa:", session);
       console.log("Ruta:", ruta);
       console.log("Foto (Blob):", foto);
-      
+
     const { error } = await this.supabase.client.storage
       .from("usuarios")
       .upload(ruta, foto);
@@ -48,7 +48,7 @@ async obtenerPendientes(): Promise<any[]> {
       .from('usuarios')
       .select('*')
       .eq('role', 'cliente')
-      .eq('aprobado', false);
+      .eq('aprobado', 'pendiente');
 
     if (error) throw new Error(error.message);
     return data || [];
@@ -57,7 +57,16 @@ async obtenerPendientes(): Promise<any[]> {
   async aprobarUsuario(uid: string): Promise<void> {
     const { error } = await this.supabase.client
       .from('usuarios')
-      .update({ aprobado: true })
+      .update({ aprobado: 'aprobadoz' })
+      .eq('uid', uid);
+
+    if (error) throw new Error(error.message);
+  }
+
+  async rechazarUsuario(uid: string): Promise<void> {
+    const { error } = await this.supabase.client
+      .from('usuarios')
+      .update({ aprobado: 'rechazado' })
       .eq('uid', uid);
 
     if (error) throw new Error(error.message);

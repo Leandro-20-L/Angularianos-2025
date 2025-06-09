@@ -30,7 +30,7 @@ export class LoginPage implements OnInit {
    
     const datosUsuario = await this.usuario.obtenerUsuarioPorUID(user.id);
 
-    if (!datosUsuario.aprobado) {
+    if (datosUsuario.aprobado != "aprobado") {
       this.imprimirToast("Tu cuenta aún no fue aprobada. Esperá que un supervisor te habilite.");
       return;
     }

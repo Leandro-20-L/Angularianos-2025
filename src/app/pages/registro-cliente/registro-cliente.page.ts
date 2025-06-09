@@ -70,7 +70,7 @@ export class RegistroClientePage implements OnInit {
           correo: this.correo,
           foto: urlFoto,
           role: "cliente",
-          aprobado: false
+          aprobado: "pendiente"
         });
         this.imprimirToast("Registro exitoso.");
       }
