@@ -7,6 +7,7 @@ import { UsuarioService } from 'src/app/servicios/usuario.service';
 import { AuthService } from 'src/app/servicios/auth.service';
 import { IonContent, IonTitle, IonButton, IonInput, ToastController, IonIcon, IonFabButton, IonFab } from '@ionic/angular/standalone';
 import { BarcodeScanner } from '@capacitor-community/barcode-scanner';
+import { QrService } from 'src/app/servicios/qr.service';
 
 @Component({
   selector: 'app-registro-cliente',
@@ -29,7 +30,11 @@ export class RegistroClientePage implements OnInit {
   mensajeError: string = "";
   dniData: string | null = null;
 
-  constructor(private supabase: SupabaseService, private usuario: UsuarioService, public toastController: ToastController, private authService: AuthService) { }
+  constructor(private supabase: SupabaseService,
+    private usuario: UsuarioService,
+    public toastController: ToastController,
+    private authService: AuthService,
+    private qrService: QrService) { }
 
   ngOnInit() {
   }
@@ -158,36 +163,23 @@ export class RegistroClientePage implements OnInit {
 
   async scan() {
     this.escaneando = true;
-    BarcodeScanner.hideBackground();
-
-    const permission = await BarcodeScanner.checkPermission({ force: true });
-    if (!permission.granted) {
-      this.imprimirToast("Permiso de cámara denegado");
-      return;
-    }
-
-    document.body.classList.add('scanner-active');
-
-    const result: { hasContent: boolean, content?: string } = await BarcodeScanner.startScan();
-
-    if (result.hasContent && result.content) {
-      const datos = result.content.split('@');
+    try {
+      let resultado = await this.qrService.scan();
+      const datos = resultado!.split('@');
       const apellido = datos[1];
-      const nombres = datos[2]; 
+      const nombres = datos[2];
       this.dni = datos[4];
-      
+  
       this.apellido = apellido.trim();
       this.nombre = nombres.trim();
-    } else {
-      this.imprimirToast("No se detectó ningún código.");
+
+    } catch (error: any) {
+      this.imprimirToast(error.message);
     }
-    await this.cancelarEscaneo();
   }
 
   async cancelarEscaneo() {
     this.escaneando = false;
-    await BarcodeScanner.stopScan();
-    BarcodeScanner.showBackground();
-    document.body.classList.remove('scanner-active');
+    await this.qrService.cancelarEscaneo();
   }
 }
