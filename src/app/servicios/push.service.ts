@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, OnInit } from '@angular/core';
 import { PushNotifications, Token, } from '@capacitor/push-notifications';
 import { Platform } from '@ionic/angular';
 import { SupabaseService } from './supabase.service';
@@ -7,7 +7,7 @@ import { LocalNotifications } from '@capacitor/local-notifications';
 @Injectable({
   providedIn: 'root'
 })
-export class PushService {
+export class PushService implements OnInit {
 
   token: Token | null = null;
 
@@ -16,66 +16,40 @@ export class PushService {
     private platform: Platform
   ) { }
 
-  async registrarTokenPush(userId: number) {
-    if (!this.platform.is('capacitor')) {
-      console.warn('Push notifications only work on device (not web)');
-      return;
-    }
-
-    const permiso = await PushNotifications.requestPermissions();
-    if (permiso.receive !== 'granted') {
-      console.log('No se concedieron permisos para notificaciones');
-      return;
-    }
-
-    await PushNotifications.register();
-
-    PushNotifications.addListener('registration', async (token) => {
-      console.log('Token FCM:', token.value);
-
-      const { error } = await this.supabase.client.from('fcm_tokens').insert([
-        {
-          user_id: userId,
-          token: token.value
-        }
-      ]);
-
-      if (error) {
-        console.error('Error al guardar token en Supabase:', error.message);
-      } else {
-        console.log('Token guardado en Supabase.');
-      }
-    });
-
-    PushNotifications.addListener('registrationError', err => {
-      console.error('Error de registro FCM:', err);
-    });
-
-    PushNotifications.addListener('pushNotificationActionPerformed', notification => {
-      console.log('Notificación interactuada:', notification);
-    });
-
-    this.escucharNotificaciones();
+  ngOnInit() {
   }
 
-  private escucharNotificaciones() {
-    PushNotifications.addListener('pushNotificationReceived', async (notification) => {
-      console.log('Notificación recibida:', notification);
+  initializePushNotifications(id: string) {
+    if (this.platform.is('capacitor')) {
 
-      // Mostrar la notificación local si la app está en primer plano
-      await LocalNotifications.schedule({
-        notifications: [{
-          title: notification.title || 'Nuevo mensaje',
-          body: notification.body || '',
-          id: Date.now(),
-          schedule: { at: new Date(Date.now() + 100) },
-          sound: '', // null no es permitido según el error
-          attachments: [], // null no es permitido
-          actionTypeId: '',
-          extra: {}
-        }]
+      PushNotifications.requestPermissions().then(result => {
+        if (result.receive === 'granted') {
+          PushNotifications.register();
+        } else {
+          console.error('Permiso de notificación denegado');
+        }
       });
-    });
+
+      PushNotifications.addListener('registration', (token: Token) => {
+        console.log('Push registration success, token: ' + token.value);
+        this.supabase.client
+          .from('usuarios')
+          .update([{ token_push: token.value }])
+          .eq("uid", id)
+      });
+
+      PushNotifications.addListener('registrationError', (error: any) => {
+        console.error('Error al registrar notificaciones push', error);
+      });
+
+      PushNotifications.addListener('pushNotificationReceived', (notification: any) => {
+        console.log('Notificación recibida: ', notification);
+      });
+
+      PushNotifications.addListener('pushNotificationActionPerformed', (notification) => {
+        console.log('Acción de notificación: ', notification);
+      });
+    }
   }
 
   async enviarNotificacionAlBackend(titulo: string, cuerpo: string, tokenUsuario: string) {

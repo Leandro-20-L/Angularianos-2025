@@ -5,8 +5,7 @@ import { SupabaseService } from 'src/app/servicios/supabase.service';
 import { Camera, CameraResultType, CameraSource } from '@capacitor/camera';
 import { UsuarioService } from 'src/app/servicios/usuario.service';
 import { AuthService } from 'src/app/servicios/auth.service';
-import { IonContent, IonTitle, IonButton, IonInput, ToastController, IonIcon, IonFabButton, IonFab } from '@ionic/angular/standalone';
-import { BarcodeScanner } from '@capacitor-community/barcode-scanner';
+import { IonContent, IonTitle, IonButton, IonInput, ToastController, IonFabButton, IonFab } from '@ionic/angular/standalone';
 import { QrService } from 'src/app/servicios/qr.service';
 
 @Component({
@@ -14,7 +13,7 @@ import { QrService } from 'src/app/servicios/qr.service';
   templateUrl: './registro-cliente.page.html',
   styleUrls: ['./registro-cliente.page.scss'],
   standalone: true,
-  imports: [IonFab, IonFabButton, IonIcon, CommonModule, FormsModule, IonContent, IonTitle, IonButton, IonInput]
+  imports: [IonFab, IonFabButton, CommonModule, FormsModule, IonContent, IonTitle, IonButton, IonInput]
 })
 export class RegistroClientePage implements OnInit {
   dni: string = "";
@@ -172,7 +171,7 @@ export class RegistroClientePage implements OnInit {
   
       this.apellido = apellido.trim();
       this.nombre = nombres.trim();
-
+      await this.cancelarEscaneo()
     } catch (error: any) {
       this.imprimirToast(error.message);
     }

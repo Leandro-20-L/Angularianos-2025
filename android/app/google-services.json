@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "869780067267",
+    "project_id": "chat-c7a80",
+    "storage_bucket": "chat-c7a80.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:869780067267:android:380b87d209e5b18ec52376",
+        "android_client_info": {
+          "package_name": "com.angularianos.comanda"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAg2AmV4KJHWlKQ6Z__-bkOtyNgD8eE5NY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:869780067267:android:fb3256d47c64e684c52376",
+        "android_client_info": {
+          "package_name": "com.bautista.conversandoAula"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAg2AmV4KJHWlKQ6Z__-bkOtyNgD8eE5NY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -7,10 +7,8 @@ import { BarcodeScanner } from '@capacitor-community/barcode-scanner';
 export class QrService {
 
   constructor() { }
-  escaneando:Boolean = false;
 
   async scan() {
-    this.escaneando = true;
     BarcodeScanner.hideBackground();
 
     const permission = await BarcodeScanner.checkPermission({ force: true });
@@ -24,7 +22,6 @@ export class QrService {
     const result: { hasContent: boolean, content?: string } = await BarcodeScanner.startScan();
 
     if (result.hasContent && result.content) {
-      await this.cancelarEscaneo();
       return result.content;
     } else {
       throw new Error("No se detectó ningún código.");
@@ -32,7 +29,6 @@ export class QrService {
   }
 
   async cancelarEscaneo() {
-    this.escaneando = false;
     await BarcodeScanner.stopScan();
     BarcodeScanner.showBackground();
     document.body.classList.remove('scanner-active');

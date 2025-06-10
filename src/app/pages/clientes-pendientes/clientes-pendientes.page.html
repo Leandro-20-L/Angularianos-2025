@@ -22,6 +22,13 @@
       </ion-button>
     </ion-item>
   </ion-list>
+
+    <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+    <ion-fab-button (click)="signOut()" class="btn_cerrarSesion">
+      <img src="assets/iconos/cerrar.svg" class="img-responsive" />
+    </ion-fab-button>
+  </ion-fab>
+  
 </ion-content>
 
 <ng-template #loading>
