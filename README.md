@@ -28,6 +28,41 @@
 
 <br/>
 
+## Entrada
+
+<br/>
+<div align="center">
+    <img src="https://hnlzagyadmtdaztbcwzd.supabase.co/storage/v1/object/public/logo//Entrada.png" alt="Logo" width="250">
+</div>
+<br/>
+
+## Mesas
+
+<table align="center">
+    <tr>
+        <td align="center">
+            <h3>Mesa 1</h3>
+            <img src="https://hnlzagyadmtdaztbcwzd.supabase.co/storage/v1/object/public/logo//MESA1.png" alt="Mesa 1" width="250" style="margin: 15px;">
+        </td>
+        <td align="center">
+            <h3>Mesa 2</h3>
+            <img src="https://hnlzagyadmtdaztbcwzd.supabase.co/storage/v1/object/public/logo//MESA2.png" alt="Mesa 2" width="250" style="margin: 15px;">
+        </td>
+    </tr>
+    <tr>
+        <td align="center">
+            <h3>Mesa 3</h3>
+            <img src="https://hnlzagyadmtdaztbcwzd.supabase.co/storage/v1/object/public/logo//MESA3.png" alt="Mesa 3" width="250" style="margin: 15px;">
+        </td>
+        <td align="center">
+            <h3>Mesa 4</h3>
+            <img src="https://hnlzagyadmtdaztbcwzd.supabase.co/storage/v1/object/public/logo//MESA4.png" alt="Mesa 4" width="250" style="margin: 15px;">
+        </td>
+    </tr>
+</table>
+
+<br>
+
 <h2 align="center">División de tareas</h2>
 
 #### Icono
