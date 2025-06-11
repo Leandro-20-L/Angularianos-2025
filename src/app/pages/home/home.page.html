@@ -1,20 +1,22 @@
 <ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-title>
-      Blank
+  <ion-toolbar color="fondo">
+    <ion-title class="titulo">
+      BIENVENIDO
     </ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">BIENVENIDO</ion-title>
-    </ion-toolbar>
-  </ion-header>
+<ion-content [fullscreen]="true" class="fondo">
+
+  
+  <div class="formulario">
+    <ion-button expand="block" (click)="escanearQrYEntrarLista()" class="login-btn">
+      Escanear QR para entrar en lista de espera
+    </ion-button>
+  </div>
 
   <ion-fab vertical="bottom" horizontal="end" slot="fixed">
-    <ion-fab-button (click)="signOut()">
+    <ion-fab-button (click)="signOut()" class="salir">
       <img src="assets/iconos/cerrar.svg" class="img-responsive" />
     </ion-fab-button>
   </ion-fab>

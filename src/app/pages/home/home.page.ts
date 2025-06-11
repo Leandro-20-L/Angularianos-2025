@@ -4,6 +4,8 @@ import { PushService } from 'src/app/servicios/push.service';
 import { IonicModule } from '@ionic/angular';
 import { Router } from '@angular/router';
 import { ToastController } from '@ionic/angular/standalone';
+import { UsuarioService } from 'src/app/servicios/usuario.service';
+import { QrService } from 'src/app/servicios/qr.service';
 
 @Component({
   selector: 'app-home',
@@ -12,7 +14,15 @@ import { ToastController } from '@ionic/angular/standalone';
   imports: [IonicModule],
 })
 export class HomePage implements OnInit {
-  constructor(public toastController : ToastController, private route: Router, private auth: AuthService, private push: PushService, private acceso: AuthService) {
+  constructor(
+    public toastController : ToastController, 
+    private route: Router, 
+    private auth: AuthService, 
+    private push: PushService, 
+    private acceso: AuthService,
+    private usuarioService: UsuarioService,
+    private qrService: QrService,
+  ) {
   }
 
   async ngOnInit() {
@@ -35,6 +45,23 @@ export class HomePage implements OnInit {
     await this.auth.logOut();
     this.route.navigate(["/login"])
   }
+
+  async escanearQrYEntrarLista() {
+    try {
+      const qrContenido = await this.qrService.scan();
+      console.log("Contenido del QR:", qrContenido);
+
+      await this.usuarioService.marcarComoEsperando(qrContenido as string);
+
+      this.imprimirToast('Te agregamos a la lista de espera');
+    } catch (error) {
+      this.imprimirToast( 'Error al escanear');
+    } finally {
+      await this.qrService.cancelarEscaneo(); 
+    }
+  }
+
+  
 
   async imprimirToast(mensaje: string) {
     const toast = await this.toastController.create({
