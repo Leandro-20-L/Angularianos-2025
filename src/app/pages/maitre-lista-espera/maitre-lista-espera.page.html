@@ -1,0 +1,25 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Lista de Espera</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <ion-list *ngIf="clientes.length > 0; else sinClientes">
+    <ion-item *ngFor="let cliente of clientes">
+      <ion-label>
+        <h2>{{ cliente.nombre }} {{ cliente.apellido }}</h2>
+        <p>DNI: {{ cliente.dni }}</p>
+      </ion-label>
+      <ion-button slot="end" (click)="asignarMesa(cliente)" color="primary">
+        Asignar Mesa
+      </ion-button>
+    </ion-item>
+  </ion-list>
+
+  <ng-template #sinClientes>
+    <ion-text color="medium">
+      <p>No hay clientes en espera actualmente.</p>
+    </ion-text>
+  </ng-template>
+</ion-content>
