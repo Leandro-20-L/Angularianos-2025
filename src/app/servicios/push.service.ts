@@ -1,6 +1,7 @@
 import { Injectable, OnInit } from '@angular/core';
 import { PushNotifications, Token, } from '@capacitor/push-notifications';
 import { Platform } from '@ionic/angular';
+import { HttpClient } from '@angular/common/http';
 import { SupabaseService } from './supabase.service';
 import { LocalNotifications } from '@capacitor/local-notifications';
 
@@ -13,7 +14,8 @@ export class PushService implements OnInit {
 
   constructor(
     private supabase: SupabaseService,
-    private platform: Platform
+    private platform: Platform,
+    private http: HttpClient
   ) { }
 
   ngOnInit() {
@@ -30,12 +32,12 @@ export class PushService implements OnInit {
         }
       });
 
-      PushNotifications.addListener('registration', (token: Token) => {
-        console.log('Push registration success, token: ' + token.value);
-        this.supabase.client
+      PushNotifications.addListener('registration', async (token: Token) => {
+        await this.supabase.client
           .from('usuarios')
-          .update([{ token_push: token.value }])
-          .eq("uid", id)
+          .update({ token_push: token.value })
+          .eq("uid", id);
+
       });
 
       PushNotifications.addListener('registrationError', (error: any) => {
@@ -52,27 +54,21 @@ export class PushService implements OnInit {
     }
   }
 
-  async enviarNotificacionAlBackend(titulo: string, cuerpo: string, tokenUsuario: string) {
-    try {
-      const response = await fetch('https://tu-backend.com/send-notification', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-          token: tokenUsuario,
-          title: titulo,
-          body: cuerpo
-        })
-      });
+  async getToken(id: string) {
+    const { error, data } = await this.supabase.client
+      .from("usuarios")
+      .select("token_push")
+      .eq("uid", id)
+      .single()
 
-      const data = await response.json();
-      console.log('Respuesta backend notificación:', data);
-    } catch (error) {
-      console.error('Error enviando notificación al backend:', error);
-    }
+    if (error) throw error;
+    return data;
   }
 
+  sendNotification(token: any, title: string, body: string, url: string) {
+    const payload = { token, title, body };
+    return this.http.post(url, payload);
+  }
 
 }
 
