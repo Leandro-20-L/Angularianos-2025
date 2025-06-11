@@ -64,7 +64,7 @@ export class MaitreListaEsperaPage implements OnInit {
             const mesa = this.mesasDisponibles.find((m) => m.uid === mesaUid);
             if (!mesa) return;
 
-            // Actualizar usuario
+            
             await this.supabase.client
               .from('usuarios')
               .update({
@@ -73,7 +73,7 @@ export class MaitreListaEsperaPage implements OnInit {
               })
               .eq('uid', cliente.uid);
 
-            // Actualizar mesa
+            
             await this.supabase.client
               .from('mesas')
               .update({
@@ -82,7 +82,7 @@ export class MaitreListaEsperaPage implements OnInit {
               })
               .eq('uid', mesa.uid);
 
-            // Refrescar datos
+            
             await this.cargarClientes();
             await this.cargarMesas();
           },
