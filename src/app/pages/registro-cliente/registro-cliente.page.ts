@@ -55,47 +55,57 @@ export class RegistroClientePage implements OnInit {
     this.ruta = `${this.nombre}_${Date.now()}.jpg`;
   }
 
-  async registrar() {
-    if (!this.validarDatos()) {
-      return;
-    }
-    try {
-      const user = await this.authService.signUp(this.correo, this.clave);
-      const uid = user;
-      const urlFoto = await this.usuario.subirFoto(this.ruta, this.foto);
-
-      if (this.tipo === "identificado") {
-
-        await this.usuario.registrarUsuario({
-          uid,
-          nombre: this.nombre,
-          apellido: this.apellido,
-          dni: this.dni,
-          correo: this.correo,
-          foto: urlFoto,
-          role: "cliente",
-          aprobado: "pendiente"
-        });
-        this.imprimirToast("Registro exitoso.");
-      }
-      if (this.tipo === "anonimo") {
-
-        await this.usuario.registrarUsuario({
-          nombre: this.nombre,
-          foto: urlFoto,
-          role: "cliente"
-        });
-        this.imprimirToast("Registro exitoso.");
-      }
-
-    } catch (error: any) {
-      console.log("Usuario a registrar:", this.usuario);
-      console.error("ERROR REGISTRO:", error);
-
-      this.mensajeError = error.message;
-    }
-
+async registrar() {
+  if (!this.validarDatos()) {
+    return;
   }
+
+  try {
+  let user;
+  let correoFinal = this.correo;
+  let claveFinal = this.clave;
+
+  if (this.tipo === "anonimo") {
+    correoFinal = `anonimo_${Date.now()}@anonimo.com`;
+    claveFinal = "123456";
+  }
+
+  user = await this.authService.signUp(correoFinal, claveFinal);
+  const uid = user;
+  const urlFoto = await this.usuario.subirFoto(this.ruta, this.foto);
+
+  if (this.tipo === "identificado") {
+    await this.usuario.registrarUsuario({
+      uid,
+      nombre: this.nombre,
+      apellido: this.apellido,
+      dni: this.dni,
+      correo: this.correo,
+      foto: urlFoto,
+      role: "cliente",
+      aprobado: "pendiente"
+    });
+  }
+
+  if (this.tipo === "anonimo") {
+    await this.usuario.registrarUsuario({
+      uid,
+      nombre: this.nombre,
+      correo: correoFinal,
+      foto: urlFoto,
+      aprobado: "aprobado",
+      role: "anonimo"
+    });
+  }
+
+  this.imprimirToast("Registro exitoso.");
+
+} catch (error: any) {
+  console.error("ERROR REGISTRO:", error);
+  this.mensajeError = error.message;
+}
+}
+
 
   validarDatos(): boolean {
 

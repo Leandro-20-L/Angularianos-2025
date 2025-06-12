@@ -30,7 +30,7 @@ export class MaitreListaEsperaPage implements OnInit {
     const { data, error } = await this.supabase.client
       .from('usuarios')
       .select('*')
-      .eq('role', 'cliente')
+      .in('role', ['cliente', 'anonimo'])
       .eq('aprobado', 'aprobado')
       .eq('situacion', 'esperando_mesa')
       .is('mesa_asignada', null);

@@ -104,4 +104,45 @@ async obtenerPendientes(): Promise<any[]> {
       if (error) throw error;
   }
 }
+
+async obtenerMesaAsignada(): Promise<{ numero: number, qr: string } | null> {
+  const uid = await this.authService.getUserUid();
+
+  // Obtener número de mesa asignada
+  const { data: user, error: errorUser } = await this.supabase.client
+    .from('usuarios')
+    .select('mesa_asignada')
+    .eq('uid', uid)
+    .single();
+
+  if (errorUser || !user?.mesa_asignada) return null;
+
+  // Buscar mesa con ese número
+  const { data: mesa, error: errorMesa } = await this.supabase.client
+    .from('mesas')
+    .select('qr, numero')
+    .eq('numero', user.mesa_asignada)
+    .single();
+
+  if (errorMesa || !mesa) return null;
+
+  return {
+    numero: mesa.numero,
+    qr: mesa.qr
+  };
+}
+
+async obtenerSituacionUsuario(): Promise<string | null> {
+  const uid = await this.authService.getUserUid();
+
+  const { data, error } = await this.supabase.client
+    .from('usuarios')
+    .select('situacion')
+    .eq('uid', uid)
+    .single();
+
+  if (error || !data?.situacion) return null;
+
+  return data.situacion;
+}
 }

@@ -15,7 +15,13 @@ import { UsuarioService } from 'src/app/servicios/usuario.service';
 })
 export class HomePage implements OnInit {
   constructor(public toastController: ToastController, private route: Router, private auth: AuthService, private push: PushService, private acceso: AuthService,private qrService: QrService,private usuarioService: UsuarioService,){}
+  async ionViewWillEnter() {
+  const situacion = await this.usuarioService.obtenerSituacionUsuario();
 
+  if (situacion === 'mesaAsignado') {
+    this.route.navigate(['/mesa']);
+  }
+}
   async ngOnInit() {
     try {
       let uid = await this.acceso.getUserUid();
