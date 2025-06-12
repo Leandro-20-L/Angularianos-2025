@@ -12,18 +12,19 @@ import { ToastController } from '@ionic/angular/standalone';
   imports: [IonicModule],
 })
 export class HomePage implements OnInit {
-  constructor(public toastController : ToastController, private route: Router, private auth: AuthService, private push: PushService, private acceso: AuthService) {
+  constructor(public toastController: ToastController, private route: Router, private auth: AuthService, private push: PushService, private acceso: AuthService) {
   }
 
   async ngOnInit() {
     try {
       let uid = await this.acceso.getUserUid();
       let token = await this.push.getToken(uid!)
+      
       this.push.initializePushNotifications(uid!);
-      this.push.sendNotification(token, "hola", "mensaje personalizado", 'https://api-la-comanda-1.onrender.com/notify')
+      this.push.sendNotification(token, "hola", "mensaje personalizado desde ts", 'https://api-la-comanda.onrender.com/notify')
         .subscribe({
           next: res => this.imprimirToast('Notificación enviada:'),
-          error: err => this.imprimirToast('Error al enviar notificación:')
+          error: err => this.imprimirToast(err.message)
         });
 
     } catch (error: any) {
