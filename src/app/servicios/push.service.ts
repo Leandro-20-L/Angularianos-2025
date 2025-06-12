@@ -62,13 +62,19 @@ export class PushService implements OnInit {
       .single()
 
     if (error) throw error;
-    return data;
+    return data.token_push;
   }
 
   sendNotification(token: any, title: string, body: string, url: string) {
-    const payload = { token, title, body };
-    return this.http.post(url, payload);
+    if (!token) {
+      throw new Error("token vacio")
+    }
+    
+    const payload = { token: token, title: title, body: body };
+    return this.http.post(url, payload)
+
   }
+
 
 }
 
