@@ -18,8 +18,8 @@ export class HomePage implements OnInit {
   async ngOnInit() {
     try {
       let uid = await this.acceso.getUserUid();
-      let token = await this.push.getToken(uid!)
-      
+      let token = await this.push.getToken(uid!);
+
       this.push.initializePushNotifications(uid!);
       this.push.sendNotification(token, "hola", "mensaje personalizado desde ts", 'https://api-la-comanda.onrender.com/notify')
         .subscribe({
