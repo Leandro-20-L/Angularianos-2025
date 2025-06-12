@@ -92,7 +92,7 @@
 | :---------------- | :----- | :---- | :-------- |
 | Bautista Escalante    | 3/6  | 3/6  | `main` |
 
-### 2 
+### 2 y 3
 #### Listado clientes pendientes de aprobación
 
 | Encargado/s       | Inicio | Final | Rama       |
