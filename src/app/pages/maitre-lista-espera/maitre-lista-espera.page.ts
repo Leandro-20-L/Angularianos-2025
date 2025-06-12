@@ -31,7 +31,7 @@ export class MaitreListaEsperaPage implements OnInit {
       .from('usuarios')
       .select('*')
       .eq('role', 'cliente')
-      .eq('aprobado', true)
+      .eq('aprobado', 'aprobado')
       .eq('situacion', 'esperando_mesa')
       .is('mesa_asignada', null);
 
@@ -69,7 +69,7 @@ export class MaitreListaEsperaPage implements OnInit {
               .from('usuarios')
               .update({
                 mesa_asignada: mesa.numero,
-                situacion: 'sentado',
+                situacion: 'mesaAsignado',
               })
               .eq('uid', cliente.uid);
 

@@ -59,7 +59,7 @@ async obtenerPendientes(): Promise<any[]> {
   async aprobarUsuario(uid: string): Promise<void> {
     const { error } = await this.supabase.client
       .from('usuarios')
-      .update({ aprobado: 'aprobadoz' })
+      .update({ aprobado: 'aprobado' })
       .eq('uid', uid);
 
     if (error) throw new Error(error.message);
@@ -74,24 +74,34 @@ async obtenerPendientes(): Promise<any[]> {
     if (error) throw new Error(error.message);
   }
 
-  async marcarComoEsperando(qrMesa: string): Promise<void> {
+  async marcarComoEsperando(qrContenido: string): Promise<void> {
   
-  const uid = await this.authService.getUserUid();
+    const uid = await this.authService.getUserUid();
 
-  // (Opcional) Verificás que el QR sea válido contra la tabla de mesas
-  const { data: mesa, error: mesaError } = await this.supabase.client
-    .from('mesas')
-    .select('*')
-    .eq('qr', qrMesa)
-    .single();
+    if (qrContenido === 'lista-espera') {
+      // QR general de entrada
+      const { error } = await this.supabase.client
+        .from('usuarios')
+        .update({ situacion: 'esperando_mesa', mesa_asignada: null }) // mesa_asignada null por si ya tenía una
+        .eq('uid', uid);
 
-  if (mesaError || !mesa) throw new Error('QR inválido o mesa inexistente');
+      if (error) throw error;
+    } else {
+      // Si no es el QR general, buscar una mesa específica
+      const { data: mesa, error: mesaError } = await this.supabase.client
+        .from('mesas')
+        .select('*')
+        .eq('qr', qrContenido)
+        .single();
 
-  const { error } = await this.supabase.client
-    .from('usuarios')
-    .update({ situacion: 'esperando_mesa' })
-    .eq('uid', uid);
+      if (mesaError || !mesa) throw new Error('QR inválido o mesa inexistente');
 
-  if (error) throw error;
+      const { error } = await this.supabase.client
+        .from('usuarios')
+        .update({ situacion: 'esperando_mesa', mesa_asignada: mesa.id })
+        .eq('uid', uid);
+
+      if (error) throw error;
+  }
 }
 }
