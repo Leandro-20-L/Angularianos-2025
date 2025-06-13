@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { IonContent, IonHeader, IonTitle, IonToolbar, IonCard, IonCardHeader, IonCardContent, IonCardTitle, IonButton } from '@ionic/angular/standalone';
+import { IonContent, IonHeader, IonTitle, IonToolbar, IonCard, IonCardHeader, IonCardContent, IonCardTitle, IonButton,IonFabButton,IonFab } from '@ionic/angular/standalone';
 import { QrService } from 'src/app/servicios/qr.service';
 import { Router } from '@angular/router';
 import { AlertController } from '@ionic/angular';
@@ -15,13 +15,14 @@ import { AuthService } from 'src/app/servicios/auth.service';
   templateUrl: './mesa.page.html',
   styleUrls: ['./mesa.page.scss'],
   standalone: true,
-  imports: [CommonModule, FormsModule, IonCard, IonCardHeader, IonCardContent, IonCardTitle, IonButton]
+  imports: [CommonModule, FormsModule, IonCard, IonCardHeader, IonCardContent, IonCardTitle, IonButton,IonFabButton,IonFab]
 })
 export class MesaPage implements OnInit {
 
   numeroMesaAsignada: number | null = null;
   qrCorrecto: string | null = null;
   id: any = "";
+  escaneando: boolean = false;
 
   constructor(private auth: AuthService, private consultaService: ConsultaService, private push: PushService, private alert: AlertController, private qrService: QrService, private router: Router, private usuarioService: UsuarioService) { }
 
@@ -40,8 +41,11 @@ export class MesaPage implements OnInit {
   }
 
   async escanearQR() {
+    this.escaneando= true;
     try {
       const resultado = await this.qrService.scan();
+      console.log('QR escaneado:', resultado);
+      console.log('QR correcto:', this.qrCorrecto);
 
       if (resultado === this.qrCorrecto) {
         await this.qrService.cancelarEscaneo();
@@ -99,5 +103,8 @@ export class MesaPage implements OnInit {
     });
     await alert.present();
   }
-
+  async signOut() {
+    await this.auth.logOut();
+    this.router.navigate(["/login"])
+  }
 }

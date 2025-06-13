@@ -1,5 +1,5 @@
 <ng-container *ngIf="numeroMesaAsignada !== null; else sinMesa">
-  <ion-card>
+  <ion-card [class.fondoTransparente]="escaneando">
     <ion-card-header>
       <ion-card-title>Mesa asignada</ion-card-title>
     </ion-card-header>
@@ -12,7 +12,13 @@
 </ng-container>
 
 <ng-template #sinMesa>
-  <ion-card>
+  <ion-card [class.fondoTransparente]="escaneando">
     <ion-card-content>No tenés una mesa asignada.</ion-card-content>
   </ion-card>
 </ng-template>
+
+ <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+    <ion-fab-button (click)="signOut()" class="salir">
+      <img src="assets/iconos/cerrar.svg" class="img-responsive" />
+    </ion-fab-button>
+  </ion-fab>

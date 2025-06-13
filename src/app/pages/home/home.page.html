@@ -6,12 +6,13 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true" class="fondo">
+<ion-content [fullscreen]="true" class="fondo" [class.fondoTransparente]="escaneando">
 
-  
-  <div class="formulario">
+   <div class="formulario">
+    <h2 class="subtitulo">Escanear QR para entrar en lista de espera</h2>
+
     <ion-button expand="block" (click)="escanearQrYEntrarLista()" class="login-btn">
-      Escanear QR para entrar en lista de espera
+      <img src="assets/imgs/consultas_mesa.png" alt="">
     </ion-button>
   </div>
 

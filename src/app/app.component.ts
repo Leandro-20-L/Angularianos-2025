@@ -1,6 +1,8 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { IonApp, IonRouterOutlet } from '@ionic/angular/standalone';
+import { StatusBar, Style } from '@capacitor/status-bar';
+
 
 @Component({
   selector: 'app-root',
@@ -10,7 +12,16 @@ import { IonApp, IonRouterOutlet } from '@ionic/angular/standalone';
 export class AppComponent {
   showSplash = true;
 
-  constructor() { }
+  constructor() {
+    this.initializeApp();
+   }
+
+  private async initializeApp() {
+    
+     StatusBar.setOverlaysWebView({ overlay: false });
+    
+     StatusBar.setStyle({ style: Style.Default });
+  }
 
   ngOnInit() {
     setTimeout(() => {

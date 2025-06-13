@@ -14,6 +14,9 @@ import { UsuarioService } from 'src/app/servicios/usuario.service';
   imports: [IonicModule],
 })
 export class HomePage implements OnInit {
+
+  escaneando: boolean = false;
+
   constructor(public toastController: ToastController, private route: Router, private auth: AuthService, private push: PushService, private acceso: AuthService,private qrService: QrService,private usuarioService: UsuarioService,){}
   async ionViewWillEnter() {
   const situacion = await this.usuarioService.obtenerSituacionUsuario();
@@ -45,6 +48,7 @@ export class HomePage implements OnInit {
   }
 
   async escanearQrYEntrarLista() {
+    this.escaneando = true;
     try {
       const qrContenido = await this.qrService.scan();
       console.log("Contenido del QR:", qrContenido);

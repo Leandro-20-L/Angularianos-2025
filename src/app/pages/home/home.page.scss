@@ -42,3 +42,17 @@
   --background: #FAA307;
   background: #FAA307;
 }
+
+.fondoTransparente {
+  --background: transparent !important;
+  background: transparent !important;
+}
+
+.subtitulo {
+  text-align: center;
+  color: black;
+  font-weight: bold;
+  font-size: 1.2rem;
+  margin-top: 10px;
+  font-family: sans-serif;
+}
