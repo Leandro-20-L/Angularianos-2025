@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { IonContent, IonHeader, IonTitle, IonToolbar, IonCard, IonCardHeader, IonCardContent, IonCardTitle, IonButton,IonFabButton,IonFab } from '@ionic/angular/standalone';
+import { IonContent, IonHeader, IonTitle, IonToolbar, IonCard, IonCardHeader, IonCardContent, IonCardTitle, IonButton, IonFabButton, IonFab } from '@ionic/angular/standalone';
 import { QrService } from 'src/app/servicios/qr.service';
 import { Router } from '@angular/router';
-import { AlertController } from '@ionic/angular';
+import { AlertController } from '@ionic/angular/standalone';
 import { UsuarioService } from 'src/app/servicios/usuario.service';
 import { PushService } from 'src/app/servicios/push.service';
 import { ConsultaService } from 'src/app/servicios/consulta.service';
@@ -15,7 +15,7 @@ import { AuthService } from 'src/app/servicios/auth.service';
   templateUrl: './mesa.page.html',
   styleUrls: ['./mesa.page.scss'],
   standalone: true,
-  imports: [CommonModule, FormsModule, IonCard, IonCardHeader, IonCardContent, IonCardTitle, IonButton,IonFabButton,IonFab]
+  imports: [CommonModule, FormsModule, IonCard, IonCardHeader, IonCardContent, IonCardTitle, IonButton, IonFabButton, IonFab]
 })
 export class MesaPage implements OnInit {
 
@@ -41,7 +41,7 @@ export class MesaPage implements OnInit {
   }
 
   async escanearQR() {
-    this.escaneando= true;
+    this.escaneando = true;
     try {
       const resultado = await this.qrService.scan();
       console.log('QR escaneado:', resultado);
@@ -78,10 +78,12 @@ export class MesaPage implements OnInit {
         {
           text: 'enviar',
           handler: async (data: any) => {
+            data = data.consulta;
+            console.log('Datos ingresados:', data);
             if (data.trim().length > 100) {
               throw new Error("consulta muy larga");
             }
-            if(data.trim().length == 0){
+            if (data.trim().length == 0) {
               throw new Error("mensaje vacio");
             }
 
@@ -89,14 +91,13 @@ export class MesaPage implements OnInit {
             this.push.initializePushNotifications(mozo[0].uid!);
             let token = await this.push.getToken(mozo[0].uid!);
 
-            this.consultaService.enviarConsulta(this.id, data.trim(), this.numeroMesaAsignada!, mozo[0].id)
+            await this.consultaService.enviarConsulta(this.id, data.trim(), this.numeroMesaAsignada!, mozo[0].id)
 
-            await this.push.sendNotification(token, "nueva consulta", data.trim(), 'https://api-la-comanda.onrender.com/notify')
+            this.push.sendNotification(token, "nueva consulta", data.trim(), 'https://api-la-comanda.onrender.com/notify')
               .subscribe({
                 next: res => this.alert.create({ header: 'consulta enviada' }),
                 error: err => this.alert.create({ header: `${err.message}` })
               });
-            console.log('Datos ingresados:', data);
           }
         }
       ]

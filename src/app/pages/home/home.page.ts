@@ -6,25 +6,26 @@ import { Router } from '@angular/router';
 import { ToastController } from '@ionic/angular/standalone';
 import { QrService } from 'src/app/servicios/qr.service';
 import { UsuarioService } from 'src/app/servicios/usuario.service';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-home',
   templateUrl: 'home.page.html',
   styleUrls: ['home.page.scss'],
-  imports: [IonicModule],
+  imports: [IonicModule, CommonModule],
 })
 export class HomePage implements OnInit {
 
   escaneando: boolean = false;
 
-  constructor(public toastController: ToastController, private route: Router, private auth: AuthService, private push: PushService, private acceso: AuthService,private qrService: QrService,private usuarioService: UsuarioService,){}
+  constructor(public toastController: ToastController, private route: Router, private auth: AuthService, private push: PushService, private acceso: AuthService, private qrService: QrService, private usuarioService: UsuarioService,) { }
   async ionViewWillEnter() {
-  const situacion = await this.usuarioService.obtenerSituacionUsuario();
+    const situacion = await this.usuarioService.obtenerSituacionUsuario();
 
-  if (situacion === 'mesaAsignado') {
-    this.route.navigate(['/mesa']);
+    if (situacion === 'mesaAsignado') {
+      this.route.navigate(['/mesa']);
+    }
   }
-}
   async ngOnInit() {
     try {
       let uid = await this.acceso.getUserUid();
@@ -57,10 +58,15 @@ export class HomePage implements OnInit {
 
       this.imprimirToast('Te agregamos a la lista de espera');
     } catch (error) {
-      this.imprimirToast( 'Error al escanear');
+      this.imprimirToast('Error al escanear');
     } finally {
-      await this.qrService.cancelarEscaneo(); 
+      await this.cancelarEscaneo();
     }
+  }
+
+  async cancelarEscaneo() {
+    this.escaneando = false;
+    await this.qrService.cancelarEscaneo()
   }
 
   async imprimirToast(mensaje: string) {

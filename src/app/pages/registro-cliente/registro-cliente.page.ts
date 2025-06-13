@@ -7,6 +7,8 @@ import { UsuarioService } from 'src/app/servicios/usuario.service';
 import { AuthService } from 'src/app/servicios/auth.service';
 import { IonContent, IonTitle, IonButton, IonInput, ToastController, IonFabButton, IonFab } from '@ionic/angular/standalone';
 import { QrService } from 'src/app/servicios/qr.service';
+import { Router } from '@angular/router';
+import { PushService } from 'src/app/servicios/push.service';
 
 @Component({
   selector: 'app-registro-cliente',
@@ -29,7 +31,10 @@ export class RegistroClientePage implements OnInit {
   mensajeError: string = "";
   dniData: string | null = null;
 
-  constructor(private supabase: SupabaseService,
+  constructor(
+    private supabase: SupabaseService,
+    private push: PushService,
+    private route: Router,
     private usuario: UsuarioService,
     public toastController: ToastController,
     private authService: AuthService,
@@ -55,56 +60,73 @@ export class RegistroClientePage implements OnInit {
     this.ruta = `${this.nombre}_${Date.now()}.jpg`;
   }
 
-async registrar() {
-  if (!this.validarDatos()) {
-    return;
+  async registrar() {
+    if (!this.validarDatos()) {
+      return;
+    }
+
+    try {
+      let user;
+      let correoFinal = this.correo;
+      let claveFinal = this.clave;
+
+      if (this.tipo === "anonimo") {
+        correoFinal = `anonimo_${Date.now()}@anonimo.com`;
+        claveFinal = "123456";
+      }
+
+      user = await this.authService.signUp(correoFinal, claveFinal);
+      const uid = user;
+      const urlFoto = await this.usuario.subirFoto(this.ruta, this.foto);
+
+      if (this.tipo === "identificado") {
+        await this.usuario.registrarUsuario({
+          uid,
+          nombre: this.nombre,
+          apellido: this.apellido,
+          dni: this.dni,
+          correo: this.correo,
+          foto: urlFoto,
+          role: "cliente",
+          aprobado: "pendiente"
+        });
+        this.route.navigate(['/login']);
+      }
+
+      if (this.tipo === "anonimo") {
+        await this.usuario.registrarUsuario({
+          uid,
+          nombre: this.nombre,
+          correo: correoFinal,
+          foto: urlFoto,
+          aprobado: "aprobado",
+          role: "anonimo"
+        });
+        this.route.navigate(['/home']);
+
+        let admin = await this.usuario.obtenerUsuarioPorRol("dueno");
+        let tokenAdmin = await this.push.getToken(admin[0].uid!);
+        let supervisor = await this.usuario.obtenerUsuarioPorRol("supervisor");
+        let tokenSupervisor = await this.push.getToken(supervisor[0].uid!);
+
+        this.push.initializePushNotifications(admin[0].uid!);
+        this.push.sendNotification(tokenAdmin, "angularianos", "hay nuevos usuarios a aprobar", 'https://api-la-comanda.onrender.com/notify')
+        
+        this.push.initializePushNotifications(supervisor[0].uid!);
+        this.push.sendNotification(tokenSupervisor, "angularianos", "hay nuevos usuarios a aprobar", 'https://api-la-comanda.onrender.com/notify')
+          .subscribe({
+            next: res => this.imprimirToast('Notificación enviada:'),
+            error: err => this.imprimirToast(err.message)
+          });
+      }
+
+      this.imprimirToast("Registro exitoso.");
+
+    } catch (error: any) {
+      console.error("ERROR REGISTRO:", error);
+      this.mensajeError = error.message;
+    }
   }
-
-  try {
-  let user;
-  let correoFinal = this.correo;
-  let claveFinal = this.clave;
-
-  if (this.tipo === "anonimo") {
-    correoFinal = `anonimo_${Date.now()}@anonimo.com`;
-    claveFinal = "123456";
-  }
-
-  user = await this.authService.signUp(correoFinal, claveFinal);
-  const uid = user;
-  const urlFoto = await this.usuario.subirFoto(this.ruta, this.foto);
-
-  if (this.tipo === "identificado") {
-    await this.usuario.registrarUsuario({
-      uid,
-      nombre: this.nombre,
-      apellido: this.apellido,
-      dni: this.dni,
-      correo: this.correo,
-      foto: urlFoto,
-      role: "cliente",
-      aprobado: "pendiente"
-    });
-  }
-
-  if (this.tipo === "anonimo") {
-    await this.usuario.registrarUsuario({
-      uid,
-      nombre: this.nombre,
-      correo: correoFinal,
-      foto: urlFoto,
-      aprobado: "aprobado",
-      role: "anonimo"
-    });
-  }
-
-  this.imprimirToast("Registro exitoso.");
-
-} catch (error: any) {
-  console.error("ERROR REGISTRO:", error);
-  this.mensajeError = error.message;
-}
-}
 
 
   validarDatos(): boolean {
@@ -178,7 +200,7 @@ async registrar() {
       const apellido = datos[1];
       const nombres = datos[2];
       this.dni = datos[4];
-  
+
       this.apellido = apellido.trim();
       this.nombre = nombres.trim();
       await this.cancelarEscaneo()

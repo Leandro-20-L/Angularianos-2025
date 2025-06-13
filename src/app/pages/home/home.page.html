@@ -6,7 +6,7 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true" class="fondo" [class.fondoTransparente]="escaneando">
+<ion-content *ngIf="!escaneando"  [fullscreen]="true" class="fondo">
 
    <div class="formulario">
     <h2 class="subtitulo">Escanear QR para entrar en lista de espera</h2>
@@ -19,6 +19,16 @@
   <ion-fab vertical="bottom" horizontal="end" slot="fixed">
     <ion-fab-button (click)="signOut()" class="salir">
       <img src="assets/iconos/cerrar.svg" class="img-responsive" />
+    </ion-fab-button>
+  </ion-fab>
+
+</ion-content>
+
+<ion-content *ngIf="escaneando" class="fondoTransparente">
+
+  <ion-fab vertical="bottom" horizontal="end">
+    <ion-fab-button (click)="cancelarEscaneo()" class="salir">
+      <img src="assets/iconos/atras.svg" class="salir" />
     </ion-fab-button>
   </ion-fab>
 
