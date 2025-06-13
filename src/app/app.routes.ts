@@ -25,10 +25,17 @@ export const routes: Routes = [
   {
     path: 'maitre-lista-espera',
     loadComponent: () => import('./pages/maitre-lista-espera/maitre-lista-espera.page').then( m => m.MaitreListaEsperaPage)
-  },  {
+  },
+  {
     path: 'mesa',
     loadComponent: () => import('./pages/mesa/mesa.page').then( m => m.MesaPage)
+  },
+  {
+    path: 'menu',
+    loadComponent: () => import('./pages/menu/menu.component').then( m => m.MenuComponent)
+  },
+  {
+    path:'**',
+    redirectTo: 'login'
   }
-
-
 ];

@@ -8,7 +8,7 @@ import { AuthService } from './auth.service';
 })
 export class UsuarioService {
 
-  constructor(private supabase: SupabaseService,private authService: AuthService) { }
+  constructor(private supabase: SupabaseService, private authService: AuthService) { }
 
   async registrarUsuario(usuario: any) {
     console.log("Insertando usuario:", usuario);
@@ -21,9 +21,9 @@ export class UsuarioService {
 
   async subirFoto(ruta: string, foto: Blob): Promise<string> {
     const session = await this.supabase.client.auth.getSession();
-      console.log("Sesión activa:", session);
-      console.log("Ruta:", ruta);
-      console.log("Foto (Blob):", foto);
+    console.log("Sesión activa:", session);
+    console.log("Ruta:", ruta);
+    console.log("Foto (Blob):", foto);
 
     const { error } = await this.supabase.client.storage
       .from("usuarios")
@@ -35,17 +35,17 @@ export class UsuarioService {
   }
 
   async obtenerUsuarioPorUID(uid: string): Promise<any> {
-  const { data, error } = await this.supabase.client
-    .from("usuarios")
-    .select("*")
-    .eq("uid", uid)
-    .single();
+    const { data, error } = await this.supabase.client
+      .from("usuarios")
+      .select("*")
+      .eq("uid", uid)
+      .single();
 
-  if (error) throw error;
-  return data;
-}
+    if (error) throw error;
+    return data;
+  }
 
-async obtenerPendientes(): Promise<any[]> {
+  async obtenerPendientes(): Promise<any[]> {
     const { data, error } = await this.supabase.client
       .from('usuarios')
       .select('*')
@@ -75,7 +75,7 @@ async obtenerPendientes(): Promise<any[]> {
   }
 
   async marcarComoEsperando(qrContenido: string): Promise<void> {
-  
+
     const uid = await this.authService.getUserUid();
 
     if (qrContenido === 'lista-espera') {
@@ -102,47 +102,57 @@ async obtenerPendientes(): Promise<any[]> {
         .eq('uid', uid);
 
       if (error) throw error;
+    }
   }
-}
 
-async obtenerMesaAsignada(): Promise<{ numero: number, qr: string } | null> {
-  const uid = await this.authService.getUserUid();
+  async obtenerMesaAsignada(): Promise<{ numero: number, qr: string } | null> {
+    const uid = await this.authService.getUserUid();
 
-  // Obtener número de mesa asignada
-  const { data: user, error: errorUser } = await this.supabase.client
-    .from('usuarios')
-    .select('mesa_asignada')
-    .eq('uid', uid)
-    .single();
+    // Obtener número de mesa asignada
+    const { data: user, error: errorUser } = await this.supabase.client
+      .from('usuarios')
+      .select('mesa_asignada')
+      .eq('uid', uid)
+      .single();
 
-  if (errorUser || !user?.mesa_asignada) return null;
+    if (errorUser || !user?.mesa_asignada) return null;
 
-  // Buscar mesa con ese número
-  const { data: mesa, error: errorMesa } = await this.supabase.client
-    .from('mesas')
-    .select('qr, numero')
-    .eq('numero', user.mesa_asignada)
-    .single();
+    // Buscar mesa con ese número
+    const { data: mesa, error: errorMesa } = await this.supabase.client
+      .from('mesas')
+      .select('qr, numero')
+      .eq('numero', user.mesa_asignada)
+      .single();
 
-  if (errorMesa || !mesa) return null;
+    if (errorMesa || !mesa) return null;
 
-  return {
-    numero: mesa.numero,
-    qr: mesa.qr
-  };
-}
+    return {
+      numero: mesa.numero,
+      qr: mesa.qr
+    };
+  }
 
-async obtenerSituacionUsuario(): Promise<string | null> {
-  const uid = await this.authService.getUserUid();
+  async obtenerSituacionUsuario(): Promise<string | null> {
+    const uid = await this.authService.getUserUid();
 
-  const { data, error } = await this.supabase.client
-    .from('usuarios')
-    .select('situacion')
-    .eq('uid', uid)
-    .single();
+    const { data, error } = await this.supabase.client
+      .from('usuarios')
+      .select('situacion')
+      .eq('uid', uid)
+      .single();
 
-  if (error || !data?.situacion) return null;
+    if (error || !data?.situacion) return null;
 
-  return data.situacion;
-}
+    return data.situacion;
+  }
+
+  async obtenerUsuarioPorRol(rol: string) {
+    const { error, data } = await this.supabase.client
+      .from("usuarios")
+      .select("*")
+      .eq("role", rol)
+
+    if (error) throw error;
+    return data;
+  }
 }

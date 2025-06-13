@@ -1,0 +1,60 @@
+ion-content.fondo {
+    --background: linear-gradient(to bottom, #6A040F, #9D0208);
+}
+
+.foto {
+    width: 100px;
+    height: auto;
+    border-radius: 10%;
+}
+
+.titulo {
+    color: #FFBA08;
+    font-family: "Amoresa";
+    text-align: center;
+    font-size: 100px;
+    margin-top: 20px;
+}
+
+h2 {
+    margin: 25px 0 10px;
+    text-align: center;
+    font-size: 2rem;
+    color: white;
+    font-weight: 600;
+    border-bottom: 2px solid #ccc;
+    padding-bottom: 5px;
+}
+
+ion-card {
+    margin: 15px auto;
+    max-width: 90%;
+    border-radius: 15px;
+    overflow: hidden;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+    background: #FFBA08;
+    padding: 10px;
+}
+
+.foto {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    border-radius: 10px;
+}
+
+ion-card p {
+    margin: 8px 0;
+    font-size: 1.5rem;
+    color: white;
+    font-family: 'Arial', sans-serif;
+}
+
+ion-card p:last-child {
+
+    font-weight: bold;
+    color: #ffffff;
+    text-align: right;
+    border-top: 1px dashed #ccc;
+    padding-top: 5px;
+}
