@@ -98,3 +98,29 @@
 | Encargado/s       | Inicio | Final | Rama       |
 | :---------------- | :----- | :---- | :--------- |
 | Leandro Escobar | 4/6 | 5/6  |  `main` |
+
+#### Lógica de mandado de correo electrónico
+
+| Encargado/s       | Inicio | Final | Rama       |
+| :---------------- | :----- | :---- | :--------- |
+| Leandro Escobar | 9/6 | 9/6  |  `main` |
+
+#### Notificaciones push  
+
+| Encargado/s       | Inicio | Final | Rama       |
+| :---------------- | :----- | :---- | :--------- |
+| Bautista Escalante | 10/6 | 10/6  |  `main` |
+
+### 4)
+#### funcionalidad punto 4
+
+| Encargado/s       | Inicio | Final | Rama       |
+| :---------------- | :----- | :---- | :--------- |
+| Bautista Escalante, Leandro Escobar | 11/6 | 12/6  |  `main` |
+
+### 5)
+#### funcionalidad punto 5
+
+| Encargado/s       | Inicio | Final | Rama       |
+| :---------------- | :----- | :---- | :--------- |
+| Leandro Escobar | 12/6 | 13/6  |  `main` |
