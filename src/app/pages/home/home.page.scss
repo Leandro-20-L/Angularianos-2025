@@ -20,17 +20,42 @@
   align-items: center;
   height: 100%;
   padding: 20px;
-  gap: 20px;
+  gap: 30px;
+}
+
+.subtitulo {
+  text-align: center;
+  color: #ffffff;
+  font-weight: bold;
+  font-size: 1.5rem;
+  line-height: 1.6;
+  font-family: 'Amoresa', sans-serif;
+  text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.3);
+  padding: 0 20px;
 }
 
 .login-btn {
+  width: 80%;
+  max-width: 400px;
+  height: auto;
+  aspect-ratio: 1 / 1; 
   --background: #E85D04;
   --color: black;
   --border-radius: 30px;
   font-weight: bold;
   font-size: 1rem;
-  max-width: 320px;
   transition: 0.3s ease-in-out;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  padding: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.login-btn img {
+  max-width: 60%;
+  max-height: 60%;
+  object-fit: contain;
 }
 
 .login-btn:hover {
@@ -46,13 +71,4 @@
 .fondoTransparente {
   --background: transparent !important;
   background: transparent !important;
-}
-
-.subtitulo {
-  text-align: center;
-  color: black;
-  font-weight: bold;
-  font-size: 1.2rem;
-  margin-top: 10px;
-  font-family: sans-serif;
 }

@@ -17,6 +17,7 @@ import { CommonModule } from '@angular/common';
 export class HomePage implements OnInit {
 
   escaneando: boolean = false;
+  
 
   constructor(public toastController: ToastController, private route: Router, private auth: AuthService, private push: PushService, private acceso: AuthService, private qrService: QrService, private usuarioService: UsuarioService,) { }
   async ionViewWillEnter() {

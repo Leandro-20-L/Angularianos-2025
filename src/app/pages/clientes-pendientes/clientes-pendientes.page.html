@@ -5,6 +5,8 @@
 </ion-header>
 
 <ion-content *ngIf="!cargando; else loading">
+  
+  <div class="img-fondo" [ngStyle]="{'background-image': 'url(assets/imgs/fondo-alimentario.avif)'}"></div>
   <ion-list *ngIf="clientesPendientes.length > 0; else sinClientes">
     <ion-item *ngFor="let cliente of clientesPendientes">
       <ion-avatar slot="start">
