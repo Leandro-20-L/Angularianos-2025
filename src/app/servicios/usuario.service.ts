@@ -134,7 +134,11 @@ export class UsuarioService {
 
   async obtenerSituacionUsuario(): Promise<string | null> {
     const uid = await this.authService.getUserUid();
-
+    
+  if (!uid) {
+    console.error("UID inválido, no se puede obtener la situación del usuario.");
+    return null;
+  }
     const { data, error } = await this.supabase.client
       .from('usuarios')
       .select('situacion')
