@@ -15,7 +15,7 @@ import { AuthService } from 'src/app/servicios/auth.service';
   templateUrl: './mesa.page.html',
   styleUrls: ['./mesa.page.scss'],
   standalone: true,
-  imports: [CommonModule, FormsModule, IonCard, IonCardHeader, IonCardContent, IonCardTitle, IonButton, IonFabButton, IonFab,IonContent]
+  imports: [CommonModule, FormsModule,IonHeader,IonTitle,IonToolbar, IonCard, IonCardHeader, IonCardContent, IonCardTitle, IonButton, IonFabButton, IonFab,IonContent]
 })
 export class MesaPage implements OnInit {
 

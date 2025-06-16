@@ -1,7 +1,12 @@
+
 <ion-content>
+ 
   <div class="contenedor-principal">
     <ng-container *ngIf="numeroMesaAsignada !== null; else sinMesa">
       <ion-card [class.fondoTransparente]="escaneando">
+         <div class="img-card">
+          <img src="assets/imgs/alta_pedido.png" alt="">
+        </div>
         <ion-card-header>
           <ion-card-title>Mesa asignada</ion-card-title>
         </ion-card-header>
