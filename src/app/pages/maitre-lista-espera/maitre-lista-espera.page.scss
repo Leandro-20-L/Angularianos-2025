@@ -1,0 +1,85 @@
+.header-custom {
+  --background: #6A040F;
+  color: white;
+}
+
+.titulo-lista {
+  font-family: 'Amoresa', sans-serif;
+  text-align: center;
+  color: #FFBA08;
+  font-size: 24px;
+}
+
+.contenido-lista {
+  background: linear-gradient(to bottom, #6A040F, #E85D04);
+  padding: 1rem;
+  min-height: 100%;
+}
+
+.lista-clientes {
+  margin-top: 1rem;
+}
+
+.item-cliente {
+  --background: #FAA307; /* Aplica a ion-item */
+  background-color: #FAA307 !important; /* Asegura override */
+  border-radius: 12px;
+  margin-bottom: 10px;
+  color: #6A040F;
+  --inner-padding-end: 10px;
+  --padding-start: 16px;
+}
+
+.nombre-cliente {
+  font-weight: bold;
+  font-size: 18px;
+  margin: 0;
+}
+
+.dni-cliente {
+  font-size: 14px;
+  color: #6A040F;
+  margin: 0;
+}
+
+.boton-asignar {
+  font-weight: bold;
+  --background: #E85D04;
+  --color: #000;
+  border-radius: 8px;
+}
+
+.sin-clientes {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 80%;
+  text-align: center;
+}
+
+.sin-clientes img {
+  width: 60%;
+  max-width: 300px;
+  margin-bottom: 1rem;
+  opacity: 0.6;
+}
+
+.relleno-imagen {
+  display: flex;
+  justify-content: center;
+  margin-top: 2rem;
+}
+
+.relleno-imagen img {
+  width: 50%;
+  max-width: 250px;
+  opacity: 0.4;
+}
+
+:host {
+  ion-content {
+    --background: none;
+    background: linear-gradient(to bottom, #6A040F, #E85D04) !important;
+  }
+}
