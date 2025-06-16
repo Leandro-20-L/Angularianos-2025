@@ -15,17 +15,18 @@
         Asignar Mesa
       </ion-button>
     </ion-item>
-    <div *ngIf="clientes.length < 4" class="relleno-imagen">
-      
-    </div>
   </ion-list>
 
   <ng-template #sinClientes>
     <div class="sin-clientes">
-      <img src="assets/vacio.svg" alt="sin clientes" />
       <ion-text color="medium">
         <p>No hay clientes en espera actualmente.</p>
       </ion-text>
     </div>
   </ng-template>
+
+  <!-- Imagen decorativa al fondo SIEMPRE visible -->
+  <div class="fondo-imagen-decorativa">
+    <img src="assets/imgs/fondo-alimentario.avif" alt="decoración" />
+  </div>
 </ion-content>

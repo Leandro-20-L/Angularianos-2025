@@ -1,24 +1,28 @@
-<ng-container *ngIf="numeroMesaAsignada !== null; else sinMesa">
-  <ion-card [class.fondoTransparente]="escaneando">
-    <ion-card-header>
-      <ion-card-title>Mesa asignada</ion-card-title>
-    </ion-card-header>
-    <ion-card-content>
-      <p><strong>Mesa N°:</strong> {{ numeroMesaAsignada }}</p>
-      <ion-button expand="block" (click)="escanearQR()">Escanear QR de mi mesa</ion-button>
-      <ion-button expand="block" (click)="preguntar()">preguntar al Mozo</ion-button>
-    </ion-card-content>
-  </ion-card>
-</ng-container>
+<ion-content>
+  <div class="contenedor-principal">
+    <ng-container *ngIf="numeroMesaAsignada !== null; else sinMesa">
+      <ion-card [class.fondoTransparente]="escaneando">
+        <ion-card-header>
+          <ion-card-title>Mesa asignada</ion-card-title>
+        </ion-card-header>
+        <ion-card-content>
+          <p><strong>Mesa N°:</strong> {{ numeroMesaAsignada }}</p>
+          <ion-button expand="block" (click)="escanearQR()">Escanear QR de mi mesa</ion-button>
+          <ion-button expand="block" (click)="preguntar()">preguntar al Mozo</ion-button>
+        </ion-card-content>
+      </ion-card>
+    </ng-container>
 
-<ng-template #sinMesa>
-  <ion-card [class.fondoTransparente]="escaneando">
-    <ion-card-content>No tenés una mesa asignada.</ion-card-content>
-  </ion-card>
-</ng-template>
+    <ng-template #sinMesa>
+      <ion-card [class.fondoTransparente]="escaneando">
+        <ion-card-content>No tenés una mesa asignada.</ion-card-content>
+      </ion-card>
+    </ng-template>
+  </div>
 
- <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+  <ion-fab vertical="bottom" horizontal="end" slot="fixed">
     <ion-fab-button (click)="signOut()" class="salir">
       <img src="assets/iconos/cerrar.svg" class="img-responsive" />
     </ion-fab-button>
   </ion-fab>
+</ion-content>

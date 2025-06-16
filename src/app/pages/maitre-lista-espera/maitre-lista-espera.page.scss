@@ -59,10 +59,11 @@
 }
 
 .sin-clientes img {
-  width: 60%;
+  width: 80%;
   max-width: 300px;
   margin-bottom: 1rem;
   opacity: 0.6;
+  border-radius: 12px;
 }
 
 .relleno-imagen {
@@ -82,4 +83,36 @@
     --background: none;
     background: linear-gradient(to bottom, #6A040F, #E85D04) !important;
   }
+}
+
+.fondo-imagen-decorativa {
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  pointer-events: none; /* evita que bloquee clics */
+  z-index: 0;
+   height: 100%;
+}
+
+.fondo-imagen-decorativa img {
+  width: 100%;
+ // max-width: 280px;
+  //opacity: 0.3;
+  margin-bottom: 1rem;
+  border-radius: 12px;
+  height: 100%;
+}
+
+/* Asegurar que el contenido esté por delante */
+ion-list,
+.lista-clientes,
+.item-cliente,
+.boton-asignar {
+  position: relative;
+  z-index: 1;
+    background-color: transparent;
 }

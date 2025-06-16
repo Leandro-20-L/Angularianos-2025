@@ -2,3 +2,74 @@
   --background: transparent !important;
   background: transparent !important;
 }
+
+:host {
+  ion-content {
+    --background: none;
+    background: linear-gradient(to bottom, #6A040F, #E85D04) !important;
+  }
+}
+
+/* ✅ Centrar el card vertical y horizontal */
+.contenedor-principal {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  padding: 1rem;
+}
+
+/* Tarjeta */
+ion-card {
+  width: 100%;
+  max-width: 400px;
+  background: #FAA307 !important;
+  border-radius: 16px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  color: #6A040F;
+  z-index: 1;
+  padding-bottom: 1rem;
+}
+
+/* Título */
+ion-card-title {
+  font-family: 'Amoresa', sans-serif;
+  font-size: 26px;
+  color: #6A040F;
+  text-align: center;
+  margin-bottom: 0.5rem;
+}
+
+/* ✅ Aumentar fuente del número de mesa */
+ion-card-content p {
+  font-size: 20px;
+  font-weight: bold;
+  margin-bottom: 1rem;
+}
+
+/* Botones */
+ion-button {
+  --background: #FFBA08;
+  --color: #000;
+  --border-radius: 10px;
+  margin-top: 10px;
+  font-weight: bold;
+  text-transform: uppercase;
+}
+
+ion-button:hover {
+  --background: #E85D04;
+}
+
+/* Botón flotante de cerrar */
+ion-fab-button.salir {
+  --background: #FFBA08;
+  --color: #6A040F;
+  width: 60px;
+  height: 60px;
+}
+
+ion-fab-button.salir img {
+  width: 50px;
+  height: 50px;
+}

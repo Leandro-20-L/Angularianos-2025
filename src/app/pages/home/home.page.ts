@@ -17,16 +17,25 @@ import { CommonModule } from '@angular/common';
 export class HomePage implements OnInit {
 
   escaneando: boolean = false;
-  
+  cargando: boolean = true;
+  intervalId: any;
 
   constructor(public toastController: ToastController, private route: Router, private auth: AuthService, private push: PushService, private acceso: AuthService, private qrService: QrService, private usuarioService: UsuarioService,) { }
-  async ionViewWillEnter() {
-    const situacion = await this.usuarioService.obtenerSituacionUsuario();
-
-    if (situacion === 'mesaAsignado') {
-      this.route.navigate(['/mesa']);
-    }
+  async ngOnDestroy() {
+    clearInterval(this.intervalId); // 🔚 Limpia el intervalo al salir de la página
   }
+
+  verificarSituacionCada5Segundos() {
+    this.intervalId = setInterval(async () => {
+      const situacion = await this.usuarioService.obtenerSituacionUsuario();
+      if (situacion === 'mesaAsignado') {
+        clearInterval(this.intervalId);
+        this.route.navigate(['/mesa']);
+      }
+      this.cargando = false;
+    }, 5000);
+  }
+
   async ngOnInit() {
     try {
       let uid = await this.acceso.getUserUid();
@@ -42,6 +51,7 @@ export class HomePage implements OnInit {
     } catch (error: any) {
       console.log(error.message)
     }
+    this.verificarSituacionCada5Segundos();
   }
 
   async signOut() {
