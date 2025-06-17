@@ -1,13 +1,29 @@
-<ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-title>encuestas-previas</ion-title>
-  </ion-toolbar>
-</ion-header>
-
 <ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">encuestas-previas</ion-title>
-    </ion-toolbar>
-  </ion-header>
+  <ion-item>
+    <ion-label class="ion-text-center">
+      <p style="font-size: 20px;">¿Cómo calificarías la comida?</p>
+    </ion-label>
+  </ion-item>
+  <canvas id="comidaChart" height="300"></canvas>
+
+  <ion-item>
+    <ion-label class="ion-text-center">
+      <p style="font-size: 20px;">¿Cómo calificarías la atención al cliente?</p>
+    </ion-label>
+  </ion-item>
+  <canvas id="atencionChart" height="300"></canvas>
+
+  <ion-item>
+    <ion-label class="ion-text-center">
+      <p style="font-size: 20px;">¿Cómo calificarías la limpieza?</p>
+    </ion-label>
+  </ion-item>
+  <canvas id="limpiezaChart" height="300"></canvas>
+
+  <ion-item>
+    <ion-label class="ion-text-center">
+      <p style="font-size: 20px;">¿Cómo nos conociste?</p>
+    </ion-label>
+  </ion-item>
+  <canvas id="conocioChart" height="300"></canvas>
 </ion-content>

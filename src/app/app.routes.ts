@@ -34,10 +34,7 @@ export const routes: Routes = [
     path: 'menu',
     loadComponent: () => import('./pages/menu/menu.component').then( m => m.MenuComponent)
   },
-  {
-    path:'**',
-    redirectTo: 'login'
-  },  {
+   {
     path: 'lista-pedidos',
     loadComponent: () => import('./pages/lista-pedidos/lista-pedidos.page').then( m => m.ListaPedidosPage)
   },
@@ -48,6 +45,12 @@ export const routes: Routes = [
   {
     path: 'encuestas-previas',
     loadComponent: () => import('./pages/encuestas-previas/encuestas-previas.page').then( m => m.EncuestasPreviasPage)
-  }
+  },
+ 
+  {
+    path:'**',
+    redirectTo: 'login'
+  },
+ 
 
 ];
