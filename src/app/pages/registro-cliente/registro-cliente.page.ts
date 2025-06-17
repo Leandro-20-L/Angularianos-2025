@@ -61,72 +61,75 @@ export class RegistroClientePage implements OnInit {
   }
 
   async registrar() {
-    if (!this.validarDatos()) {
-      return;
-    }
-
-    try {
-      let user;
-      let correoFinal = this.correo;
-      let claveFinal = this.clave;
-
-      if (this.tipo === "anonimo") {
-        correoFinal = `anonimo_${Date.now()}@anonimo.com`;
-        claveFinal = "123456";
-      }
-
-      user = await this.authService.signUp(correoFinal, claveFinal);
-      const uid = user;
-      const urlFoto = await this.usuario.subirFoto(this.ruta, this.foto);
-
-      if (this.tipo === "identificado") {
-        await this.usuario.registrarUsuario({
-          uid,
-          nombre: this.nombre,
-          apellido: this.apellido,
-          dni: this.dni,
-          correo: this.correo,
-          foto: urlFoto,
-          role: "cliente",
-          aprobado: "pendiente"
-        });
-        this.route.navigate(['/login']);
-      }
-
-      if (this.tipo === "anonimo") {
-        await this.usuario.registrarUsuario({
-          uid,
-          nombre: this.nombre,
-          correo: correoFinal,
-          foto: urlFoto,
-          aprobado: "aprobado",
-          role: "anonimo"
-        });
-        this.route.navigate(['/home']);
-
-        let admin = await this.usuario.obtenerUsuarioPorRol("dueno");
-        let tokenAdmin = await this.push.getToken(admin[0].uid!);
-        let supervisor = await this.usuario.obtenerUsuarioPorRol("supervisor");
-        let tokenSupervisor = await this.push.getToken(supervisor[0].uid!);
-
-        this.push.initializePushNotifications(admin[0].uid!);
-        this.push.sendNotification(tokenAdmin, "angularianos", "hay nuevos usuarios a aprobar", 'https://api-la-comanda.onrender.com/notify')
-        
-        this.push.initializePushNotifications(supervisor[0].uid!);
-        this.push.sendNotification(tokenSupervisor, "angularianos", "hay nuevos usuarios a aprobar", 'https://api-la-comanda.onrender.com/notify')
-          .subscribe({
-            next: res => this.imprimirToast('Notificación enviada:'),
-            error: err => this.imprimirToast(err.message)
-          });
-      }
-
-      this.imprimirToast("Registro exitoso.");
-
-    } catch (error: any) {
-      console.error("ERROR REGISTRO:", error);
-      this.mensajeError = error.message;
-    }
+  if (!this.validarDatos()) {
+    return;
   }
+
+  try {
+    let user;
+    let correoFinal = this.correo;
+    let claveFinal = this.clave;
+
+    if (this.tipo === "anonimo") {
+      correoFinal = `anonimo_${Date.now()}@anonimo.com`;
+      claveFinal = "123456";
+    }
+
+    user = await this.authService.signUp(correoFinal, claveFinal);
+    const uid = user;
+
+    await this.push.initializePushNotifications(uid);
+
+    const urlFoto = await this.usuario.subirFoto(this.ruta, this.foto);
+
+    if (this.tipo === "identificado") {
+      await this.usuario.registrarUsuario({
+        uid,
+        nombre: this.nombre,
+        apellido: this.apellido,
+        dni: this.dni,
+        correo: this.correo,
+        foto: urlFoto,
+        role: "cliente",
+        aprobado: "pendiente"
+      });
+
+      this.route.navigate(['/login']);
+
+    } else if (this.tipo === "anonimo") {
+      await this.usuario.registrarUsuario({
+        uid,
+        nombre: this.nombre,
+        correo: correoFinal,
+        foto: urlFoto,
+        aprobado: "aprobado",
+        role: "anonimo"
+      });
+
+      this.route.navigate(['/home']);
+    }
+
+    let admin = await this.usuario.obtenerUsuarioPorRol("dueno");
+    let tokenAdmin = await this.push.getToken(admin[0].uid!);
+
+    let supervisor = await this.usuario.obtenerUsuarioPorRol("supervisor");
+    let tokenSupervisor = await this.push.getToken(supervisor[0].uid!);
+
+    await this.push.sendNotification(tokenAdmin, "angularianos", "hay nuevos usuarios a aprobar", 'https://api-la-comanda.onrender.com/notify').toPromise();
+
+    this.push.sendNotification(tokenSupervisor, "angularianos", "hay nuevos usuarios a aprobar", 'https://api-la-comanda.onrender.com/notify')
+      .subscribe({
+        next: res => this.imprimirToast('Notificación enviada:'),
+        error: err => this.imprimirToast(err.message)
+      });
+
+    this.imprimirToast("Registro exitoso.");
+
+  } catch (error: any) {
+    console.error("ERROR REGISTRO:", error);
+    this.mensajeError = error.message;
+  }
+}
 
 
   validarDatos(): boolean {

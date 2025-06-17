@@ -22,7 +22,7 @@ export class HomePage implements OnInit {
 
   constructor(public toastController: ToastController, private route: Router, private auth: AuthService, private push: PushService, private acceso: AuthService, private qrService: QrService, private usuarioService: UsuarioService,) { }
   async ngOnDestroy() {
-    clearInterval(this.intervalId); // 🔚 Limpia el intervalo al salir de la página
+    clearInterval(this.intervalId); 
   }
 
   verificarSituacionCada5Segundos() {
@@ -37,20 +37,7 @@ export class HomePage implements OnInit {
   }
 
   async ngOnInit() {
-    try {
-      let uid = await this.acceso.getUserUid();
-      let token = await this.push.getToken(uid!);
-
-      this.push.initializePushNotifications(uid!);
-      this.push.sendNotification(token, "hola", "mensaje personalizado desde ts", 'https://api-la-comanda.onrender.com/notify')
-        .subscribe({
-          next: res => this.imprimirToast('Notificación enviada:'),
-          error: err => this.imprimirToast(err.message)
-        });
-
-    } catch (error: any) {
-      console.log(error.message)
-    }
+    
     this.verificarSituacionCada5Segundos();
   }
 
@@ -60,20 +47,35 @@ export class HomePage implements OnInit {
   }
 
   async escanearQrYEntrarLista() {
-    this.escaneando = true;
-    try {
-      const qrContenido = await this.qrService.scan();
-      console.log("Contenido del QR:", qrContenido);
+  this.escaneando = true;
+  let uid = await this.acceso.getUserUid();
+  try {
+    const qrContenido = await this.qrService.scan();
+    console.log("Contenido del QR:", qrContenido);
 
-      await this.usuarioService.marcarComoEsperando(qrContenido as string);
+    await this.usuarioService.marcarComoEsperando(qrContenido as string);
 
-      this.imprimirToast('Te agregamos a la lista de espera');
-    } catch (error) {
-      this.imprimirToast('Error al escanear');
-    } finally {
-      await this.cancelarEscaneo();
-    }
+    await this.push.initializePushNotifications(uid!);
+
+    //  notificar al maitre
+    const maitre = await this.usuarioService.obtenerUsuarioPorRol("maitre");
+    const tokenMaitre = await this.push.getToken(maitre[0].uid!);
+
+    await this.push.sendNotification(
+      tokenMaitre,
+      "Cliente en espera",
+      "Hay un nuevo cliente esperando mesa",
+      'https://api-la-comanda.onrender.com/notify'
+    ).toPromise();
+
+    this.imprimirToast('Te agregamos a la lista de espera');
+
+  } catch (error) {
+    this.imprimirToast('Error al escanear');
+  } finally {
+    await this.cancelarEscaneo();
   }
+}
 
   async cancelarEscaneo() {
     this.escaneando = false;
