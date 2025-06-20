@@ -1,5 +1,5 @@
 
-<ion-content>
+<ion-content *ngIf="!escaneando"  [fullscreen]="true" class="fondo">
  
   <div class="contenedor-principal">
     <ng-container *ngIf="numeroMesaAsignada !== null; else sinMesa">
@@ -12,8 +12,10 @@
         </ion-card-header>
         <ion-card-content>
           <p><strong>Mesa N°:</strong> {{ numeroMesaAsignada }}</p>
+
           <ion-button expand="block" (click)="escanearQR()">Escanear QR de mi mesa</ion-button>
-          <ion-button expand="block" (click)="preguntar()">preguntar al Mozo</ion-button>
+          <ion-button expand="block" routerLink="/ConsultaMozo">preguntar al Mozo</ion-button>
+          
         </ion-card-content>
       </ion-card>
     </ng-container>
@@ -30,4 +32,14 @@
       <img src="assets/iconos/cerrar.svg" class="img-responsive" />
     </ion-fab-button>
   </ion-fab>
+</ion-content>
+
+<ion-content *ngIf="escaneando" class="fondoTransparente">
+
+  <ion-fab vertical="bottom" horizontal="end">
+    <ion-fab-button (click)="cancelarEscaneo()" class="salir">
+      <img src="assets/iconos/atras.svg" class="salir" />
+    </ion-fab-button>
+  </ion-fab>
+
 </ion-content>

@@ -1,0 +1,39 @@
+<ion-content class="fondo">
+
+  <ion-header>
+    <ion-button routerLink="/mesa" class="casa">
+      <img src="assets/iconos/volverAtras.svg" width="30px" class="flecha">
+      <span class="circulo">
+        <img *ngIf="perfil==='cliente'" src="assets/accesos_rapidos/mesero.png" class="perfil">
+      </span>
+    </ion-button>
+  </ion-header>
+
+  <ion-list style="background: transparent;">
+    <ion-item *ngFor="let m of mensajes()">
+      <ion-card *ngIf="m.user_id.uid !== id" class="mensaje">
+        <ion-card-content>
+          <p class="contenido"><strong>{{ m.content }}</strong></p>
+          <p class="fecha">{{m.created_at | date:'yy/mm/dd hh:mm'}}</p>
+        </ion-card-content>
+      </ion-card>
+
+      <ion-card *ngIf="m.user_id.uid === id" class="mensajePropio">
+        <ion-card-content>
+           <p class="contenido"><strong>{{ m.content }}</strong></p>
+          <p class="fecha">{{m.created_at | date:'yy/mm/dd hh:mm'}}</p>
+        </ion-card-content>
+      </ion-card>
+    </ion-item>
+  </ion-list>
+
+  <ion-footer style="position:fixed; bottom: 0px; width: 100%; background: transparent;">
+    <ion-item>
+      <ion-input [(ngModel)]="nuevoMensaje" id="inputMensaje" placeholder="Escribe tu mensaje..." fill="outline"
+        type="text"></ion-input>
+      <ion-button (click)="enviarMensaje(nuevoMensaje)" expand="block" color="success">
+        <img src="assets/iconos/enviar.svg" width="50px">
+      </ion-button>
+    </ion-item>
+  </ion-footer>
+</ion-content>

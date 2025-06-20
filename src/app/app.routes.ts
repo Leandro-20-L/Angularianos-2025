@@ -46,11 +46,8 @@ export const routes: Routes = [
     path: 'encuestas-previas',
     loadComponent: () => import('./pages/encuestas-previas/encuestas-previas.page').then( m => m.EncuestasPreviasPage)
   },
- 
   {
-    path:'**',
-    redirectTo: 'login'
-  },
- 
-
+    path: 'ConsultaMozo',
+    loadComponent: () => import('./pages/consulta-mozo/consulta-mozo.page').then( m => m.ConsultaMozoPage)
+  }
 ];

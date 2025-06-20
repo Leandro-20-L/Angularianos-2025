@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { IonContent, IonHeader, IonTitle, IonToolbar, IonCard, IonCardHeader, IonCardContent, IonCardTitle, IonButton, IonFabButton, IonFab } from '@ionic/angular/standalone';
 import { QrService } from 'src/app/servicios/qr.service';
-import { Router } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { AlertController } from '@ionic/angular/standalone';
 import { UsuarioService } from 'src/app/servicios/usuario.service';
 import { PushService } from 'src/app/servicios/push.service';
@@ -15,7 +15,7 @@ import { AuthService } from 'src/app/servicios/auth.service';
   templateUrl: './mesa.page.html',
   styleUrls: ['./mesa.page.scss'],
   standalone: true,
-  imports: [CommonModule, FormsModule,IonHeader,IonTitle,IonToolbar, IonCard, IonCardHeader, IonCardContent, IonCardTitle, IonButton, IonFabButton, IonFab,IonContent]
+  imports: [RouterLink,CommonModule, FormsModule,IonHeader,IonTitle,IonToolbar, IonCard, IonCardHeader, IonCardContent, IonCardTitle, IonButton, IonFabButton, IonFab,IonContent]
 })
 export class MesaPage implements OnInit {
 
@@ -48,64 +48,24 @@ export class MesaPage implements OnInit {
       console.log('QR correcto:', this.qrCorrecto);
 
       if (resultado === this.qrCorrecto) {
-        await this.qrService.cancelarEscaneo();
         this.router.navigate(['/menu']); // Redirigís a la página del menú
       } else {
-        await this.qrService.cancelarEscaneo();
         alert('El QR escaneado no corresponde con tu mesa asignada.');
       }
     } catch (error) {
-      await this.qrService.cancelarEscaneo();
       alert(error);
+    }finally{
+      await this.cancelarEscaneo();
     }
   }
 
-  async preguntar() {
-    const alert = await this.alert.create({
-      header: 'Ingrese su consulta',
-      cssClass: 'custom-alert',
-      inputs: [
-        {
-          name: 'consulta',
-          type: 'text'
-        },
-      ],
-      buttons: [
-        {
-          text: 'Cancelar',
-          role: 'cancel',
-        },
-        {
-          text: 'enviar',
-          handler: async (data: any) => {
-            data = data.consulta;
-            console.log('Datos ingresados:', data);
-            if (data.trim().length > 100) {
-              throw new Error("consulta muy larga");
-            }
-            if (data.trim().length == 0) {
-              throw new Error("mensaje vacio");
-            }
-
-            let mozo = await this.usuarioService.obtenerUsuarioPorRol("mozo");
-            this.push.initializePushNotifications(mozo[0].uid!);
-            let token = await this.push.getToken(mozo[0].uid!);
-
-            await this.consultaService.enviarConsulta(this.id, data.trim(), this.numeroMesaAsignada!, mozo[0].id)
-
-            this.push.sendNotification(token, "nueva consulta", data.trim(), 'https://api-la-comanda.onrender.com/notify')
-              .subscribe({
-                next: res => this.alert.create({ header: 'consulta enviada' }),
-                error: err => this.alert.create({ header: `${err.message}` })
-              });
-          }
-        }
-      ]
-    });
-    await alert.present();
-  }
   async signOut() {
     await this.auth.logOut();
     this.router.navigate(["/login"])
+  }
+
+  async cancelarEscaneo() {
+    this.escaneando = false;
+    await this.qrService.cancelarEscaneo()
   }
 }

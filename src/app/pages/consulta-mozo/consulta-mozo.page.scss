@@ -1,0 +1,89 @@
+.fondo {
+  --background: linear-gradient(to bottom, #6A040F, #E85D04) !important;
+}
+
+.mensaje,
+.mensajePropio {
+  position: relative;
+  margin-left: 0px;
+  margin-top: 10px;
+  margin-right: 0px;
+  padding: 10px;
+  width: 70%;
+  clear: both;
+}
+
+.mensaje {
+  background-color: rgb(80, 79, 79);
+  margin-left: 0;
+  margin-right: auto;
+}
+
+.mensajePropio {
+  background-color: #FAA307;
+  margin-left: auto;
+  margin-right: 0;
+}
+
+.casa {
+  background-color: transparent !important;
+  background: transparent !important;
+  --background: transparent !important;
+  width: 100%;
+  display: flex;
+  align-content: flex-start;
+  align-items: center;
+  gap: 8px;
+}
+
+ion-list,
+ion-item,
+ion-toolbar,
+ion-footer {
+  background: transparent !important;
+  --background: transparent !important;
+  box-shadow: none !important;
+  border: none !important;
+}
+
+ion-item::part(native),
+ion-toolbar::part(native),
+ion-footer::part(native) {
+  background: transparent !important;
+  box-shadow: none !important;
+  border: none !important;
+}
+
+ion-input {
+  --background: transparent !important;
+  background: transparent !important;
+}
+
+ion-button {
+  --background: transparent !important;
+  background: transparent !important;
+  box-shadow: none !important;
+}
+
+.perfil {
+  width: 40px;
+}
+
+.circulo {
+  border-radius: 50%;
+  background-color: #E85D04;
+  height: 50px;
+  width: 50px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.fecha {
+  color: white;
+}
+
+.contenido {
+  color: white;
+  font-size: 16px;
+}
