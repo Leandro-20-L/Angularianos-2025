@@ -7,7 +7,6 @@ import { Router, RouterLink } from '@angular/router';
 import { AlertController } from '@ionic/angular/standalone';
 import { UsuarioService } from 'src/app/servicios/usuario.service';
 import { PushService } from 'src/app/servicios/push.service';
-import { ConsultaService } from 'src/app/servicios/consulta.service';
 import { AuthService } from 'src/app/servicios/auth.service';
 
 @Component({
@@ -24,7 +23,7 @@ export class MesaPage implements OnInit {
   id: any = "";
   escaneando: boolean = false;
 
-  constructor(private auth: AuthService, private consultaService: ConsultaService, private push: PushService, private alert: AlertController, private qrService: QrService, private router: Router, private usuarioService: UsuarioService) { }
+  constructor(private auth: AuthService, private push: PushService, private alert: AlertController, private qrService: QrService, private router: Router, private usuarioService: UsuarioService) { }
 
   async ngOnInit() {
     this.id = await this.auth.getUserUid();

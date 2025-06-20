@@ -7,16 +7,18 @@ import { MensajeService } from 'src/app/servicios/mensajes.service';
 import { AuthService } from 'src/app/servicios/auth.service';
 import { UsuarioService } from 'src/app/servicios/usuario.service';
 import { SupabaseService } from 'src/app/servicios/supabase.service';
-import { RouterLink } from '@angular/router';
+import { Router } from '@angular/router';
 import { PushService } from 'src/app/servicios/push.service';
-import { ConsultaService } from 'src/app/servicios/consulta.service';
+import { Preferences } from '@capacitor/preferences';
+import { Token } from '@angular/compiler';
+
 
 @Component({
   selector: 'app-consulta-mozo',
   templateUrl: './consulta-mozo.page.html',
   styleUrls: ['./consulta-mozo.page.scss'],
   standalone: true,
-  imports: [RouterLink, IonicModule, CommonModule, FormsModule]
+  imports: [IonicModule, CommonModule, FormsModule]
 })
 export class ConsultaMozoPage implements OnInit {
 
@@ -34,43 +36,63 @@ export class ConsultaMozoPage implements OnInit {
     private usuarioService: UsuarioService,
     private supabase: SupabaseService,
     private push: PushService,
-    private consultaService: ConsultaService
+    private router: Router
   ) {
   }
 
   async ngOnInit() {
+    this.mensaje.borrar()
     this.id = await this.acceso.getUserUid();
     let usuario = await this.usuarioService.obtenerUsuarioPorUID(this.id);
     this.mesaAsignada = usuario.mesa_asignada;
     this.perfil = usuario.role;
     await this.actualizarChat();
-    console.log(this.mensajes)
+
   }
 
+  volverAtras() {
+    if (this.perfil === "cliente") {
+      this.router.navigate(["/mesa"])
+    } else if (this.perfil === "mozo") {
+      this.router.navigate(["/mozo"])
+    }
+  }
 
   async enviarMensaje(mensaje: string) {
-    console.log(mensaje.length)
-    if (mensaje.length > 21) {
-      this.mostrarToast("no se pueden superar los 21 caracteres");
-      return;
+    try {
+      if (mensaje.length > 100) {
+        throw new Error("no se pueden superar los 100 caracteres");
+      }
+      if (mensaje.length == 0) {
+        throw new Error("mensaje no valido");
+      }
+
+      let token = ""
+      let tipo = (): string => { if (this.perfil === "cliente") return 'consulta'; else return 'respuesta' };
+    
+      if (this.perfil === "mozo") {
+
+        let uid = await this.obtenerIdCliente();
+        if (!uid) throw new Error('primero debes elegir qué mensaje responder')
+          
+          token = await this.push.getToken(uid);
+        await this.mensaje.escribirMensaje(mensaje, uid, this.id, tipo(), this.id);
+      } else {
+
+        let mozo = await this.usuarioService.obtenerUsuarioPorRol("mozo");
+        this.push.initializePushNotifications(mozo[0].uid!);
+        token = await this.push.getToken(mozo[0].uid!);
+        await this.mensaje.escribirMensaje(mensaje, this.id, mozo[0].uid!, tipo(), this.id);
+      }
+
+      this.push.sendNotification(token, `nueva ${tipo()}`, mensaje.trim(), 'https://api-la-comanda.onrender.com/notify')
+        .subscribe({
+          next: res => this.mostrarToast('consulta enviada'),
+          error: err => { throw err; }
+        });
+    } catch (err: any) {
+      alert(`${err.message}`)
     }
-    if (mensaje.length == 0) {
-      this.mostrarToast("mensaje no valido");
-      return;
-    }
-
-    let mozo = await this.usuarioService.obtenerUsuarioPorRol("mozo");
-    this.push.initializePushNotifications(mozo[0].uid!);
-    let token = await this.push.getToken(mozo[0].uid!);
-
-    await this.mensaje.escribirMensaje(mensaje, this.id, this.mesaAsignada!, mozo[0].uid);
-    // await this.consultaService.enviarConsulta(this.id, mensaje.trim(), this.mesaAsignada!, mozo[0].id)
-
-    this.push.sendNotification(token, "nueva consulta", mensaje.trim(), 'https://api-la-comanda.onrender.com/notify')
-      .subscribe({
-        next: res => this.mostrarToast('consulta enviada'),
-        error: err => this.mostrarToast(`${err.message}`)
-      });
   }
 
   async actualizarChat() {
@@ -127,5 +149,17 @@ export class ConsultaMozoPage implements OnInit {
 
   async cerrarSesion() {
     await this.acceso.logOut();
+  }
+
+  async guardarId(uid: string) {
+    await Preferences.set({
+      key: 'clientUid',
+      value: uid
+    });
+  }
+
+  async obtenerIdCliente() {
+    const { value } = await Preferences.get({ key: 'clientUid' });
+    return value;
   }
 }

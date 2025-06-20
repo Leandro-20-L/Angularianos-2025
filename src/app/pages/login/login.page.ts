@@ -45,6 +45,9 @@ export class LoginPage implements OnInit {
       case 'maitre':
         this.router.navigate(['/maitre-lista-espera']);
         break;
+      case 'mozo':
+        this.router.navigate(['/mozo']);
+        break;
       default:
         this.router.navigate(['/home']);
     }

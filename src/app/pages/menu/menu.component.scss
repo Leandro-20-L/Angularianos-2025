@@ -58,3 +58,14 @@ ion-card p:last-child {
     border-top: 1px dashed #ccc;
     padding-top: 5px;
 }
+
+.btn_agregar {
+    --background: transparent !important;
+    --border-radius: 50%;
+}
+
+.cantidad {
+    --background: transparent !important;
+    width: 200px;
+    font-size: 20px;
+}

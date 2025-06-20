@@ -1,28 +1,44 @@
-<ion-content class="fondo">
+<ion-content [fullscreen]="true">
+
+  <div class="fondo-imagen-decorativa">
+    <img src="assets/imgs/fondo-alimentario.avif" alt="decoración" />
+  </div>
 
   <ion-header>
-    <ion-button routerLink="/mesa" class="casa">
+    <ion-button (click)="volverAtras()" class="casa">
       <img src="assets/iconos/volverAtras.svg" width="30px" class="flecha">
       <span class="circulo">
         <img *ngIf="perfil==='cliente'" src="assets/accesos_rapidos/mesero.png" class="perfil">
+        <img *ngIf="perfil==='mozo'" src="assets/accesos_rapidos/usuario.png" class="perfil">
       </span>
     </ion-button>
   </ion-header>
 
-  <ion-list style="background: transparent;">
+  <ion-list lines="none" style="background: transparent;">
     <ion-item *ngFor="let m of mensajes()">
-      <ion-card *ngIf="m.user_id.uid !== id" class="mensaje">
+
+      <ion-card *ngIf="m.emisor !== id" class="mensaje">
         <ion-card-content>
+          <P class="fecha" *ngIf="m.tipo === 'respuesta'">{{m.id_mozo.nombre}} (mozo)</P>
+          <p class="fecha" *ngIf="m.tipo === 'consulta'">Mesa {{m.id_cliente.mesa_asignada}}</p>
           <p class="contenido"><strong>{{ m.content }}</strong></p>
           <p class="fecha">{{m.created_at | date:'yy/mm/dd hh:mm'}}</p>
         </ion-card-content>
+
+        <ion-button *ngIf="m.tipo === 'consulta'" class="btn_responder">
+          <img src="assets/iconos/responder.svg" class="responder" (click)="guardarId(m.id_cliente.uid)">
+        </ion-button>
+
       </ion-card>
 
-      <ion-card *ngIf="m.user_id.uid === id" class="mensajePropio">
+      <ion-card *ngIf="m.emisor === id" class="mensajePropio">
         <ion-card-content>
-           <p class="contenido"><strong>{{ m.content }}</strong></p>
+          <P class="fecha" *ngIf="m.tipo === 'respuesta'">{{m.id_mozo.nombre}} (mozo)</P>
+          <p class="fecha" *ngIf="m.tipo === 'consulta'">Mesa {{m.id_cliente.mesa_asignada}}</p>
+          <p class="contenido"><strong>{{ m.content }}</strong></p>
           <p class="fecha">{{m.created_at | date:'yy/mm/dd hh:mm'}}</p>
         </ion-card-content>
+
       </ion-card>
     </ion-item>
   </ion-list>

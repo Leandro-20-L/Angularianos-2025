@@ -1,0 +1,36 @@
+ion-fab-button.salir {
+    --background: #FFBA08;
+    width: 60px;
+    height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+ion-fab-button.salir img {
+    width: 50px;
+    height: 50px;
+}
+
+ion-content.fondo {
+    --background: linear-gradient(to bottom, #6A040F, #E85D04) !important;
+    height: 100vh;
+}
+
+.btn_consultas {
+    width: 350px;
+    height: 100px;
+    --background: #E85D04;
+}
+
+.btn_consultas img{
+    height: 90px;
+    width: 90px;
+}
+
+.botones_mozo {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+}

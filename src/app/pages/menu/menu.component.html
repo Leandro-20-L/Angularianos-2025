@@ -3,66 +3,22 @@
   <ion-title class="titulo">Menú</ion-title>
 
   <div>
-    <h2>Comidas</h2>
-    <ion-card>
-      <img src="assets/comidas/asado.jpg" class="foto">
-      <p>Carne de vaca a la parrilla con chorizo y morcilla. Acompañado de papas.</p>
-      <p>⏱ 45 min</p>
-      <p> $10000</p>
-    </ion-card>
+    <ion-card-content *ngFor="let p of productos">
+      <ion-card>
+        <img [src]="p.fotos" class="foto">
+        <p>{{p.descripcion}}</p>
+        <p>⏱ {{p.tiempo_elaboracion}} min</p>
+        <p> ${{p.precio}}</p>
 
-    <ion-card>
-      <img src="assets/comidas/hambuerguesa.jpg" class="foto">
-      <p>Pan artesanal, carne vacuna, queso, lechuga y tomate.</p>
-      <p>⏱ 15 min</p>
-      <p> $5000</p>
-    </ion-card>
-    
-    <ion-card>
-      <img src="assets/comidas/milanesa.jpg" class="foto">
-      <p>malanesa de carne, con papas fritas de acompañamiento.</p>
-      <p>⏱ 25 min</p>
-      <p> $6500</p>
-    </ion-card>
+        <div class="">
+          <input type="number" [(ngModel)]="productos" class="cantidad" placeholder="escribe la cantidad">
+          <ion-button (click)="agregarProducto(p)" class="btn_agregar"><img src="assets/iconos/agregar_pedido.svg" width="50px"></ion-button>
+        </div>
+      </ion-card>
+    </ion-card-content>
   </div>
 
-  <div>
-    <h2>Bebidas</h2>
-    <ion-card> <img src="assets/bebidas/gaseosa.jpg" class="foto">
-      <p>Botella de 500 ml, Coca-Cola, Fanta o Sprite.</p>
-      <p> $1200</p>
-    </ion-card>
-
-    <ion-card>
-      <img src="assets/bebidas/cerbeza.jpg" class="foto">
-      <p>Lata de cerveza rubia artesanal o industrial, bien fría.</p>
-      <p> $1400</p>
-    </ion-card>
-
-    <ion-card> <img src="assets/bebidas/vino.jpg" class="foto">
-      <p>Copa de vino tinto o blanco, ideal para acompañar carnes.</p>
-      <p> $10000</p>
-    </ion-card>
-  </div>
-
-  <div>
-    <h2>Postres</h2>
-    <ion-card> <img src="assets/postres/flan.jpg" class="foto">
-      <p>Clásico flan casero con dulce de leche o crema.</p>
-      <p> $1900</p>
-    </ion-card>
-
-    <ion-card>
-      <img src="assets/postres/helado.jpg" class="foto">
-      <p>Helado artesanal (vainilla, chocolate o frutilla).</p>
-      <p> $3000</p>
-    </ion-card>
-    
-    <ion-card> 
-      <img src="assets/postres/tiramisu.jpg" class="foto">
-      <p>Postre italiano con capas de bizcocho, café y mascarpone.</p>
-      <p> $1200</p>
-    </ion-card>
-  </div>
+  <ion-button>finalizar pedido</ion-button>
+  <ion-button>volver atrás</ion-button>
 
 </ion-content>

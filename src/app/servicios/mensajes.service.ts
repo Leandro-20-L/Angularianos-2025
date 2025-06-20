@@ -11,22 +11,27 @@ export class MensajeService {
   async obtenerMensajes() {
     const { data, error } = await this.supabase.client
       .from("mensajes_mozo")
-      .select("*, user_id(*), id_asignado(*)")
+      .select("*, id_cliente(*), id_mozo(*)")
 
     return data;
   }
 
-  async escribirMensaje(mensaje: string, clienteId: string, numeroMesa: number, id_mozo: string) {
+  async escribirMensaje(mensaje: string, clienteId: string, id_mozo: string, tipo: string, emisor:string) {
     const { data, error } = await this.supabase.client
       .from("mensajes_mozo")
       .insert({
         content: mensaje,
-        user_id: clienteId,
-        id_asignado: id_mozo,
-        numero_mesa: numeroMesa
+        id_cliente: clienteId,
+        id_mozo: id_mozo,
+        tipo: tipo,
+        emisor:emisor
       }).select();
 
     if (error) throw error;
     return data;
+  }
+
+  async borrar(){
+    await this.supabase.client.from("mensajes_mozo").delete().eq("id", 20)
   }
 }

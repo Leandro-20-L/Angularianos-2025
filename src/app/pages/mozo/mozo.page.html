@@ -1,0 +1,16 @@
+<ion-content [fullscreen]="true" class="fondo">
+
+  <div class="botones_mozo">
+    <ion-button routerLink="/ConsultaMozo" class="btn_consultas">
+      <img src="assets/iconos/chat.png"/>
+    </ion-button>
+
+  </div>
+
+  <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+    <ion-fab-button (click)="signOut()" class="salir">
+      <img src="assets/iconos/cerrar.svg" class="img-responsive" />
+    </ion-fab-button>
+  </ion-fab>
+
+</ion-content>

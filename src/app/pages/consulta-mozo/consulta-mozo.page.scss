@@ -87,3 +87,47 @@ ion-button {
   color: white;
   font-size: 16px;
 }
+
+.fondo-imagen-decorativa {
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  pointer-events: none;
+  /* evita que bloquee clics */
+  z-index: 0;
+  height: 100%;
+}
+
+.fondo-imagen-decorativa img {
+  width: 100%;
+  height: 100%;
+  margin-bottom: 1rem;
+  border-radius: 12px;
+  height: 100%;
+}
+
+#inputMensaje {
+  color: white;
+}
+
+.responder{
+  margin: 0px;
+  width: 20px;
+  height: 20px;
+}
+
+.btn_responder {
+  margin-left: 8px;
+  --padding-start: 0;
+  --padding-end: 0;
+  --background: transparent;
+  background: transparent;
+  box-shadow: none;
+  height: 100%;
+  display: flex;
+  align-items: center;
+}
