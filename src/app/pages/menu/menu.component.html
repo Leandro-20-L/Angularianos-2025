@@ -1,6 +1,10 @@
 <ion-content class="fondo">
 
   <ion-title class="titulo">Menú</ion-title>
+  
+  <div class="fondo_precio">
+    <ion-title class="precio">${{precioTotal}}</ion-title>
+  </div>
 
   <div>
     <ion-card-content *ngFor="let p of productos">

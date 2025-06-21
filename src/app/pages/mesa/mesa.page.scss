@@ -79,3 +79,9 @@ ion-fab-button.salir img {
 .img-card{
   border-radius: 50%;
 }
+
+::ng-deep .custom-alert .alert-wrapper {
+  background-color: #FFBA08;
+  color: #ccc;
+  border-radius: 12px;
+}

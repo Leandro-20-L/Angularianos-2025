@@ -20,6 +20,7 @@ export class MenuComponent implements OnInit {
 
   productos: any[] = [];
   pedido: Pedido[] = [];
+  precioTotal = 0;
   cantidad: any = "";
   uid: any = "";
   usuario: any = "";
@@ -34,6 +35,7 @@ export class MenuComponent implements OnInit {
 
   async agregarAlPedido(p: any) {
     try {
+      this.precioTotal += (p.precio * this.cantidad);
       if (this.cantidad == "" || this.cantidad <= 0) throw new Error("agrega la cantidad")
 
       this.pedido.push(new Pedido(p.nombre, (p.precio * this.cantidad), p.sector, p.tiempo_elaboracion, this.cantidad))
@@ -62,6 +64,7 @@ export class MenuComponent implements OnInit {
       });
       mensaje = `tomamos su pedido y estara listo en ${maxTiempo} minutos`
       this.router.navigate(["/mesa"]);
+
     } catch (err: any) {
       mensaje = err.message;
     } finally {
