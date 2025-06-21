@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { SupabaseService } from './supabase.service';
 import { AuthService } from './auth.service';
+import { from } from 'rxjs';
 
 
 @Injectable({
@@ -134,11 +135,11 @@ export class UsuarioService {
 
   async obtenerSituacionUsuario(): Promise<string | null> {
     const uid = await this.authService.getUserUid();
-    
-  if (!uid) {
-    console.error("UID inválido, no se puede obtener la situación del usuario.");
-    return null;
-  }
+
+    if (!uid) {
+      console.error("UID inválido, no se puede obtener la situación del usuario.");
+      return null;
+    }
     const { data, error } = await this.supabase.client
       .from('usuarios')
       .select('situacion')
@@ -158,5 +159,21 @@ export class UsuarioService {
 
     if (error) throw error;
     return data;
+  }
+
+  async obtenerUidMesa(uid: string) {
+    const { error, data } = await this.supabase.client
+      .from("usuarios")
+      .select("mesa_asignada")
+      .eq("uid", uid)
+
+    if (error) throw error;
+
+    const { data: uidMesa } = await this.supabase.client
+      .from("mesas")
+      .select("uid")
+      .eq("numero", data[0].mesa_asignada)
+
+    return uidMesa
   }
 }

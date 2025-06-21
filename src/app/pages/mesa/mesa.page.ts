@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { IonContent, IonHeader, IonTitle, IonToolbar, IonCard, IonCardHeader, IonCardContent, IonCardTitle, IonButton, IonFabButton, IonFab } from '@ionic/angular/standalone';
+import { IonicModule} from '@ionic/angular';
 import { QrService } from 'src/app/servicios/qr.service';
 import { Router, RouterLink } from '@angular/router';
 import { AlertController } from '@ionic/angular/standalone';
@@ -14,7 +14,7 @@ import { AuthService } from 'src/app/servicios/auth.service';
   templateUrl: './mesa.page.html',
   styleUrls: ['./mesa.page.scss'],
   standalone: true,
-  imports: [RouterLink,CommonModule, FormsModule,IonHeader,IonTitle,IonToolbar, IonCard, IonCardHeader, IonCardContent, IonCardTitle, IonButton, IonFabButton, IonFab,IonContent]
+  imports: [RouterLink,CommonModule, FormsModule, IonicModule]
 })
 export class MesaPage implements OnInit {
 

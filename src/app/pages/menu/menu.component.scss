@@ -69,3 +69,21 @@ ion-card p:last-child {
     width: 200px;
     font-size: 20px;
 }
+
+.btn_volver,
+.btn_finalizar{
+    --background: #e85d04;
+    width: 200px;
+    height: 60px;
+}
+
+.bototnes{
+    display: flex;
+    justify-content: center;
+}
+
+::ng-deep .custom-alert .alert-wrapper {
+  background-color: #FFBA08;
+  color: #ccc;
+  border-radius: 12px;
+}

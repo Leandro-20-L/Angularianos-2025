@@ -11,14 +11,16 @@
         <p> ${{p.precio}}</p>
 
         <div class="">
-          <input type="number" [(ngModel)]="productos" class="cantidad" placeholder="escribe la cantidad">
-          <ion-button (click)="agregarProducto(p)" class="btn_agregar"><img src="assets/iconos/agregar_pedido.svg" width="50px"></ion-button>
+          <input type="number" [(ngModel)]="cantidad" class="cantidad" placeholder="escribe la cantidad">
+          <ion-button (click)="agregarAlPedido(p)" class="btn_agregar"><img src="assets/iconos/agregar_pedido.svg" width="50px"></ion-button>
         </div>
       </ion-card>
     </ion-card-content>
   </div>
 
-  <ion-button>finalizar pedido</ion-button>
-  <ion-button>volver atrás</ion-button>
+  <div class="botones">
+    <ion-button class="btn_finalizar" (click)="finalizarPedido()">finalizar pedido</ion-button>
+    <ion-button class="btn_volver" routerLink="/mesa">volver atrás</ion-button>
+  </div>
 
 </ion-content>
