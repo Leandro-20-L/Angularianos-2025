@@ -124,3 +124,36 @@
 | Encargado/s       | Inicio | Final | Rama       |
 | :---------------- | :----- | :---- | :--------- |
 | Leandro Escobar | 12/6 | 13/6  |  `main` |
+
+
+### 6)
+#### funcionalidad punto 6
+
+| Encargado/s       | Inicio | Final | Rama       |
+| :---------------- | :----- | :---- | :--------- |
+| Leandro Escobar | 19/6 | 20/6  |  `main` |
+
+
+### 7)
+#### funcionalidad punto 7
+
+| Encargado/s       | Inicio | Final | Rama       |
+| :---------------- | :----- | :---- | :--------- |
+| Leandro Escobar | 20/6 | 21/6  |  `main` |
+
+
+### 8)
+#### funcionalidad punto 8
+
+| Encargado/s       | Inicio | Final | Rama       |
+| :---------------- | :----- | :---- | :--------- |
+| Leandro Escobar | 21/6 | 22/6  |  `main` |
+
+
+### 9)
+#### funcionalidad punto 9
+
+| Encargado/s       | Inicio | Final | Rama       |
+| :---------------- | :----- | :---- | :--------- |
+| Leandro Escobar | 22/6 | /6  |  `main` |
+
