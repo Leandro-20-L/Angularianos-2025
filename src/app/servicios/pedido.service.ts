@@ -35,4 +35,80 @@ export class PedidoService {
     if (error) throw error;
     return data;
   }
+
+  async traerPedidosPorMesa(idMesa: string) {
+  const { data, error } = await this.supabase.client
+    .from('pedidos')
+    .select('*')
+    .eq('id_mesa', idMesa);
+
+  if (error) {
+    console.error('Error al traer pedidos por mesa:', error);
+    return [];
+  }
+
+  return data;
+
 }
+
+async obtenerMesasConPedidos(): Promise<any[]> {
+  const { data, error } = await this.supabase.client
+    .from('pedidos')
+    .select('id_mesa')
+    .eq('estado', 'pendiente'); // o cualquier otro filtro
+
+  if (error) {
+    console.error('Error al obtener mesas con pedidos:', error);
+    return [];
+  }
+
+  // Extraer IDs únicos
+  const mesasUnicas = [...new Set(data.map(p => p.id_mesa))];
+  return mesasUnicas;
+}
+
+async obtenerMapaMesas(): Promise<{ [uid: string]: number }> {
+  const { data, error } = await this.supabase.client
+    .from('mesas')
+    .select('uid, numero');
+
+  if (error) {
+    console.error('Error al obtener mesas:', error);
+    return {};
+  }
+
+  const mapa: { [uid: string]: number } = {};
+  data.forEach((m) => {
+    mapa[m.uid] = m.numero;
+  });
+  return mapa;
+}
+
+async actualizarEstadoPedido(pedidoId: string, nuevoEstado: string) {
+  const { error } = await this.supabase.client
+    .from('pedidos')
+    .update({ estado: nuevoEstado })
+    .eq('uid', pedidoId);
+
+  return { error };
+}
+
+async traerPedidosPorSector(sector: string) {
+  const { data, error } = await this.supabase.client
+    .from('pedidos')
+    .select('*')
+    .eq('item_menu_sector', sector)
+    .eq('estado', 'en preparacion');
+
+  if (error) {
+    console.error('Error al traer pedidos por sector:', error);
+    return [];
+  }
+
+  return data;
+}
+
+}
+
+
+

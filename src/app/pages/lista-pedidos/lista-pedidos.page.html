@@ -1,13 +1,41 @@
-<ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-title>lista-pedidos</ion-title>
-  </ion-toolbar>
-</ion-header>
+<ion-content class="fondoPedidos">
+  <ng-container *ngIf="pedidosAgrupados | keyvalue as mesas">
+    <div *ngFor="let mesa of mesas" class="mesa-container">
 
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">lista-pedidos</ion-title>
-    </ion-toolbar>
-  </ion-header>
+      <ion-item color="warning" class="mesa-header">
+        <ion-label>
+          <strong>Mesa:</strong> {{ mesa.key }}
+        </ion-label>
+        <ion-button 
+        slot="end"
+        size="small"
+        fill="solid"
+        
+        (click)="aprobarPedidosPorMesa(mesa.key)">
+        Aprobar Pedido
+      </ion-button>
+      </ion-item>
+
+      
+
+      <ion-list>
+        <ion-item *ngFor="let pedido of mesa.value" class="pedido-card">
+          <ion-label>
+            <h3 class="item-nombre">{{ pedido.item_menu }}</h3>
+            <p><strong>Sector:</strong> {{ pedido.item_menu_sector }}</p>
+            <p><strong>Cantidad:</strong> {{ pedido.cantidad_item_menu }}</p>
+            <p><strong>Precio total:</strong> ${{ pedido.precio_total }}</p>
+            <p><strong>Fecha:</strong> {{ pedido.fecha_pedido | date: 'dd/MM/yyyy' }}</p>
+          </ion-label>
+        </ion-item>
+      </ion-list>
+
+    </div>
+  </ng-container>
+
+  <ng-template #sinPedidos>
+    <ion-item color="danger">
+      <ion-label>No hay pedidos activos.</ion-label>
+    </ion-item>
+  </ng-template>
 </ion-content>

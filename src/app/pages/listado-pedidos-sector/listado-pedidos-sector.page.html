@@ -1,0 +1,28 @@
+<ion-content class="fondoSector">
+  <ion-item color="warning" class="sector-header">
+    <ion-label>
+      <strong>Pedidos del sector:</strong> {{ sector }}
+    </ion-label>
+  </ion-item>
+
+  <ion-list>
+    <ion-item *ngFor="let pedido of pedidos" class="pedido-card">
+      <ion-label>
+        <h3 class="item-nombre">{{ pedido.item_menu }}</h3>
+        <p><strong>Sector:</strong> {{ pedido.item_menu_sector }}</p>
+        <p><strong>Cantidad:</strong> {{ pedido.cantidad_item_menu }}</p>
+      </ion-label>
+
+      <ion-button
+        slot="end"
+        fill="solid"
+        color="tertiary"
+        size="small"
+        class="btn-completar"
+        (click)="marcarComoCompletado(pedido.uid)">
+        
+        Completar
+      </ion-button>
+    </ion-item>
+  </ion-list>
+</ion-content>

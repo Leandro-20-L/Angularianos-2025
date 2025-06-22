@@ -48,6 +48,12 @@ export class LoginPage implements OnInit {
       case 'mozo':
         this.router.navigate(['/mozo']);
         break;
+      case 'cocinero':
+        this.router.navigate(['/listado-pedidos-sector']);
+        break;
+      case 'bartender':
+        this.router.navigate(['/listado-pedidos-sector']);
+        break;
       default:
         this.router.navigate(['/home']);
     }

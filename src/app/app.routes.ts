@@ -52,6 +52,10 @@ export const routes: Routes = [
   },  {
     path: 'mozo',
     loadComponent: () => import('./pages/mozo/mozo.page').then( m => m.MozoPage)
+  },
+  {
+    path: 'listado-pedidos-sector',
+    loadComponent: () => import('./pages/listado-pedidos-sector/listado-pedidos-sector.page').then( m => m.ListadoPedidosSectorPage)
   }
 
 ];

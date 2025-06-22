@@ -1,0 +1,43 @@
+.fondoPedidos {
+  --background: #6A040F;
+  color: #ffffff;
+  font-family: 'Arial', sans-serif;
+}
+
+.mesa-container {
+  margin: 16px;
+  padding: 10px;
+  border-radius: 12px;
+  background-color: #E85D04;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.4);
+}
+
+.mesa-header {
+  background-color: #FFBA08;
+  color: #000;
+  font-weight: bold;
+  border-radius: 8px;
+  margin-bottom: 8px;
+}
+
+ion-button {
+  --background: #FAA307;
+  color: #000;
+  margin-bottom: 12px;
+  font-weight: bold;
+  border-radius: 10px;
+}
+
+.pedido-card {
+  background-color: #fff3e0;
+  color: #000;
+  margin-bottom: 10px;
+  border-radius: 10px;
+  padding: 5px;
+}
+
+.item-nombre {
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: #fff;
+}

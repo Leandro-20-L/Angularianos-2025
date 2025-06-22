@@ -51,9 +51,12 @@ export class MesaPage implements OnInit {
       if (resultado === this.qrCorrecto) {
         let estado = await this.pedidoService.traerEstado(this.id);
         if (estado?.length > 0) {
+          console.log('Estado detectado:', estado[0].estado);
           // pedido existe
           let botones = []
+          
           switch (estado[0].estado) {
+            
             case "pendiente":
               botones.push("aceptar")
               break;
@@ -88,7 +91,8 @@ export class MesaPage implements OnInit {
               botones.push("ver encuesta");
               break;
           }
-          this.alert.create({ header:`su pedido esta ${estado[0].estado}`, buttons: botones, cssClass: 'custom-alert' });
+          const alert = await this.alert.create({ header:`su pedido esta ${estado[0].estado}`, buttons: botones, cssClass: 'custom-alert' });
+          await alert.present();
           //si el estado == a confirmar -> solo muestra el estado
           //si el estado == confirmado -> muestra el estado y botones de juegos y encuesta
           //si el estado == listo para entregar -> muestra el estado
@@ -103,7 +107,7 @@ export class MesaPage implements OnInit {
         throw new Error('El QR escaneado no corresponde con tu mesa asignada.');
       }
     } catch (error: any) {
-      this.alert.create({ header: error.message, buttons: ["aceptar"] });
+      await this.alert.create({ header: error.message, buttons: ["aceptar"] });
     } finally {
       await this.cancelarEscaneo();
     }

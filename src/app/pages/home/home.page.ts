@@ -91,4 +91,8 @@ export class HomePage implements OnInit {
     await toast.present();
   }
 
+  irAEncuestas() {
+  this.route.navigate(['/encuestas-previas']);
+}
+
 }

@@ -1,0 +1,33 @@
+.fondoSector {
+  --background: #6A040F;
+  color: #ffffff;
+  font-family: 'Arial', sans-serif;
+}
+
+.sector-header {
+  background-color: #FFBA08;
+  color: #000;
+  font-weight: bold;
+}
+
+.pedido-card {
+  background-color: #E85D04;
+  color: #000;
+  border-radius: 12px;
+  margin: 8px;
+  padding: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+}
+
+.item-nombre {
+  font-size: 1.1rem;
+  font-weight: bold;
+  color: #fff;
+}
+
+.btn-completar {
+  --background: #FAA307;
+  --color: #000;
+  border-radius: 8px;
+  font-weight: bold;
+}

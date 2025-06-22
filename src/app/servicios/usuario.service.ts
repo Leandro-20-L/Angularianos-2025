@@ -108,6 +108,7 @@ export class UsuarioService {
 
   async obtenerMesaAsignada(): Promise<{ numero: number, qr: string } | null> {
     const uid = await this.authService.getUserUid();
+    console.log("UID del usuario:", uid);
 
     // Obtener número de mesa asignada
     const { data: user, error: errorUser } = await this.supabase.client
@@ -115,7 +116,7 @@ export class UsuarioService {
       .select('mesa_asignada')
       .eq('uid', uid)
       .single();
-
+    console.log("Usuario encontrado:", user);
     if (errorUser || !user?.mesa_asignada) return null;
 
     // Buscar mesa con ese número
@@ -131,6 +132,17 @@ export class UsuarioService {
       numero: mesa.numero,
       qr: mesa.qr
     };
+  }
+
+  async obtenerMesaUid(uid:string){
+    const { data: mesa, error: errorMesa } = await this.supabase.client
+      .from('mesas')
+      .select('uid')
+      .eq('uid',uid )
+      .single();
+      console.log('Resultado mesa:', mesa);
+
+      return mesa;
   }
 
   async obtenerSituacionUsuario(): Promise<string | null> {
