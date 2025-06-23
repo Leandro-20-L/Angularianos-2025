@@ -55,14 +55,14 @@ async obtenerMesasConPedidos(): Promise<any[]> {
   const { data, error } = await this.supabase.client
     .from('pedidos')
     .select('id_mesa')
-    .eq('estado', 'pendiente'); // o cualquier otro filtro
+    .in('estado', ['pendiente', 'listo para entregar']); 
 
   if (error) {
     console.error('Error al obtener mesas con pedidos:', error);
     return [];
   }
 
-  // Extraer IDs únicos
+  
   const mesasUnicas = [...new Set(data.map(p => p.id_mesa))];
   return mesasUnicas;
 }

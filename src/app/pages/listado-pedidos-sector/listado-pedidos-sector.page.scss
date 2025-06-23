@@ -12,15 +12,19 @@
 
 .pedido-card {
   background-color: #E85D04;
+    --background: #6A040F;
+    
   color: #000;
   border-radius: 12px;
-  margin: 8px;
+  margin: 3px;
   padding: 12px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+  font-weight: bold;
+  
 }
 
 .item-nombre {
-  font-size: 1.1rem;
+  font-size: 1.2rem;
   font-weight: bold;
   color: #fff;
 }
@@ -31,3 +35,39 @@
   border-radius: 8px;
   font-weight: bold;
 }
+
+ion-list,
+.item-cliente,
+.boton-asignar {
+  position: relative;
+  z-index: 1;
+  background-color: transparent;
+}
+
+.fondo-imagen-decorativa {
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  pointer-events: none; 
+  z-index: 0;
+   height: 100%;
+}
+
+.fondo-imagen-decorativa img {
+  width: 100%;
+ // max-width: 280px;
+  opacity: 0.4;
+ // margin-bottom: 1rem;
+  border-radius: 12px;
+  height: 100%;
+}
+
+.img-responsive {
+  --background: #FAA307;
+  background: #FAA307;
+}
+

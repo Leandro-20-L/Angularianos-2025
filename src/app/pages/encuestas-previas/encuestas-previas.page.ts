@@ -10,7 +10,7 @@ import Chart from 'chart.js/auto';
   templateUrl: './encuestas-previas.page.html',
   styleUrls: ['./encuestas-previas.page.scss'],
   standalone: true,
-  imports: [IonContent, IonHeader, IonTitle, IonToolbar, CommonModule, FormsModule,IonItem,IonLabel]
+  imports: [IonContent, CommonModule, FormsModule,IonItem,IonLabel]
 })
 export class EncuestasPreviasPage implements OnInit {
   constructor(private supabase: SupabaseService) {}
@@ -25,16 +25,16 @@ export class EncuestasPreviasPage implements OnInit {
       return;
     }
 
-    // Gráficos de comida en los 3 formatos
+    
     this.renderChartBarOrLine(encuestas, 'comida', 'comidaChartBar', 'Comida', 'bar');
     this.renderChartBarOrLine(encuestas, 'comida', 'comidaChartLine', 'Comida', 'line');
     this.renderChartPie(encuestas, 'comida', 'comidaChartPie', 'Comida (Pie)');
 
-    // Otros campos con bar
+    
     this.renderChartBarOrLine(encuestas, 'atencion_cliente', 'atencionChart', 'Atención al cliente', 'bar');
     this.renderChartBarOrLine(encuestas, 'limpieza', 'limpiezaChart', 'Limpieza del lugar', 'bar');
 
-    // Pie de "cómo nos conociste"
+    
     this.renderConocioChart(encuestas);
   }
 

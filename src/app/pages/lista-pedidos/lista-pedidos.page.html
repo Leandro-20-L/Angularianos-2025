@@ -6,31 +6,60 @@
         <ion-label>
           <strong>Mesa:</strong> {{ mesa.key }}
         </ion-label>
-        <ion-button 
-        slot="end"
-        size="small"
-        fill="solid"
         
-        (click)="aprobarPedidosPorMesa(mesa.key)">
-        Aprobar Pedido
-      </ion-button>
       </ion-item>
 
-      
-
       <ion-list>
-        <ion-item *ngFor="let pedido of mesa.value" class="pedido-card">
+        <ion-item *ngFor="let pedidos of mesa.value" class="pedido-card">
           <ion-label>
-            <h3 class="item-nombre">{{ pedido.item_menu }}</h3>
-            <p><strong>Sector:</strong> {{ pedido.item_menu_sector }}</p>
-            <p><strong>Cantidad:</strong> {{ pedido.cantidad_item_menu }}</p>
-            <p><strong>Precio total:</strong> ${{ pedido.precio_total }}</p>
-            <p><strong>Fecha:</strong> {{ pedido.fecha_pedido | date: 'dd/MM/yyyy' }}</p>
-          </ion-label>
+          <h3 class="item-nombre">{{ pedidos.item_menu }}</h3>
+          <div class="detalle-linea">
+            <span class="label">📍 Sector:</span>
+            <span class="valor">{{ pedidos.item_menu_sector }}</span>
+          </div>
+          <div class="detalle-linea">
+            <span class="label">🔢 Cantidad:</span>
+            <span class="valor">{{ pedidos.cantidad_item_menu }}</span>
+          </div>
+          <div class="detalle-linea">
+            <span class="label">💲Precio:</span>
+            <span class="valor">${{ pedidos.precio_total }}</span>
+          </div>
+          <div class="detalle-linea">
+            <span class="label">📅 Fecha:</span>
+            <span class="valor">{{ pedidos.fecha_pedido | date: 'dd/MM/yyyy' }}</span>
+          </div>
+          <div class="detalle-linea">
+            <span class="label">⏳ Estado:</span>
+            <span class="valor">{{ pedidos.estado }}</span>
+          </div>
+        </ion-label>
+
+          <ion-button
+            slot="end"
+            size="small"
+            color="success"
+            fill="outline"
+            *ngIf="pedidos.estado === 'listo para entregar'"
+            (click)="entregarPedido(pedidos.uid)">
+            Entregar
+          </ion-button>
+          <ion-button 
+          slot="end"
+          size="small"
+          fill="solid"
+          color="success"
+          *ngIf="pedidos.estado === 'pendiente'"
+          (click)="aprobarPedidosPorMesa(mesa.key)">
+          Aprobar Pedido
+        </ion-button>
         </ion-item>
       </ion-list>
 
     </div>
+    <div class="fondo-imagen-decorativa">
+    <img src="assets/imgs/fondo.jpg" alt="decoración" />
+  </div>
   </ng-container>
 
   <ng-template #sinPedidos>

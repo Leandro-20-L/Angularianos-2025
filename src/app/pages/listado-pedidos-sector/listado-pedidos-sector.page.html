@@ -16,13 +16,22 @@
       <ion-button
         slot="end"
         fill="solid"
-        color="tertiary"
+        
         size="small"
         class="btn-completar"
-        (click)="marcarComoCompletado(pedido.uid)">
+        (click)="marcarComoCompletado(pedido.uid,pedido.id_mesa)">
         
         Completar
       </ion-button>
     </ion-item>
   </ion-list>
+  <div class="fondo-imagen-decorativa">
+    <img src="assets/imgs/fondo.jpg" alt="decoración" />
+  </div>
+
+    <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+    <ion-fab-button (click)="signOut()" class="salir">
+      <img src="assets/iconos/cerrar.svg" class="img-responsive" />
+    </ion-fab-button>
+    </ion-fab>
 </ion-content>

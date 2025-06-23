@@ -97,7 +97,7 @@ export class MaitreListaEsperaPage implements OnInit {
             'https://api-la-comanda.onrender.com/notify'
           ).toPromise();
 
-          // Refrescar listas
+          
           await this.cargarClientes();
           await this.cargarMesas();
         },

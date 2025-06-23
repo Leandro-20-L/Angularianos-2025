@@ -83,7 +83,7 @@ export class UsuarioService {
       // QR general de entrada
       const { error } = await this.supabase.client
         .from('usuarios')
-        .update({ situacion: 'esperando_mesa', mesa_asignada: null }) // mesa_asignada null por si ya tenía una
+        .update({ situacion: 'esperando_mesa', mesa_asignada: null }) 
         .eq('uid', uid);
 
       if (error) throw error;
