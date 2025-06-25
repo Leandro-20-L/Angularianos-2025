@@ -56,6 +56,10 @@ export const routes: Routes = [
   {
     path: 'listado-pedidos-sector',
     loadComponent: () => import('./pages/listado-pedidos-sector/listado-pedidos-sector.page').then( m => m.ListadoPedidosSectorPage)
+  },
+  {
+    path: 'encuesta',
+    loadComponent: () => import('./pages/encuesta/encuesta.page').then( m => m.EncuestaPage)
   }
 
 ];

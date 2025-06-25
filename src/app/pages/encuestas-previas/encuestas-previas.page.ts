@@ -4,6 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { IonContent, IonHeader, IonTitle, IonToolbar,IonItem,IonLabel } from '@ionic/angular/standalone';
 import { SupabaseService } from 'src/app/servicios/supabase.service';
 import Chart from 'chart.js/auto';
+import { EncuestaService } from 'src/app/servicios/encuesta.service';
 
 @Component({
   selector: 'app-encuestas-previas',
@@ -13,29 +14,21 @@ import Chart from 'chart.js/auto';
   imports: [IonContent, CommonModule, FormsModule,IonItem,IonLabel]
 })
 export class EncuestasPreviasPage implements OnInit {
-  constructor(private supabase: SupabaseService) {}
+  constructor(private encuestaService: EncuestaService) {}
 
   async ngOnInit() {
-    const { data: encuestas, error } = await this.supabase.client
-      .from('encuestas')
-      .select('*');
-
-    if (error) {
-      console.error('Error al traer encuestas:', error);
-      return;
-    }
+    const encuestas = await this.encuestaService.traerEncuestasPrevias()
+    
+    this.renderChartBarOrLine(encuestas!, 'comida', 'comidaChartBar', 'Comida', 'bar');
+    this.renderChartBarOrLine(encuestas!, 'comida', 'comidaChartLine', 'Comida', 'line');
+    this.renderChartPie(encuestas!, 'comida', 'comidaChartPie', 'Comida (Pie)');
 
     
-    this.renderChartBarOrLine(encuestas, 'comida', 'comidaChartBar', 'Comida', 'bar');
-    this.renderChartBarOrLine(encuestas, 'comida', 'comidaChartLine', 'Comida', 'line');
-    this.renderChartPie(encuestas, 'comida', 'comidaChartPie', 'Comida (Pie)');
+    this.renderChartBarOrLine(encuestas!, 'atencion_cliente', 'atencionChart', 'Atención al cliente', 'bar');
+    this.renderChartBarOrLine(encuestas!, 'limpieza', 'limpiezaChart', 'Limpieza del lugar', 'bar');
 
     
-    this.renderChartBarOrLine(encuestas, 'atencion_cliente', 'atencionChart', 'Atención al cliente', 'bar');
-    this.renderChartBarOrLine(encuestas, 'limpieza', 'limpiezaChart', 'Limpieza del lugar', 'bar');
-
-    
-    this.renderConocioChart(encuestas);
+    this.renderConocioChart(encuestas!);
   }
 
   renderChartBarOrLine(
