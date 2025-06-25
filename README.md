@@ -28,6 +28,22 @@
 
 <br/>
 
+<div align="center">
+    <h2 align="center">Splash-screen y login</h1>
+</div>
+
+<table align="center">
+    <tr>
+        <td align="center">
+            <h3>Splash-screen</h3>
+            <img src="./src/assets/imgs/splash.png" alt="Mesa 1" width="250" style="margin: 15px;">
+        </td>
+        <td align="center">
+            <h3>Login</h3>
+            <img src="./src/assets/imgs/login.png" alt="Mesa 2" width="250" style="margin: 15px;">
+        </td>
+    </tr>
+</table>
 ## Entrada
 
 <br/>
