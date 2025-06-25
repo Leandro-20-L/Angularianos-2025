@@ -7,7 +7,7 @@ import emailjs, { EmailJSResponseStatus } from 'emailjs-com';
 export class EmailService {
     constructor() {}
 
-    // usar asincronico; en .then salió todo bien
+    
     async enviarCorreo(
         destinatarioNombre: string,
         direccionCorreo: string,
@@ -28,7 +28,7 @@ export class EmailService {
         try {
             const response: EmailJSResponseStatus = await emailjs.send(
                 'angularianos2025',
-                'template_ih5bwde',
+                'template_r5dyc1c',
                 templateParams,
                 '3dc1adopaWkwNRDFM'
             );
