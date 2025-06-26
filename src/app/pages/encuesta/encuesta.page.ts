@@ -6,13 +6,15 @@ import { EncuestaService } from 'src/app/servicios/encuesta.service';
 import { Camera, CameraResultType, CameraSource } from '@capacitor/camera';
 import { UsuarioService } from 'src/app/servicios/usuario.service';
 import { AuthService } from 'src/app/servicios/auth.service';
+import { Router, RouterLink } from '@angular/router';
+import { AlertController } from '@ionic/angular/standalone';
 
 @Component({
   selector: 'app-encuesta',
   templateUrl: './encuesta.page.html',
   styleUrls: ['./encuesta.page.scss'],
   standalone: true,
-  imports: [IonicModule, CommonModule, FormsModule]
+  imports: [IonicModule, CommonModule, FormsModule, RouterLink]
 })
 export class EncuestaPage implements OnInit {
 
@@ -34,7 +36,7 @@ export class EncuestaPage implements OnInit {
 
   fotos: { [numero: string]: string | null } = { '1': null, '2': null, '3': null };
 
-  constructor(private auth: AuthService, private encuastaService: EncuestaService, private usuariosService: UsuarioService) { }
+  constructor(private alert: AlertController, private router: Router, private auth: AuthService, private encuastaService: EncuestaService, private usuariosService: UsuarioService) { }
 
   async ngOnInit() {
     this.id_usuario = await this.auth.getUserUid()!;
@@ -57,19 +59,39 @@ export class EncuestaPage implements OnInit {
   }
 
   async tomarFoto() {
-    const image = await Camera.getPhoto({
-      quality: 90,
-      allowEditing: false,
-      resultType: CameraResultType.Uri,
-      source: CameraSource.Camera,
-    });
+    try {
 
-    const response = await fetch(image.webPath!);
-    let foto = await response.blob();
-    let ruta = `_${Date.now()}.jpg`;
+      if (this.contadorFotos > 4) {
+        throw new Error("Cantidad de fotos excedida");
+      }
 
-    const urlFoto = await this.usuariosService.subirFoto(ruta, foto);
-    this.fotos[this.contadorFotos.toString()] = urlFoto;
+      const image = await Camera.getPhoto({
+        quality: 90,
+        allowEditing: false,
+        resultType: CameraResultType.Uri,
+        source: CameraSource.Camera,
+      });
+
+      const response = await fetch(image.webPath!);
+      let foto = await response.blob();
+      let ruta = `_${Date.now()}.jpg`;
+
+      const urlFoto = await this.usuariosService.subirFoto(ruta, foto);
+      this.fotos[this.contadorFotos.toString()] = urlFoto;
+      this.contadorFotos++;
+
+    } catch (error: any) {
+
+      const alert = await this.alert.create({
+        header: error.message,
+        buttons: [{
+          text: "aceptar",
+          role: "ok"
+        }],
+        cssClass: 'custom-alert'
+      });
+      this.alert.create()
+    }
   }
 
   async guardarEncuesta() {
@@ -77,14 +99,16 @@ export class EncuestaPage implements OnInit {
       await this.encuastaService.agregarEncuesta(
         this.calificaciones["atencion_cliente"],
         this.calificaciones["comida"],
-        this.comoConocio.toString(),
+        [this.comoConocio],
         this.id_usuario,
         this.calificaciones["limpieza"],
         this.opinion_general,
         this.fotos["1"],
         this.fotos["2"],
         this.fotos["3"]
-      )
+      );
+
+      this.router.navigate(["/mesa"]);
     } catch (error) {
 
     }

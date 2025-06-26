@@ -37,76 +37,98 @@ export class PedidoService {
   }
 
   async traerPedidosPorMesa(idMesa: string) {
-  const { data, error } = await this.supabase.client
-    .from('pedidos')
-    .select('*')
-    .eq('id_mesa', idMesa);
+    const { data, error } = await this.supabase.client
+      .from('pedidos')
+      .select('*')
+      .eq('id_mesa', idMesa);
 
-  if (error) {
-    console.error('Error al traer pedidos por mesa:', error);
-    return [];
+    if (error) {
+      console.error('Error al traer pedidos por mesa:', error);
+      return [];
+    }
+
+    return data;
+
   }
-
-  return data;
-
-}
-
-async obtenerMesasConPedidos(): Promise<any[]> {
-  const { data, error } = await this.supabase.client
-    .from('pedidos')
-    .select('id_mesa')
-    .in('estado', ['pendiente', 'listo para entregar']); 
-
-  if (error) {
-    console.error('Error al obtener mesas con pedidos:', error);
-    return [];
-  }
-
   
-  const mesasUnicas = [...new Set(data.map(p => p.id_mesa))];
-  return mesasUnicas;
-}
+  async traerPedidosPorMesaFecha(idMesa: string, fecha:Date) {
+    const { data } = await this.supabase.client
+      .from('pedidos')
+      .select('*')
+      .eq('id_mesa', idMesa)
+      .eq('fecha_pedido', fecha.toISOString().split('T')[0]);
 
-async obtenerMapaMesas(): Promise<{ [uid: string]: number }> {
-  const { data, error } = await this.supabase.client
-    .from('mesas')
-    .select('uid, numero');
+    return data;
+  }
+  
+  async obtenerMesasConPedidos(): Promise<any[]> {
+    const { data, error } = await this.supabase.client
+      .from('pedidos')
+      .select('id_mesa')
+      .in('estado', ['pendiente', 'listo para entregar']);
 
-  if (error) {
-    console.error('Error al obtener mesas:', error);
-    return {};
+    if (error) {
+      console.error('Error al obtener mesas con pedidos:', error);
+      return [];
+    }
+
+
+    const mesasUnicas = [...new Set(data.map(p => p.id_mesa))];
+    return mesasUnicas;
   }
 
-  const mapa: { [uid: string]: number } = {};
-  data.forEach((m) => {
-    mapa[m.uid] = m.numero;
-  });
-  return mapa;
-}
+  async obtenerMapaMesas(): Promise<{ [uid: string]: number }> {
+    const { data, error } = await this.supabase.client
+      .from('mesas')
+      .select('uid, numero');
 
-async actualizarEstadoPedido(pedidoId: string, nuevoEstado: string) {
-  const { error } = await this.supabase.client
-    .from('pedidos')
-    .update({ estado: nuevoEstado })
-    .eq('uid', pedidoId);
+    if (error) {
+      console.error('Error al obtener mesas:', error);
+      return {};
+    }
 
-  return { error };
-}
-
-async traerPedidosPorSector(sector: string) {
-  const { data, error } = await this.supabase.client
-    .from('pedidos')
-    .select('*')
-    .eq('item_menu_sector', sector)
-    .eq('estado', 'en preparacion');
-
-  if (error) {
-    console.error('Error al traer pedidos por sector:', error);
-    return [];
+    const mapa: { [uid: string]: number } = {};
+    data.forEach((m) => {
+      mapa[m.uid] = m.numero;
+    });
+    return mapa;
   }
 
-  return data;
-}
+  async actualizarEstadoPedido(pedidoId: string, nuevoEstado: string) {
+    const { error } = await this.supabase.client
+      .from('pedidos')
+      .update({ estado: nuevoEstado })
+      .eq('uid', pedidoId);
+
+    return { error };
+  }
+
+  async traerPedidosPorSector(sector: string) {
+    const { data, error } = await this.supabase.client
+      .from('pedidos')
+      .select('*')
+      .eq('item_menu_sector', sector)
+      .eq('estado', 'en preparacion');
+
+    if (error) {
+      console.error('Error al traer pedidos por sector:', error);
+      return [];
+    }
+
+    return data;
+  }
+
+  async guardarPropina(propina: number, id_cliente: string, fecha: Date) {
+    const { data, error } = await this.supabase.client
+      .from("pedidos")
+      .update({ propina, cuenta_entregada: true, estado:"cuenta entregada" })
+      .eq("id_cliente", id_cliente)
+      .eq("fecha_pedido", fecha)
+      .select()
+
+
+    console.log(data, error)
+  }
 
 }
 

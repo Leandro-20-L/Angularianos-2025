@@ -1,0 +1,59 @@
+<ion-content class="fondo" [fullscreen]="true">
+
+  <div class="center" *ngIf="mostar">
+    <ion-card class="card">
+      <ion-card-header>
+        <ion-card-title>¿Deseas dejar una propina?</ion-card-title>
+      </ion-card-header>
+
+      <ion-card-content>
+
+        <ion-input type="number" type="number" fill="outline" shape="round" [(ngModel)]="monto"></ion-input>
+
+        <ion-button expand="block" color="success" shape="round" (click)="guardarValor('')">aceptar</ion-button>
+        <ion-button expand="block" color="success" shape="round" (click)="guardarValor('noGracias')">no,
+          gracias</ion-button>
+
+      </ion-card-content>
+    </ion-card>
+  </div>
+
+  <div class="center" *ngIf="!mostar">
+    <ion-card-content class="card">
+      <ion-card-header class="titulo">
+        Cuenta
+      </ion-card-header>
+      <h2>{{ datosUsuario.nombre }}</h2>
+      <h2>Mesa: {{ datosUsuario.mesa_asignada }}</h2>
+      <h2>Fecha: {{ pedidos[0].fecha_pedido }}</h2><br>
+
+      <div *ngFor="let c of pedidos" class="pedido">
+        <div class="fila">
+          <span>Producto:</span>
+          <span>{{ c.item_menu }}</span>
+        </div>
+        <div class="fila">
+          <span>Cantidad:</span>
+          <span>{{ c.cantidad_item_menu }}</span>
+        </div>
+        <div class="fila">
+          <span>Precio unitario:</span>
+          <span>${{ c.precio_total / c.cantidad_item_menu }}</span>
+        </div><br>
+      </div>
+
+      <div class="fila">
+        <span>Propina:</span>
+        <span>${{ monto }}</span>
+      </div>
+      <div class="fila precioFinal">
+        <strong>Monto total:</strong>
+        <strong>${{ precioFinal + monto }}</strong>
+      </div>
+
+      <ion-button expand="block" color="success" shape="round" (click)="pagar()">Pagar</ion-button>
+    </ion-card-content>
+  </div>
+
+
+</ion-content>

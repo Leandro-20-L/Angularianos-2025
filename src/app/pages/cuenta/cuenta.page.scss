@@ -1,0 +1,56 @@
+ion-content.fondo {
+  --background: linear-gradient(to bottom, #6A040F, #E85D04) !important;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.card {
+  --background: #FAA307;
+  border-radius: 10px;
+}
+
+.center {
+  margin-top: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  padding: 16px;
+}
+
+::ng-deep .custom-alert .alert-wrapper {
+  background-color: #FFBA08;
+  color: #ccc;
+  border-radius: 12px;
+}
+
+.card {
+  background: #FAA307;
+  width: 95%;
+  margin-top: 20px;
+}
+
+h3{
+  font-size: 30px;
+}
+
+.precioFinal {
+  font-size: 20px;
+  background: #E85D04;
+}
+
+.titulo {
+  font-family: 'Amoresa';
+  font-size: 3rem;
+}
+
+.fila {
+  display: flex;
+  justify-content: space-between;
+  padding: 4px 0;
+}
+
+.precioFinal {
+  margin-top: 10px;
+}

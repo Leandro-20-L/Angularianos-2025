@@ -10,6 +10,7 @@ import { PushService } from 'src/app/servicios/push.service';
 import { AuthService } from 'src/app/servicios/auth.service';
 import { Pedido } from '../menu/menu.component';
 import { PedidoService } from 'src/app/servicios/pedido.service';
+import { EncuestaService } from 'src/app/servicios/encuesta.service';
 
 @Component({
   selector: 'app-mesa',
@@ -24,17 +25,21 @@ export class MesaPage implements OnInit {
   qrCorrecto: string | null = null;
   id: any = "";
   escaneando: boolean = false;
+  mesaAsignada: any = "";
+  datosMozo: any = "";
 
-  constructor(private pedidoService: PedidoService, private auth: AuthService, private push: PushService, private alert: AlertController, private qrService: QrService, private router: Router, private usuarioService: UsuarioService) { }
+  constructor(private encuestaService: EncuestaService, private pedidoService: PedidoService, private auth: AuthService, private push: PushService, private alert: AlertController, private qrService: QrService, private router: Router, private usuarioService: UsuarioService) { }
 
   async ngOnInit() {
+    this.datosMozo = await this.usuarioService.obtenerUsuarioPorRol("mozo")
+
     this.id = await this.auth.getUserUid();
 
-    const mesa = await this.usuarioService.obtenerMesaAsignada();
+    this.mesaAsignada = await this.usuarioService.obtenerMesaAsignada();
 
-    if (mesa) {
-      this.numeroMesaAsignada = mesa.numero;
-      this.qrCorrecto = mesa.qr;
+    if (this.mesaAsignada) {
+      this.numeroMesaAsignada = this.mesaAsignada.numero;
+      this.qrCorrecto = this.mesaAsignada.qr;
     } else {
       this.numeroMesaAsignada = null;
       this.qrCorrecto = null;
@@ -51,54 +56,72 @@ export class MesaPage implements OnInit {
       if (resultado === this.qrCorrecto) {
         let estado = await this.pedidoService.traerEstado(this.id);
         if (estado?.length > 0) {
-          console.log('Estado detectado:', estado[0].estado);
-          // pedido existe
-          let botones = []
-          
+
+          let botones = [];
+
           switch (estado[0].estado) {
-            
-            case "pendiente":
-              botones.push("aceptar")
-              break;
-
             case "en preparacion":
-              botones.push("aceptar");
-              botones.push("juegos");
-              break;
-
-            case "listo para entregar":
-              botones.push("aceptar");
+              botones.push(
+                {
+                  text: "juegos",
+                  handler: () => {
+                    console.log("Abrir juegos");
+                  }
+                }
+              );
               break;
 
             case "entregado":
-              botones.push("aceptar");
-              botones.push("pedir cuenta");
-              botones.push("juegos");
-              botones.push("realizar encuesta");
-              break;
-
-            case "cuenta solicitada":
-              botones.push("aceptar")
-              break;
-
-            case "cuenta pagada a revision":
-              botones.push("aceptar")
+              botones.push(
+                {
+                  text: "pedir cuenta",
+                  handler: async () => {
+                    let token = await this.push.getToken(this.datosMozo.uid)
+                    this.push.sendNotification(token, `mesa ${this.mesaAsignada}`, "el cliente pidio la cuenta", "https://api-la-comanda.onrender.com/notify")
+                    this.router.navigate(["/cuenta"])
+                  }
+                },
+                {
+                  text: "juegos",
+                  handler: () => {
+                    console.log("Abrir juegos");
+                  }
+                },
+                {
+                  text: "realizar encuesta",
+                  handler: async () => {
+                    if (!await this.encuestaService.completoEncuesta(this.id)) {
+                      throw new Error("error, este cliente ya completo la encuesta");
+                    }
+                    this.router.navigate(['/encuesta']);
+                  }
+                }
+              );
               break;
 
             case "cuenta pagada":
-              botones.push("aceptar");
-              // si hizo la encuesta mostrar este boton
-              botones.push("ver encuesta");
+              botones.push(
+                {
+                  text: "ver encuesta",
+                  handler: () => {
+                    this.router.navigate(['/encuestas-previas']);
+                  }
+                }
+              );
               break;
           }
-          const alert = await this.alert.create({ header:`su pedido esta ${estado[0].estado}`, buttons: botones, cssClass: 'custom-alert' });
-          await alert.present();
-          //si el estado == a confirmar -> solo muestra el estado
-          //si el estado == confirmado -> muestra el estado y botones de juegos y encuesta
-          //si el estado == listo para entregar -> muestra el estado
-          //si el estado == entregado -> muestra el estado botoners de juegos y pedir cuenta
-          //si el estado == entregado && completoEncuesta -> boton ver estadisticas
 
+          botones.push({
+            text: "aceptar",
+            role: "ok"
+          });
+
+          const alert = await this.alert.create({
+            header: `Su pedido está ${estado[0].estado}`,
+            buttons: botones,
+            cssClass: 'custom-alert'
+          });
+          await alert.present();
         } else {
           // pedido no existe 
           this.router.navigate(['/menu']); // Redirigís a la página del menú
