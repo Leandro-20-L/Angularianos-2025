@@ -16,5 +16,19 @@ export class PagoService {
     console.log(data)
   }
 
+  async traerPagos() {
+    let { data } = await this.supabase.client
+      .from("pagos")
+      .select("*, id_usuario(*) ")
+      .eq("estado", "pendiente de confirmacion")
+    return data;
+  }
+
+  async confirmarPago(id:number) {
+    await this.supabase.client
+      .from("pagos")
+      .update({ "estado": "pagado" })
+      .eq("id", id);
+  }
 
 }

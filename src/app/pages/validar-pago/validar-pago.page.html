@@ -1,0 +1,31 @@
+<ion-content [fullscreen]="true" class="fondo">
+  <div *ngIf="pagos.length !== 0" class="fondo">
+    <ion-card-content *ngFor="let p of pagos" class="pago-card">
+      <ion-card-header>
+        <ion-card-title class="titulo">{{p.id_usuario.nombre}}</ion-card-title>
+      </ion-card-header>
+
+      <div class="info-linea">
+        <span class="label">Mesa:</span> <span>{{p.id_usuario.mesa_asignada}}</span>
+      </div>
+      <div class="info-linea">
+        <span class="label">Estado:</span> <span>{{p.estado}}</span>
+      </div>
+      <div class="info-linea">
+        <span class="label">Fecha:</span> <span>{{p.fecha | date:'yy-mm-dd'}}</span>
+      </div>
+      <div class="info-linea">
+        <span class="label">Monto:</span> <span>$ {{p.monto}}</span>
+      </div>
+
+      <ion-button expand="block" color="success" shape="round" (click)="confirmar(p.id_usuario.uid, p.id)">confirmar
+        pago</ion-button>
+
+    </ion-card-content>
+  </div>
+
+  <div *ngIf="pagos && pagos.length === 0" class="mensaje-vacio">
+    <h2 class="error">no hay pagos por aprobar</h2>
+  </div>
+
+</ion-content>

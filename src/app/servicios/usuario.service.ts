@@ -134,11 +134,11 @@ export class UsuarioService {
     };
   }
 
-  async obtenerMesaUid(uid:string){
+  async obtenerMesaUid(uidCliente:string){
     const { data: mesa, error: errorMesa } = await this.supabase.client
       .from('mesas')
       .select('uid')
-      .eq('uid',uid )
+      .eq('id_cliente',uidCliente )
       .single();
       console.log('Resultado mesa:', mesa);
 
@@ -178,6 +178,7 @@ export class UsuarioService {
       .from("usuarios")
       .select("mesa_asignada")
       .eq("uid", uid)
+      console.log(data)
 
     if (error) throw error;
 

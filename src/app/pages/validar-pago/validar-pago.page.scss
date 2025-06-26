@@ -1,0 +1,76 @@
+ion-content.fondo {
+  --background: linear-gradient(to bottom, #6A040F, #E85D04) !important;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  flex-direction: column;
+  padding: 20px;
+  min-height: 100vh;
+}
+
+.pago-card {
+  background: #FAA307;
+  border-radius: 15px;
+  margin: 15px 0;
+  padding: 20px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+}
+
+.titulo {
+  font-size: 22px;
+  font-weight: bold;
+  color: #370617;
+  margin-bottom: 10px;
+}
+
+.info-linea {
+  display: flex;
+  justify-content: space-between;
+  padding: 5px 0;
+  font-size: 18px;
+  color: #000;
+}
+
+.label {
+  font-weight: bold;
+  color: #370617;
+}
+
+.btn_accion {
+  margin-top: 15px;
+  background-color: #6A040F;
+  color: #fff;
+  font-weight: bold;
+  transition: background-color 0.3s ease;
+}
+
+.btn_accion:hover {
+  background-color: #9D0208;
+}
+
+h2 {
+  font-size: 20px;
+}
+
+.error {
+  color: #6A040F;
+  font-size: 40px;
+  font-family: 'Amoresa';
+}
+
+.salir {
+  background: #FAA307;
+}
+
+.mensaje-vacio {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  margin-top: 20px;
+  width: 100%;
+  min-height: 150px;
+  border-radius: 10px;
+  background: #FAA307;
+}

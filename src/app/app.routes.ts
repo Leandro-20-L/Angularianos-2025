@@ -64,6 +64,10 @@ export const routes: Routes = [
   {
     path: 'cuenta',
     loadComponent: () => import('./pages/cuenta/cuenta.page').then( m => m.CuentaPage)
+  },
+  {
+    path: 'validar-pago',
+    loadComponent: () => import('./pages/validar-pago/validar-pago.page').then( m => m.ValidarPagoPage)
   }
 
 ];
