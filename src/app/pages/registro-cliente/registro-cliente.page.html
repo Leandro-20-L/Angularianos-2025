@@ -6,14 +6,12 @@
     <ion-button class="anonimo" fill="clear" (click)="definirTipo('anonimo')">
       <div class="button-content">
         <img src="assets/accesos_rapidos/anonimo.png" />
-        <span class="btn-text">Anónimo</span>
       </div>
     </ion-button>
 
     <ion-button class="identificado" fill="clear" (click)="definirTipo('identificado')">
       <div class="button-content">
         <img src="assets/accesos_rapidos/usuario.png" />
-        <span class="btn-text">Usuario</span>
       </div>
     </ion-button>
 
@@ -47,6 +45,10 @@
 
     <div class="inputbox input-icon-right">
       <ion-input type="password" placeholder="Ingrese su contraseña " [(ngModel)]="clave" class="login-input">
+      </ion-input>
+    </div>
+    <div class="inputbox input-icon-right">
+      <ion-input type="password" placeholder="repite la contraseña" [(ngModel)]="claveRepetida" class="login-input">
       </ion-input>
     </div>
 

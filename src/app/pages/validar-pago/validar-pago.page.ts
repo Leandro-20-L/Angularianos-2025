@@ -13,7 +13,7 @@ import { MesaService } from 'src/app/servicios/mesa.service';
   templateUrl: './validar-pago.page.html',
   styleUrls: ['./validar-pago.page.scss'],
   standalone: true,
-  imports: [IonicModule, CommonModule, FormsModule, RouterLink]
+  imports: [IonicModule, CommonModule, FormsModule]
 })
 export class ValidarPagoPage implements OnInit {
 
@@ -28,10 +28,10 @@ export class ValidarPagoPage implements OnInit {
     this.pagos = await this.pagoService.traerPagos();
   }
 
-  async confirmar(idCliente: string, idPedido: string) {
+  async confirmar(idCliente: string, idPedido: number) {
     let mesa = await this.usuarioService.obtenerUidMesa(idCliente);
 
-    await this.pagoService.confirmarPago(mesa![0].uid);
+    await this.pagoService.confirmarPago(idPedido);
     this.pagos = await this.pagoService.traerPagos();
 
     this.mesaService.habilitarMesa(mesa![0].uid);

@@ -71,23 +71,23 @@ ion-card p:last-child {
 }
 
 .btn_volver,
-.btn_finalizar{
+.btn_finalizar {
     --background: #e85d04;
     width: 200px;
     height: 60px;
 }
 
-.bototnes{
+.bototnes {
     display: flex;
     justify-content: center;
 }
 
-.precio{
-    background:#e85d04;
+.precio {
+    background: #e85d04;
     font-size: 2rem;
 }
 
-.fondo_precio{
+.fondo_precio {
     position: fixed;
     right: 10px;
     border-radius: 10%;
@@ -95,7 +95,22 @@ ion-card p:last-child {
 }
 
 ::ng-deep .custom-alert .alert-wrapper {
-  background-color: #FFBA08;
-  color: #ccc;
-  border-radius: 12px;
+    background-color: #FFBA08;
+    color: #ccc;
+    border-radius: 12px;
+}
+
+.botones {
+    display: flex;
+    flex-direction: row;
+}
+
+.header {
+    --background: transparent;
+}
+
+.btn_atajo {
+    --background: #e85d04;
+    font-size: 20px;
+    margin-bottom: 10px;
 }

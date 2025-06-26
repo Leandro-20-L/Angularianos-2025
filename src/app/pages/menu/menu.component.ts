@@ -20,6 +20,11 @@ export class MenuComponent implements OnInit {
 
   productos: any[] = [];
   pedido: Pedido[] = [];
+
+  comidas: any[] = [];
+  bebidas: any[] = [];
+  postres: any[] = [];
+
   precioTotal = 0;
   cantidad: any = "";
   uid: any = "";
@@ -28,9 +33,13 @@ export class MenuComponent implements OnInit {
   constructor(private router: Router, private usuarioService: UsuarioService, private authService: AuthService, private alert: AlertController, private productoService: ProductosService, private pedidoService: PedidoService) { }
 
   async ngOnInit() {
+    this.uid = await this.authService.getUserUid()!;
     this.productos = await this.productoService.traerProductos();
-    this.uid = await this.authService.getUserUid()!
-    this.usuario = await this.usuarioService.obtenerUsuarioPorUID(this.uid)
+    this.comidas.push(this.productos[0], this.productos[1], this.productos[2]);
+    this.bebidas.push(this.productos[3], this.productos[4], this.productos[5]);
+    this.postres.push(this.productos[6], this.productos[7], this.productos[8]);
+
+    this.usuario = await this.usuarioService.obtenerUsuarioPorUID(this.uid);
   }
 
   async agregarAlPedido(p: any) {
@@ -77,6 +86,14 @@ export class MenuComponent implements OnInit {
       await alert.present();
     }
   }
+
+  scrollTo(id: string) {
+    const el = document.getElementById(id);
+    if (el) {
+      el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  }
+
 
 }
 

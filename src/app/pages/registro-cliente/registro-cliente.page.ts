@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { SupabaseService } from 'src/app/servicios/supabase.service';
 import { Camera, CameraResultType, CameraSource } from '@capacitor/camera';
 import { UsuarioService } from 'src/app/servicios/usuario.service';
 import { AuthService } from 'src/app/servicios/auth.service';
@@ -24,6 +23,7 @@ export class RegistroClientePage implements OnInit {
   correo: string = "";
   nombre: string = "";
   apellido: string = "";
+  claveRepetida: string = "";
   foto: Blob = new Blob();
   ruta: string = "";
   escaneando: boolean = false;
@@ -32,7 +32,6 @@ export class RegistroClientePage implements OnInit {
   dniData: string | null = null;
 
   constructor(
-    private supabase: SupabaseService,
     private push: PushService,
     private route: Router,
     private usuario: UsuarioService,
@@ -61,79 +60,88 @@ export class RegistroClientePage implements OnInit {
   }
 
   async registrar() {
-  if (!this.validarDatos()) {
-    return;
-  }
-
-  try {
-    let user;
-    let correoFinal = this.correo;
-    let claveFinal = this.clave;
-
-    if (this.tipo === "anonimo") {
-      correoFinal = `anonimo_${Date.now()}@anonimo.com`;
-      claveFinal = "123456";
+    if (!this.validarDatos()) {
+      return;
     }
 
-    user = await this.authService.signUp(correoFinal, claveFinal);
-    const uid = user;
+    try {
+      let user;
+      let correoFinal = this.correo;
+      let claveFinal = this.clave;
 
-    await this.push.initializePushNotifications(uid);
+      if (this.tipo === "anonimo") {
+        correoFinal = `anonimo_${Date.now()}@anonimo.com`;
+        claveFinal = "123456";
+      }
 
-    const urlFoto = await this.usuario.subirFoto(this.ruta, this.foto);
+      user = await this.authService.signUp(correoFinal, claveFinal);
+      const uid = user;
 
-    if (this.tipo === "identificado") {
-      await this.usuario.registrarUsuario({
-        uid,
-        nombre: this.nombre,
-        apellido: this.apellido,
-        dni: this.dni,
-        correo: this.correo,
-        foto: urlFoto,
-        role: "cliente",
-        aprobado: "pendiente"
-      });
+      await this.push.initializePushNotifications(uid);
 
-      this.route.navigate(['/login']);
+      const urlFoto = await this.usuario.subirFoto(this.ruta, this.foto);
 
-    } else if (this.tipo === "anonimo") {
-      await this.usuario.registrarUsuario({
-        uid,
-        nombre: this.nombre,
-        correo: correoFinal,
-        foto: urlFoto,
-        aprobado: "aprobado",
-        role: "anonimo"
-      });
+      if (this.tipo === "identificado") {
+        await this.usuario.registrarUsuario({
+          uid,
+          nombre: this.nombre,
+          apellido: this.apellido,
+          dni: this.dni,
+          correo: this.correo,
+          foto: urlFoto,
+          role: "cliente",
+          aprobado: "pendiente"
+        });
 
-      this.route.navigate(['/home']);
+        this.route.navigate(['/login']);
+
+      } else if (this.tipo === "anonimo") {
+        await this.usuario.registrarUsuario({
+          uid,
+          nombre: this.nombre,
+          correo: correoFinal,
+          foto: urlFoto,
+          aprobado: "aprobado",
+          role: "anonimo"
+        });
+
+        this.route.navigate(['/home']);
+      }
+
+      let admin = await this.usuario.obtenerUsuarioPorRol("dueno");
+      let tokenAdmin = await this.push.getToken(admin[0].uid!);
+
+      let supervisor = await this.usuario.obtenerUsuarioPorRol("supervisor");
+      let tokenSupervisor = await this.push.getToken(supervisor[0].uid!);
+
+      await this.push.sendNotification(tokenAdmin, "angularianos", "hay nuevos usuarios a aprobar", 'https://api-la-comanda.onrender.com/notify').toPromise();
+
+      this.push.sendNotification(tokenSupervisor, "angularianos", "hay nuevos usuarios a aprobar", 'https://api-la-comanda.onrender.com/notify')
+        .subscribe({
+          next: res => this.imprimirToast('Notificación enviada:'),
+          error: err => this.imprimirToast(err.message)
+        });
+
+      this.imprimirToast("Registro exitoso.");
+
+    } catch (error: any) {
+      console.error("ERROR REGISTRO:", error);
+      this.mensajeError = error.message;
     }
-
-    let admin = await this.usuario.obtenerUsuarioPorRol("dueno");
-    let tokenAdmin = await this.push.getToken(admin[0].uid!);
-
-    let supervisor = await this.usuario.obtenerUsuarioPorRol("supervisor");
-    let tokenSupervisor = await this.push.getToken(supervisor[0].uid!);
-
-    await this.push.sendNotification(tokenAdmin, "angularianos", "hay nuevos usuarios a aprobar", 'https://api-la-comanda.onrender.com/notify').toPromise();
-
-    this.push.sendNotification(tokenSupervisor, "angularianos", "hay nuevos usuarios a aprobar", 'https://api-la-comanda.onrender.com/notify')
-      .subscribe({
-        next: res => this.imprimirToast('Notificación enviada:'),
-        error: err => this.imprimirToast(err.message)
-      });
-
-    this.imprimirToast("Registro exitoso.");
-
-  } catch (error: any) {
-    console.error("ERROR REGISTRO:", error);
-    this.mensajeError = error.message;
   }
-}
 
 
   validarDatos(): boolean {
 
+
+    if (!this.claveRepetida.trim()) {
+      this.imprimirToast("falta repetir la clave");
+      return false;
+    }
+    if (this.claveRepetida !== this.clave) {
+      this.imprimirToast("El las clavbes no  coinciden");
+      return false;
+    }
     if (!this.nombre.trim()) {
       this.imprimirToast("El nombre es obligatorio.");
       console.log("falta nombre");
