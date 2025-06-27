@@ -38,13 +38,13 @@ export class EncuestasPreviasPage implements OnInit {
   titulo: string,
   tipo: 'bar' | 'line' = 'bar'
 ) {
-  const labels = Array.from({ length: 10 }, (_, i) => (i + 1).toString());
-  const data = Array(10).fill(0);
+  const labels = Array.from({ length: 5 }, (_, i) => (i + 1).toString());
+  const data = Array(5).fill(0);
   const colores = ['#FFBA08', '#6A040F', '#FAA307', '#E85D04'];
 
   encuestas.forEach((e) => {
     const valor = e[campo];
-    if (valor >= 1 && valor <= 10) {
+    if (valor >= 1 && valor <= 5) {
       data[valor - 1]++;
     }
   });
@@ -106,12 +106,12 @@ export class EncuestasPreviasPage implements OnInit {
 }
 
   renderChartPie(encuestas: any[], campo: string, canvasId: string, titulo: string) {
-    const labels = ['1','2','3','4','5','6','7','8','9','10'];
-    const data = Array(10).fill(0);
+    const labels = ['1','2','3','4','5'];
+    const data = Array(5).fill(0);
 
     encuestas.forEach((e) => {
       const valor = e[campo];
-      if (valor >= 1 && valor <= 10) {
+      if (valor >= 1 && valor <= 5) {
         data[valor - 1]++;
       }
     });
