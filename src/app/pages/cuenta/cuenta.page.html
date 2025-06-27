@@ -8,10 +8,10 @@
 
       <ion-card-content>
 
-        <ion-input type="number" type="number" fill="outline" shape="round" [(ngModel)]="monto"></ion-input>
+        <ion-input placeholder="ingrese monto" type="number" type="number" fill="outline" shape="round" [(ngModel)]="monto"></ion-input>
 
-        <ion-button expand="block" color="success" shape="round" (click)="guardarValor('')">aceptar</ion-button>
-        <ion-button expand="block" color="success" shape="round" (click)="guardarValor('noGracias')">no,
+        <ion-button expand="block" class="btn-propina" shape="round" (click)="guardarValor('')">aceptar</ion-button>
+        <ion-button expand="block" class="btn-propina" shape="round" (click)="guardarValor('noGracias')">no,
           gracias</ion-button>
 
       </ion-card-content>
@@ -46,12 +46,18 @@
         <span>Propina:</span>
         <span>${{ monto }}</span>
       </div>
+
+      <div class="fila">
+        <span>Descuento:</span>
+        <span>$0</span>
+      </div>
       <div class="fila precioFinal">
         <strong>Monto total:</strong>
         <strong>${{ precioFinal + monto }}</strong>
       </div>
+      
 
-      <ion-button expand="block" color="success" shape="round" (click)="pagar()">Pagar</ion-button>
+      <ion-button expand="block" class="btn-propina" shape="round" (click)="pagar()">Pagar</ion-button>
     </ion-card-content>
   </div>
 

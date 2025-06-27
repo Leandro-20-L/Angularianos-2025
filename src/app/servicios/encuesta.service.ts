@@ -32,15 +32,16 @@ export class EncuestaService {
     return data;
   }
 
-  async completoEncuesta(id: string) {
-    let dosHorasAtras = new Date(Date.now() - 5 * 60 * 60 * 1000).toISOString();
+  async completoEncuesta(id: string): Promise<boolean> {
+  const { data, error } = await this.supabase.client
+    .from('usuarios')
+    .select('*')
+    .eq("completo_encuesta", true)
+    .eq("uid", id);
 
-    const { data } = await this.supabase.client
-      .from('usuarios')
-      .select('*')
-      .eq("completo_encuesta", true)
-      .eq("uid", id)
+  console.log("DATA:", data);
+  console.log("ERROR:", error);
 
-    return data?.length == 0;
-  }
+  return Array.isArray(data) && data.length > 0;
+}
 }

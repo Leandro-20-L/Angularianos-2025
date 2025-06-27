@@ -19,6 +19,20 @@ ion-content.fondo {
   padding: 16px;
 }
 
+.btn-propina{
+  --background:#6A040F;
+  --color:#fff;
+}
+
+ion-input {
+  --background: #6a040ea5;
+  //border: #E85D04;
+  --border-radius: 12px;
+  --color: #fff;
+}
+
+
+
 ::ng-deep .custom-alert .alert-wrapper {
   background-color: #FFBA08;
   color: #ccc;

@@ -76,9 +76,9 @@ export class MesaPage implements OnInit {
                 {
                   text: "pedir cuenta",
                   handler: async () => {
-                    let token = await this.push.getToken(this.datosMozo.uid)
+                    let token = await this.push.getToken(this.datosMozo[0].uid)
                     this.push.sendNotification(token, `mesa ${this.mesaAsignada}`, "el cliente pidio la cuenta", "https://api-la-comanda.onrender.com/notify")
-                    this.router.navigate(["/cuenta"])
+                    this.router.navigate(['/cuenta'])
                   }
                 },
                 {
@@ -88,18 +88,23 @@ export class MesaPage implements OnInit {
                   }
                 },
                 {
-                  text: "realizar encuesta",
+                  text: "pedir cuenta",
                   handler: async () => {
-                    const yaCompleto = await this.encuestaService.completoEncuesta(this.id);
-                    if (yaCompleto) {
-                      const alerta = await this.alert.create({
-                        header: "Ya completaste la encuesta",
-                        buttons: ["Aceptar"]
-                      });
-                      await alerta.present();
-                    } else {
-                      this.router.navigate(['/encuesta']);
-                    }
+                    console.log("PEDIR CUENTA - handler ejecutado");
+
+                    let token = await this.push.getToken(this.datosMozo.uid);
+                    console.log("Token obtenido:", token);
+                    console.log("dadtos moxoz",this.datosMozo);
+
+                    await this.push.sendNotification(
+                      token,
+                      `mesa ${this.mesaAsignada.numero}`,
+                      "el cliente pidio la cuenta",
+                      "https://api-la-comanda.onrender.com/notify"
+                    );
+                    console.log("Notificación enviada");
+
+                    this.router.navigate(["/cuenta"]);
                   }
                 }
               );
