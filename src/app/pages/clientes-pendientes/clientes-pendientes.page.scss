@@ -47,6 +47,22 @@ ion-content {
         margin-bottom: 4px;
       }
 
+       ion-label {
+        h2, p {
+          white-space: normal;       
+          word-break: break-word;    
+          overflow-wrap: break-word; 
+        }
+
+        h2 {
+          font-size: 1rem;
+        }
+
+        p {
+          font-size: 0.85rem;
+        }
+      }
+
       ion-label p {
         color: #6C757D;
         font-size: 0.9em;

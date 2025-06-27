@@ -1,0 +1,51 @@
+ion-content {
+  --background: #fff3e6;
+  padding: 16px;
+}
+
+/* Estilo general de los ítems que contienen texto (títulos) */
+ion-item {
+  --background: transparent;
+  --color: #6A040F;
+
+  ion-label {
+    --color: #6A040F;
+    font-weight: bold;
+    font-size: 18px;
+    text-align: center;
+    width: 100%;
+  }
+
+  
+}
+
+.text{
+    color: #6A040F;
+}
+
+canvas {
+  display: block;
+  margin: 0 auto 24px auto;
+  background-color: #fff3e6;
+  border-radius: 16px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+  max-width: 95%;
+}
+
+/* Colores personalizados por id */
+#comidaChartBar,
+#comidaChartLine {
+  background-color: #E85D04;
+}
+
+#atencionChart {
+  background-color: #E85D04;
+}
+
+#limpiezaChart {
+  background-color: #6A040F;
+}
+
+#conocioChart {
+  background-color: #FFBA08;
+}

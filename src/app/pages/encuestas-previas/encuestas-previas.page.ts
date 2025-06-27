@@ -70,8 +70,33 @@ export class EncuestasPreviasPage implements OnInit {
     },
     options: {
       responsive: true,
+      plugins: {
+        legend: {
+          labels: {
+            color: '#ffffff', // leyenda
+            font: {
+              size: 14,
+              weight: 'bold',
+            }
+          }
+        }
+      },
       scales: {
+        x: {
+          ticks: {
+            color: '#ffffff', // eje x
+            font: {
+              size: 12,
+            }
+          }
+        },
         y: {
+          ticks: {
+            color: '#ffffff', // eje y
+            font: {
+              size: 12,
+            }
+          },
           beginAtZero: true,
           max: encuestas.length > 0 ? encuestas.length : 1
         }
@@ -105,8 +130,19 @@ export class EncuestasPreviasPage implements OnInit {
         }]
       },
       options: {
-        responsive: true
+      responsive: true,
+      plugins: {
+        legend: {
+          labels: {
+            color: '#000000', // texto negro para fondo claro
+            font: {
+              size: 14,
+              weight: 'bold',
+            }
+          }
+        }
       }
+    }
     });
   }
 
@@ -136,7 +172,18 @@ export class EncuestasPreviasPage implements OnInit {
         }],
       },
       options: {
-        responsive: true
+        responsive: true,
+        plugins: {
+          legend: {
+            labels: {
+              color: '#000000', // texto negro para fondo claro
+              font: {
+                size: 14,
+                weight: 'bold',
+              }
+            }
+          }
+        }
       }
     });
   }

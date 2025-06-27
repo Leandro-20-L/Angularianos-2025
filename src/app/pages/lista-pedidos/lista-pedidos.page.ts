@@ -13,7 +13,7 @@ import { Router, RouterLink } from '@angular/router';
   templateUrl: './lista-pedidos.page.html',
   styleUrls: ['./lista-pedidos.page.scss'],
   standalone: true,
-  imports: [IonContent, CommonModule, FormsModule,IonList,IonItem,IonLabel,IonButton]
+  imports: [IonContent, CommonModule, FormsModule,IonList,IonItem,IonLabel,IonButton,IonFabButton,IonFab]
 })
 export class ListaPedidosPage implements OnInit {
   pedidosAgrupados: { [idMesa: string]: any[] } = {};
@@ -104,8 +104,8 @@ export class ListaPedidosPage implements OnInit {
     console.error(`Error al notificar al sector ${sector}:`, error);
   }
 }
-  async signOut() {
-    await this.auth.logOut();
-    this.route.navigate(["/login"])
+   signOut() {
+   
+    this.route.navigate(["/mozo"])
   }
 }
