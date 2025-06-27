@@ -35,6 +35,7 @@ export class ValidarPagoPage implements OnInit {
     this.pagos = await this.pagoService.traerPagos();
 
     this.mesaService.habilitarMesa(mesa![0].uid);
-  }
 
+    this.usuarioService.cambiarSituacion(idCliente, "");
+  }
 }

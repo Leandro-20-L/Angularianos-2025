@@ -83,7 +83,7 @@ export class UsuarioService {
       // QR general de entrada
       const { error } = await this.supabase.client
         .from('usuarios')
-        .update({ situacion: 'esperando_mesa', mesa_asignada: null }) 
+        .update({ situacion: 'esperando_mesa', mesa_asignada: null })
         .eq('uid', uid);
 
       if (error) throw error;
@@ -134,15 +134,15 @@ export class UsuarioService {
     };
   }
 
-  async obtenerMesaUid(uidCliente:string){
+  async obtenerMesaUid(uidCliente: string) {
     const { data: mesa, error: errorMesa } = await this.supabase.client
       .from('mesas')
       .select('uid')
-      .eq('id_cliente',uidCliente )
+      .eq('id_cliente', uidCliente)
       .single();
-      console.log('Resultado mesa:', mesa);
+    console.log('Resultado mesa:', mesa);
 
-      return mesa;
+    return mesa;
   }
 
   async obtenerSituacionUsuario(): Promise<string | null> {
@@ -178,7 +178,7 @@ export class UsuarioService {
       .from("usuarios")
       .select("mesa_asignada")
       .eq("uid", uid)
-      console.log(data)
+    console.log(data)
 
     if (error) throw error;
 
@@ -188,5 +188,14 @@ export class UsuarioService {
       .eq("numero", data[0].mesa_asignada)
 
     return uidMesa
+  }
+
+  async cambiarSituacion(id_cliente: string, situacion:string) {
+    const { error } = await this.supabase.client
+      .from('usuarios')
+      .update({ situacion, mesa_asignada: null })
+      .eq('uid', id_cliente);
+
+    if (error) throw error;
   }
 }
