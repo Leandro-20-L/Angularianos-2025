@@ -90,10 +90,16 @@ export class MesaPage implements OnInit {
                 {
                   text: "realizar encuesta",
                   handler: async () => {
-                    if (!await this.encuestaService.completoEncuesta(this.id)) {
-                      throw new Error("error, este cliente ya completo la encuesta");
+                    const yaCompleto = await this.encuestaService.completoEncuesta(this.id);
+                    if (yaCompleto) {
+                      const alerta = await this.alert.create({
+                        header: "Ya completaste la encuesta",
+                        buttons: ["Aceptar"]
+                      });
+                      await alerta.present();
+                    } else {
+                      this.router.navigate(['/encuesta']);
                     }
-                    this.router.navigate(['/encuesta']);
                   }
                 }
               );
@@ -127,10 +133,12 @@ export class MesaPage implements OnInit {
           this.router.navigate(['/menu']); // Redirigís a la página del menú
         }
       } else {
-        throw new Error('El QR escaneado no corresponde con tu mesa asignada.');
+        const alerta = await this.alert.create({
+          header: "El QR escaneado no corresponde con tu mesa asignada.",
+          buttons: ["Aceptar"]
+        });
+        await alerta.present();
       }
-    } catch (error: any) {
-      await this.alert.create({ header: error.message, buttons: ["aceptar"] });
     } finally {
       await this.cancelarEscaneo();
     }
@@ -145,4 +153,6 @@ export class MesaPage implements OnInit {
     this.escaneando = false;
     await this.qrService.cancelarEscaneo()
   }
+
+
 }

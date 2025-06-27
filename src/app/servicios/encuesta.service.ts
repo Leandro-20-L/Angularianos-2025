@@ -13,6 +13,11 @@ export class EncuestaService {
       .from("encuestas")
       .insert([{ atencion_cliente, comida, como_conocio, encuestado, limpieza, opinion_general, foto1, foto2, foto3, }])
       .select();
+
+    await this.supabase.client
+      .from("usuarios")
+      .update({ completo_encuesta: true })
+      .eq("uid", encuestado)
   }
 
   async traerEncuestasPrevias() {
@@ -31,11 +36,11 @@ export class EncuestaService {
     let dosHorasAtras = new Date(Date.now() - 5 * 60 * 60 * 1000).toISOString();
 
     const { data } = await this.supabase.client
-      .from('encuestas')
+      .from('usuarios')
       .select('*')
-      .eq("encuestado", id)
-      .gte("fecha", dosHorasAtras);
- 
-    return data?.length !== 0;
+      .eq("completo_encuesta", true)
+      .eq("uid", id)
+
+    return data?.length == 0;
   }
 }
