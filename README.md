@@ -150,7 +150,7 @@
 
 | Encargado/s       | Inicio | Final | Rama       |
 | :---------------- | :----- | :---- | :--------- |
-| Leandro Escobar | 19/6 | 20/6  |  `main` |
+| Bautista Escalante | 19/6 | 20/6  |  `main` |
 
 
 ### 7)
@@ -158,7 +158,7 @@
 
 | Encargado/s       | Inicio | Final | Rama       |
 | :---------------- | :----- | :---- | :--------- |
-| Leandro Escobar | 20/6 | 21/6  |  `main` |
+|Bautista Escalante| 20/6 | 21/6  |  `main` |
 
 
 ### 8)
@@ -174,5 +174,33 @@
 
 | Encargado/s       | Inicio | Final | Rama       |
 | :---------------- | :----- | :---- | :--------- |
-| Leandro Escobar | 22/6 | /6  |  `main` |
+| Leandro Escobar | 22/6 | 22/6  |  `main` |
+
+### 10)
+#### funcionalidad punto 10
+
+| Encargado/s       | Inicio | Final | Rama       |
+| :---------------- | :----- | :---- | :--------- |
+| Leandro Escobar | 22/6 | 23/6  |  `main` |
+
+### 11)
+#### funcionalidad punto 11
+
+| Encargado/s       | Inicio | Final | Rama       |
+| :---------------- | :----- | :---- | :--------- |
+| Bautista Escalante| 23/6 | 24/6  |  `main` |
+
+### 12)
+#### funcionalidad punto 12
+
+| Encargado/s       | Inicio | Final | Rama       |
+| :---------------- | :----- | :---- | :--------- |
+| Bautista Escalante | 25/6 | 25/6  |  `main` |
+
+### 13)
+#### funcionalidad punto 13
+
+| Encargado/s       | Inicio | Final | Rama       |
+| :---------------- | :----- | :---- | :--------- |
+| Bautista Escalante | 26/6 | 26/6  |  `main` |
 
