@@ -1,4 +1,5 @@
 <ion-content class="fondoSector">
+  <ng-container *ngIf="pedidos.length > 0; else sinPedidos">
   <ion-item color="warning" class="sector-header">
     <ion-label>
       <strong>Pedidos del sector:</strong> {{ sector }}
@@ -28,6 +29,14 @@
   <div class="fondo-imagen-decorativa">
     <img src="assets/imgs/fondo.jpg" alt="decoración" />
   </div>
+  </ng-container>
+    <ng-template #sinPedidos>
+    <div class="contenedor-vacio">
+      <img src="assets/imgs/logo.jpeg" alt="Logo" class="logo-vacio" />
+      <p class="texto-vacio">No hay pedidos pendientes</p>
+      <img src="assets/imgs/fondo.jpg" alt="fondo" class="fondo-vacio" />
+    </div>
+  </ng-template>
 
     <ion-fab vertical="bottom" horizontal="end" slot="fixed">
     <ion-fab-button (click)="signOut()" class="salir">

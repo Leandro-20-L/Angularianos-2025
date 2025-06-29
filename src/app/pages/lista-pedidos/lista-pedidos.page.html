@@ -1,5 +1,8 @@
 <ion-content class="fondoPedidos">
-  <ng-container *ngIf="pedidosAgrupados | keyvalue as mesas">
+  <ng-container *ngIf="(pedidosAgrupados | keyvalue) as mesas" >
+
+ 
+  <ng-container *ngIf="mesas.length > 0; else sinPedidos">
     <div *ngFor="let mesa of mesas" class="mesa-container">
 
       <ion-item color="warning" class="mesa-header">
@@ -61,16 +64,21 @@
     <img src="assets/imgs/fondo.jpg" alt="decoración" />
   </div>
   </ng-container>
+   </ng-container>
+
+  
+
+  <ng-template #sinPedidos>
+    <div class="contenedor-sin-pedidos">
+      <img src="assets/imgs/logo.jpeg" alt="Logo" class="logo-sin-pedidos" />
+      <p class="texto-sin-pedidos">No hay pedidos pendientes</p>
+      <img src="assets/imgs/fondo.jpg" class="fondo-sin-pedidos" />
+    </div>
+  </ng-template>
 
   <ion-fab vertical="bottom" horizontal="end" slot="fixed">
     <ion-fab-button (click)="signOut()" class="salir">
       <img src="assets/iconos/volverAtras.svg" class="img-responsive" />
     </ion-fab-button>
   </ion-fab>
-
-  <ng-template #sinPedidos>
-    <ion-item color="danger">
-      <ion-label>No hay pedidos activos.</ion-label>
-    </ion-item>
-  </ng-template>
 </ion-content>

@@ -6,8 +6,12 @@ ion-content.fondo {
 }
 
 .card {
-  --background: #FAA307;
+  background: #FAA307;
   border-radius: 10px;
+  width: 95%;
+  margin-top: 20px;
+  padding: 16px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
 }
 
 .center {
@@ -19,52 +23,61 @@ ion-content.fondo {
   padding: 16px;
 }
 
-.btn-propina{
-  --background:#6A040F;
-  --color:#fff;
+.btn-propina {
+  --background: #6A040F;
+  --color: #fff;
+  font-size: 1.2rem;
 }
 
 ion-input {
   --background: #6a040ea5;
-  //border: #E85D04;
   --border-radius: 12px;
   --color: #fff;
+  font-size: 1.2rem;
 }
-
-
 
 ::ng-deep .custom-alert .alert-wrapper {
   background-color: #FFBA08;
-  color: #ccc;
+  color: #000;
   border-radius: 12px;
 }
 
-.card {
-  background: #FAA307;
-  width: 95%;
-  margin-top: 20px;
+/* Texto general más grande y claro */
+h2 {
+  font-size: 1.5rem;
+  color: #fff;
 }
 
-h3{
-  font-size: 30px;
-}
-
-.precioFinal {
-  font-size: 20px;
-  background: #E85D04;
+h3 {
+  font-size: 2rem;
+  color: #fff;
 }
 
 .titulo {
   font-family: 'Amoresa';
-  font-size: 3rem;
+  font-size: 3.5rem;
+  color: #6a040ea5;
+  text-align: center;
 }
 
 .fila {
   display: flex;
   justify-content: space-between;
-  padding: 4px 0;
+  padding: 6px 0;
+  font-size: 1.7rem;
+  color: #fff;
 }
 
+/* Monto total destacado */
 .precioFinal {
-  margin-top: 10px;
+  margin-top: 16px;
+  font-size: 2rem;
+  font-weight: bold;
+  background: #E85D04;
+  padding: 14px;
+  border-radius: 12px;
+  color: #fff;
+  text-shadow: 1px 1px 2px #00000033;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.4);
+  
 }

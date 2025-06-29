@@ -24,8 +24,12 @@
     </ion-card-content>
   </div>
 
-  <div *ngIf="pagos && pagos.length === 0" class="mensaje-vacio">
-    <h2 class="error">no hay pagos por aprobar</h2>
+  <ng-container *ngIf="pagos.length === 0">
+  <div class="contenedor-vacio">
+    <img src="assets/imgs/logo.jpeg" alt="Logo" class="logo-vacio" />
+    <p class="texto-vacio">No hay pagos pendientes</p>
+    <img src="assets/imgs/fondo.jpg" alt="fondo" class="fondo-vacio" />
   </div>
+</ng-container>
 
 </ion-content>

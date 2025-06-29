@@ -12,7 +12,6 @@ ion-header {
 }
 
 ion-content {
-  //--background: #fffaf4;
     
   ion-list {
     background-color: transparent;
@@ -80,8 +79,6 @@ ion-content {
     }
   }
 
-  
-
   ion-spinner {
     display: block;
     margin: 0 auto;
@@ -103,7 +100,6 @@ ion-content {
   left: 0;
   width: 100%;
   height: 100%;
-  //background-image: url('https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.freepik.es%2Fvector-premium%2Ffondo-vector-comida-rapida_226290256.htm&psig=AOvVaw2vq3Ft4M63BeEkU096GfiO&ust=1750095002099000&source=images&cd=vfe&opi=89978449&ved=0CBQQjRxqFwoTCPD-6JH6840DFQAAAAAdAAAAABAl');
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -111,9 +107,51 @@ ion-content {
   z-index: 0;
 }
 
-/* Asegurar que el contenido esté por encima */
-
 .buttons{
   display: flex;
   flex-direction: column;
+}
+
+.contenedor-vacio {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  height: 100%;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 20px;
+}
+
+.logo-vacio {
+  max-width: 160px;
+  margin-bottom: 20px;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+.texto-vacio {
+  font-size: 1.4rem;
+  color: #fff;
+  background-color: rgba(0, 0, 0, 0.5);
+  padding: 12px 24px;
+  border-radius: 12px;
+  font-weight: bold;
+  z-index: 1;
+}
+
+.fondo-vacio {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  //background-image: url('assets/imgs/fondo-alimentario.avif');
+  background-size: cover;
+  background-position: center;
+  opacity: 0.15;
+  z-index: -1;
 }
