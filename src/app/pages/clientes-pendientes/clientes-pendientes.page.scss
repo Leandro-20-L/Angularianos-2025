@@ -113,3 +113,7 @@ ion-content {
 
 /* Asegurar que el contenido esté por encima */
 
+.buttons{
+  display: flex;
+  flex-direction: column;
+}

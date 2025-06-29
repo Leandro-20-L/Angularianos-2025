@@ -88,25 +88,11 @@ export class MesaPage implements OnInit {
                   }
                 },
                 {
-                  text: "pedir cuenta",
-                  handler: async () => {
-                    console.log("PEDIR CUENTA - handler ejecutado");
-
-                    let token = await this.push.getToken(this.datosMozo.uid);
-                    console.log("Token obtenido:", token);
-                    console.log("dadtos moxoz",this.datosMozo);
-
-                    await this.push.sendNotification(
-                      token,
-                      `mesa ${this.mesaAsignada.numero}`,
-                      "el cliente pidio la cuenta",
-                      "https://api-la-comanda.onrender.com/notify"
-                    );
-                    console.log("Notificación enviada");
-
-                    this.router.navigate(["/cuenta"]);
-                  }
+                    text: "ver encuesta",
+                  handler: () => {
+                    this.router.navigate(['/encuesta']);
                 }
+              }
               );
               break;
 
