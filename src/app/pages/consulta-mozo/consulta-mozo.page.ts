@@ -173,7 +173,4 @@ export class ConsultaMozoPage implements OnInit {
 
     return `${dia}/${mes} ${horas}:${minutos}`;
   }
-
-
-
 }

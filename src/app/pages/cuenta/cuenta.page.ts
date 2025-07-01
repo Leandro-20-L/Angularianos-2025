@@ -68,7 +68,7 @@ export class CuentaPage implements OnInit {
       this.escaneando = true;
       const qrContenido = await this.qrService.scan();
 
-      this.monto = (this.precioFinal * (parseInt(qrContenido!)) / 100);
+      this.monto = ((this.precioFinal * (parseInt(qrContenido!))) / 100);
       this.guardarValor(this.monto + this.precioFinal);
       this.mostar = false;
 

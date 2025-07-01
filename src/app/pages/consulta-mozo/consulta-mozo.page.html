@@ -25,7 +25,7 @@
           <p class="fecha">{{formatearFecha(m.created_at)}}</p>
         </ion-card-content>
 
-        <ion-button *ngIf="m.tipo === 'consulta'" class="btn_responder" >
+        <ion-button *ngIf="m.tipo === 'consulta'" (click)="guardarId(m.id_cliente.uid)" class="btn_responder" >
           <img src="assets/iconos/responder.svg" class="responder">
         </ion-button>
 
