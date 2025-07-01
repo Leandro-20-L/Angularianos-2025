@@ -21,16 +21,19 @@ export class PedidoService {
         estado: "pendiente",
         tiempo_estimado: tiempo
       });
+
+       await this.supabase.client
+      .from("usuarios")
+      .update({ completo_encuesta: false })
+      .eq("uid", id_cliente)
   }
 
   async traerEstado(uidCliente: string) {
-    const dosHorasAtras = new Date(Date.now() - 5 * 60 * 60 * 1000).toISOString();
-
     const { error, data } = await this.supabase.client
       .from("pedidos")
       .select("estado")
       .eq("id_cliente", uidCliente)
-      .gte("fecha_pedido", dosHorasAtras);
+      .gte("fecha_pedido", new Date().toISOString());
 
     if (error) throw error;
     return data;
@@ -56,7 +59,7 @@ export class PedidoService {
       .from('pedidos')
       .select('*')
       .eq('id_mesa', idMesa)
-      .eq('fecha_pedido', fecha.toISOString().split('T')[0]);
+      .eq('fecha_pedido', fecha.toISOString());
 
     return data;
   }
@@ -103,6 +106,15 @@ export class PedidoService {
     return { error };
   }
 
+  async traerPedidos() {
+    const { data } = await this.supabase.client
+      .from('pedidos')
+      .select("*")
+      .limit(1)
+
+    return data;
+  }
+
   async traerPedidosPorSector(sector: string) {
     const { data, error } = await this.supabase.client
       .from('pedidos')
@@ -118,12 +130,12 @@ export class PedidoService {
     return data;
   }
 
-  async guardarPropina(propina: number, id_cliente: string, fecha: Date) {
+  async guardarPropina(propina: number, id_cliente: string) {
     const { data, error } = await this.supabase.client
       .from("pedidos")
       .update({ propina, cuenta_entregada: true, estado:"cuenta entregada" })
       .eq("id_cliente", id_cliente)
-      .eq("fecha_pedido", fecha)
+      .eq("fecha_pedido", new Date().toISOString())
       .select()
 
 

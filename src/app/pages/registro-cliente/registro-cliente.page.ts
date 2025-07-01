@@ -133,15 +133,6 @@ export class RegistroClientePage implements OnInit {
 
   validarDatos(): boolean {
 
-
-    if (!this.claveRepetida.trim()) {
-      this.imprimirToast("falta repetir la clave");
-      return false;
-    }
-    if (this.claveRepetida !== this.clave) {
-      this.imprimirToast("El las clavbes no  coinciden");
-      return false;
-    }
     if (!this.nombre.trim()) {
       this.imprimirToast("El nombre es obligatorio.");
       console.log("falta nombre");
@@ -182,6 +173,14 @@ export class RegistroClientePage implements OnInit {
 
       if (!this.clave.trim()) {
         this.imprimirToast("La clave es obligatoria.");
+        return false;
+      }
+      if (!this.claveRepetida.trim()) {
+        this.imprimirToast("falta repetir la clave");
+        return false;
+      }
+      if (this.claveRepetida !== this.clave) {
+        this.imprimirToast("las claves no coinciden");
         return false;
       }
 

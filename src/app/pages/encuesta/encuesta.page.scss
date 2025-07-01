@@ -41,19 +41,23 @@
     background: #E85D04;
 }
 
-.botones{
+.botones {
     display: flex;
     flex-direction: column;
     --background: transparent;
 }
 
-.btn_accion{
+.btn_accion {
     --background: #FFBA08;
     color: black;
     font-size: 20px;
 }
 
-.txtbox_comentario{
+.btn_accion:active  {
+    --background: #E85D04;
+}
+
+.txtbox_comentario {
     --background: #FFBA08;
     color: black;
     font-size: 20px;

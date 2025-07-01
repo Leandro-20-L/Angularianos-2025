@@ -22,11 +22,11 @@
           <P class="fecha" *ngIf="m.tipo === 'respuesta'">{{m.id_mozo.nombre}} (mozo)</P>
           <p class="fecha" *ngIf="m.tipo === 'consulta'">Mesa {{m.id_cliente.mesa_asignada}}</p>
           <p class="contenido"><strong>{{ m.content }}</strong></p>
-          <p class="fecha">{{m.created_at | date:'yy/mm/dd hh:mm'}}</p>
+          <p class="fecha">{{formatearFecha(m.created_at)}}</p>
         </ion-card-content>
 
-        <ion-button *ngIf="m.tipo === 'consulta'" class="btn_responder">
-          <img src="assets/iconos/responder.svg" class="responder" (click)="guardarId(m.id_cliente.uid)">
+        <ion-button *ngIf="m.tipo === 'consulta'" class="btn_responder" >
+          <img src="assets/iconos/responder.svg" class="responder">
         </ion-button>
 
       </ion-card>
@@ -36,7 +36,7 @@
           <P class="fecha" *ngIf="m.tipo === 'respuesta'">{{m.id_mozo.nombre}} (mozo)</P>
           <p class="fecha" *ngIf="m.tipo === 'consulta'">Mesa {{m.id_cliente.mesa_asignada}}</p>
           <p class="contenido"><strong>{{ m.content }}</strong></p>
-          <p class="fecha">{{m.created_at | date:'yy/mm/dd hh:mm'}}</p>
+          <p class="fecha">{{formatearFecha(m.created_at)}}</p>
         </ion-card-content>
 
       </ion-card>

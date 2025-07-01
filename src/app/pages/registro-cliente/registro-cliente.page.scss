@@ -58,7 +58,7 @@
     align-items: center;
     height: 100%;
     padding: 20px;
-    gap: 12px;
+    gap: 10px;
 }
 
 .inputbox {
@@ -108,7 +108,8 @@
 }
 
 .imagen {
-    width: 200px;
+    width: 200px; 
+    height: auto;
     --background: #D00000;
     border: 2px solid #FAA307;
 }

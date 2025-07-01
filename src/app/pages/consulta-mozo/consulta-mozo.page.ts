@@ -11,6 +11,7 @@ import { Router } from '@angular/router';
 import { PushService } from 'src/app/servicios/push.service';
 import { Preferences } from '@capacitor/preferences';
 import { Token } from '@angular/compiler';
+import { AlertController } from '@ionic/angular/standalone';
 
 
 @Component({
@@ -28,6 +29,7 @@ export class ConsultaMozoPage implements OnInit {
   mensajes = signal<any>([]);
   mesaAsignada = 0;
   perfil = "";
+  id_cliente: string | null = null;
 
   constructor(
     private mensaje: MensajeService,
@@ -36,7 +38,8 @@ export class ConsultaMozoPage implements OnInit {
     private usuarioService: UsuarioService,
     private supabase: SupabaseService,
     private push: PushService,
-    private router: Router
+    private router: Router,
+    private alert: AlertController
   ) {
   }
 
@@ -67,16 +70,16 @@ export class ConsultaMozoPage implements OnInit {
         throw new Error("mensaje no valido");
       }
 
-      let token = ""
+      let token = "";
       let tipo = (): string => { if (this.perfil === "cliente") return 'consulta'; else return 'respuesta' };
-    
-      if (this.perfil === "mozo") {
 
-        let uid = await this.obtenerIdCliente();
-        if (!uid) throw new Error('primero debes elegir qué mensaje responder')
-          
-          token = await this.push.getToken(uid);
-        await this.mensaje.escribirMensaje(mensaje, uid, this.id, tipo(), this.id);
+      if (this.perfil === "mozo") {
+        console.log(this.id_cliente)
+        if (this.id_cliente == null) throw new Error('primero debes elegir qué mensaje responder')
+
+        token = await this.push.getToken(this.id_cliente);
+        await this.mensaje.escribirMensaje(mensaje, this.id_cliente, this.id, tipo(), this.id);
+
       } else {
 
         let mozo = await this.usuarioService.obtenerUsuarioPorRol("mozo");
@@ -91,13 +94,17 @@ export class ConsultaMozoPage implements OnInit {
           error: err => { throw err; }
         });
     } catch (err: any) {
-      alert(`${err.message}`)
+
+      const alerta = await this.alert.create({
+        header: err.message,
+        buttons: ["Aceptar"]
+      });
+      await alerta.present();
     }
   }
 
   async actualizarChat() {
     const array = await this.mensaje.obtenerMensajes();
-    console.log(array)
     if (array && array.length > 0) {
       this.mensajes.set(array);
     }
@@ -151,15 +158,22 @@ export class ConsultaMozoPage implements OnInit {
     await this.acceso.logOut();
   }
 
-  async guardarId(uid: string) {
-    await Preferences.set({
-      key: 'clientUid',
-      value: uid
-    });
+  guardarId(uid: string) {
+    this.id_cliente = uid;
+    console.log(this.id_cliente);
   }
 
-  async obtenerIdCliente() {
-    const { value } = await Preferences.get({ key: 'clientUid' });
-    return value;
+  formatearFecha(fecha: Date): string {
+    const f = new Date(fecha);
+
+    const dia = f.getDate().toString().padStart(2, '0');
+    const mes = (f.getMonth() + 1).toString().padStart(2, '0');
+    const horas = (parseInt(f.getHours().toString().padStart(2, '0')) -3);
+    const minutos = f.getMinutes().toString().padStart(2, '0');
+
+    return `${dia}/${mes} ${horas}:${minutos}`;
   }
+
+
+
 }

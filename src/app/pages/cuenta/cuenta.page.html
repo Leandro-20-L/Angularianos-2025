@@ -1,17 +1,18 @@
-<ion-content class="fondo" [fullscreen]="true">
+
+<ion-content *ngIf="!escaneando"  [fullscreen]="true" class="fondo">
 
   <div class="center" *ngIf="mostar">
     <ion-card class="card">
       <ion-card-header>
-        <ion-card-title>¿Deseas dejar una propina?</ion-card-title>
+        <ion-card-title class="titulo">¿Deseas dejar una propina?</ion-card-title>
       </ion-card-header>
 
       <ion-card-content>
+        <ion-button expand="block" (click)="escanear()" class="btn_qr">
+          <img src="assets/iconos/scan_qr.svg">
+        </ion-button>
 
-        <ion-input placeholder="ingrese monto" type="number" type="number" fill="outline" shape="round" [(ngModel)]="monto"></ion-input>
-
-        <ion-button expand="block" class="btn-propina" shape="round" (click)="guardarValor('')">aceptar</ion-button>
-        <ion-button expand="block" class="btn-propina" shape="round" (click)="guardarValor('noGracias')">no,
+        <ion-button expand="block" class="btn-propina" shape="round" (click)="guardarValor(0)">no,
           gracias</ion-button>
 
       </ion-card-content>
@@ -43,7 +44,7 @@
       </div>
 
       <div class="fila">
-        <span>Propina:</span>
+        <span>Propina:</span> 
         <span>${{ monto }}</span>
       </div>
 
@@ -51,15 +52,24 @@
         <span>Descuento:</span>
         <span>$0</span>
       </div>
+
       <div class="fila precioFinal">
         <strong>Monto total:</strong>
         <strong>${{ precioFinal + monto }}</strong>
       </div>
-      
 
       <ion-button expand="block" class="btn-propina" shape="round" (click)="pagar()">Pagar</ion-button>
     </ion-card-content>
   </div>
 
+</ion-content>
+
+<ion-content *ngIf="escaneando" class="fondoTransparente">
+
+  <ion-fab vertical="bottom" horizontal="end">
+    <ion-fab-button (click)="cancelarEscaneo()" class="salir">
+      <img src="assets/iconos/atras.svg" class="salir" />
+    </ion-fab-button>
+  </ion-fab>
 
 </ion-content>

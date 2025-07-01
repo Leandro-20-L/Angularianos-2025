@@ -1,0 +1,18 @@
+<ion-content [fullscreen]="true" class="fondo">
+  <ion-card-content class="contenedor-principal">
+    <ion-card>
+      <ion-card-header>
+        <ion-card-title> su pedido esta: {{estado[0].estado}}</ion-card-title>
+      </ion-card-header>
+      <div class="img-card">
+        <img src="assets/imgs/alta_pedido.png" alt="">
+      </div>
+      <ion-button class="btn_accion" routerLink="/mesa" expand="block" shape="round">aceptar</ion-button>
+      <ion-button *ngIf="estado[0].estado=== 'entregado' || estado[0].estado ==='en preparacion'" class="btn_accion" expand="block" shape="round">juegos</ion-button>
+      <ion-button *ngIf="estado[0].estado=== 'entregado'" class="btn_accion" (click)="pedirCuenta()" expand="block" shape="round">pedir cuenta</ion-button>
+      <ion-button *ngIf="estado[0].estado=== 'entregado' " class="btn_accion" (click)="hacerEncuesta()" expand="block" shape="round">hacer encuesta</ion-button>
+      <ion-button *ngIf="estado[0].estado=== 'cuenta pagada'" class="btn_accion" routerLink="/encuestas-previas" expand="block" shape="round">ver encuesta</ion-button>
+    </ion-card>
+  </ion-card-content>
+
+</ion-content>

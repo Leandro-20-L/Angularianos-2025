@@ -27,13 +27,7 @@ ion-content.fondo {
   --background: #6A040F;
   --color: #fff;
   font-size: 1.2rem;
-}
-
-ion-input {
-  --background: #6a040ea5;
-  --border-radius: 12px;
-  --color: #fff;
-  font-size: 1.2rem;
+  margin-top: 15px;
 }
 
 ::ng-deep .custom-alert .alert-wrapper {
@@ -79,5 +73,15 @@ h3 {
   color: #fff;
   text-shadow: 1px 1px 2px #00000033;
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.4);
-  
+
+}
+
+.btn_qr {
+  --background: #6A040F;
+  color: white;
+}
+
+.fondoTransparente {
+  --background: transparent !important;
+  background: transparent !important;
 }

@@ -68,6 +68,10 @@ export const routes: Routes = [
   {
     path: 'validar-pago',
     loadComponent: () => import('./pages/validar-pago/validar-pago.page').then( m => m.ValidarPagoPage)
+  },
+  {
+    path: 'estado-pedido',
+    loadComponent: () => import('./pages/estado-pedido/estado-pedido.page').then( m => m.EstadoPedidoPage)
   }
 
 ];

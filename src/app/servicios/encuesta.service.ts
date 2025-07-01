@@ -33,15 +33,12 @@ export class EncuestaService {
   }
 
   async completoEncuesta(id: string): Promise<boolean> {
-  const { data, error } = await this.supabase.client
-    .from('usuarios')
-    .select('*')
-    .eq("completo_encuesta", true)
-    .eq("uid", id);
+    const { data, error } = await this.supabase.client
+      .from('usuarios')
+      .select('*')
+      .eq("uid", id)
 
-  console.log("DATA:", data);
-  console.log("ERROR:", error);
-
-  return Array.isArray(data) && data.length > 0;
-}
+    if (error) console.log(error)
+    return data![0].completo_encuesta;
+  }
 }

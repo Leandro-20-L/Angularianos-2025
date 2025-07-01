@@ -6,11 +6,7 @@ import { QrService } from 'src/app/servicios/qr.service';
 import { Router, RouterLink } from '@angular/router';
 import { AlertController } from '@ionic/angular/standalone';
 import { UsuarioService } from 'src/app/servicios/usuario.service';
-import { PushService } from 'src/app/servicios/push.service';
 import { AuthService } from 'src/app/servicios/auth.service';
-import { Pedido } from '../menu/menu.component';
-import { PedidoService } from 'src/app/servicios/pedido.service';
-import { EncuestaService } from 'src/app/servicios/encuesta.service';
 
 @Component({
   selector: 'app-mesa',
@@ -23,18 +19,12 @@ export class MesaPage implements OnInit {
 
   numeroMesaAsignada: number | null = null;
   qrCorrecto: string | null = null;
-  id: any = "";
   escaneando: boolean = false;
   mesaAsignada: any = "";
-  datosMozo: any = "";
 
-  constructor(private encuestaService: EncuestaService, private pedidoService: PedidoService, private auth: AuthService, private push: PushService, private alert: AlertController, private qrService: QrService, private router: Router, private usuarioService: UsuarioService) { }
+  constructor(private auth: AuthService, private alert: AlertController, private qrService: QrService, private router: Router, private usuarioService: UsuarioService) { }
 
   async ngOnInit() {
-    this.datosMozo = await this.usuarioService.obtenerUsuarioPorRol("mozo")
-
-    this.id = await this.auth.getUserUid();
-
     this.mesaAsignada = await this.usuarioService.obtenerMesaAsignada();
 
     if (this.mesaAsignada) {
@@ -54,75 +44,9 @@ export class MesaPage implements OnInit {
       console.log('QR correcto:', this.qrCorrecto);
 
       if (resultado === this.qrCorrecto) {
-        let estado = await this.pedidoService.traerEstado(this.id);
-        if (estado?.length > 0) {
+        await this.cancelarEscaneo();
+        this.router.navigate(["/estado-pedido"])
 
-          let botones = [];
-
-          switch (estado[0].estado) {
-            case "en preparacion":
-              botones.push(
-                {
-                  text: "juegos",
-                  handler: () => {
-                    console.log("Abrir juegos");
-                  }
-                }
-              );
-              break;
-
-            case "entregado":
-              botones.push(
-                {
-                  text: "pedir cuenta",
-                  handler: async () => {
-                    let token = await this.push.getToken(this.datosMozo[0].uid)
-                    this.push.sendNotification(token, `mesa ${this.mesaAsignada}`, "el cliente pidio la cuenta", "https://api-la-comanda.onrender.com/notify")
-                    this.router.navigate(['/cuenta'])
-                  }
-                },
-                {
-                  text: "juegos",
-                  handler: () => {
-                    console.log("Abrir juegos");
-                  }
-                },
-                {
-                    text: "ver encuesta",
-                  handler: () => {
-                    this.router.navigate(['/encuesta']);
-                }
-              }
-              );
-              break;
-
-            case "cuenta pagada":
-              botones.push(
-                {
-                  text: "ver encuesta",
-                  handler: () => {
-                    this.router.navigate(['/encuestas-previas']);
-                  }
-                }
-              );
-              break;
-          }
-
-          botones.push({
-            text: "aceptar",
-            role: "ok"
-          });
-
-          const alert = await this.alert.create({
-            header: `Su pedido está ${estado[0].estado}`,
-            buttons: botones,
-            cssClass: 'custom-alert'
-          });
-          await alert.present();
-        } else {
-          // pedido no existe 
-          this.router.navigate(['/menu']); // Redirigís a la página del menú
-        }
       } else {
         const alerta = await this.alert.create({
           header: "El QR escaneado no corresponde con tu mesa asignada.",
