@@ -82,6 +82,30 @@
 
 <br>
 
+## Propinas
+
+<br>
+<table align="center">
+    <tr>
+        <td align="center">
+            <h3>5%</h3>
+            <img src="https://github.com/user-attachments/assets/a2cc94d2-1e7c-4167-9b5b-7038b4eec213" alt="Mesa 2" width="250" style="margin: 15px;">
+        </td>
+        <td align="center">
+            <h3>10%</h3>
+            <img src="https://github.com/user-attachments/assets/80b6c691-a0e6-4937-a00b-76b58a4ed29e" alt="Mesa 2" width="250" style="margin: 15px;">
+        </td>
+    </tr>
+    <tr>
+        <td align="center">
+            <h3>15%</h3>
+            <img src="https://github.com/user-attachments/assets/c90982e8-13ca-4e92-a525-743311845be1" alt="Mesa 3" width="250" style="margin: 15px;">
+        </td>
+    </tr>
+</table>
+
+<br>
+
 <h2 align="center">División de tareas</h2>
 
 #### Icono
