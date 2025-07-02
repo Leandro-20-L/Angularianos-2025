@@ -47,6 +47,35 @@
 
 <br/>
 
+<br/>
+
+<div align="center">
+    <h2 align="center">Imágenes de las pantallas</h1>
+</div>
+
+<table align="center">
+    <tr>
+        <td align="center">
+            <h3>Mesa Asignada</h3>
+            <img src="https://hnlzagyadmtdaztbcwzd.supabase.co/storage/v1/object/public/logo//img(4).png" alt="Mesa 1" width="250" style="margin: 15px;">
+        </td>
+        <td align="center">
+            <h3>Encuestas</h3>
+            <img src="https://hnlzagyadmtdaztbcwzd.supabase.co/storage/v1/object/public/logo//img(3).png" alt="Mesa 2" width="250" style="margin: 15px;">
+        </td>
+        <td align="center">
+            <h3>Pedido</h3>
+            <img src="https://hnlzagyadmtdaztbcwzd.supabase.co/storage/v1/object/public/logo//img(2).png" alt="Mesa 2" width="250" style="margin: 15px;">
+        </td>
+      <td align="center">
+            <h3>Chat</h3>
+            <img src="https://hnlzagyadmtdaztbcwzd.supabase.co/storage/v1/object/public/logo//img(1).png" alt="Mesa 2" width="250" style="margin: 15px;">
+        </td>
+    </tr>
+</table>
+
+<br/>
+
 ## Entrada
 
 <br/>
