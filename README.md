@@ -2,10 +2,14 @@
 <br>
 
 
+
 <div align="center">
     <img src="src/assets/imgs/logo.jpeg" alt="Logo" width="250">
 </div>
 <br/>
+
+> 🍽️ **Angularianos** es una aplicación de restaurante interactiva desarrollada con **Angular, Ionic, Capacitor y TypeScript**. 
+> Permite gestionar clientes, mesas, pedidos, encuestas, propinas y chat en tiempo real. Está pensada para funcionar como **app móvil**.
 
 <div align="center">
     <h2 align="center">Integrantes</h1>
